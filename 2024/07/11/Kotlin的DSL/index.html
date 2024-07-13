@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。 2. 创建 Kotlin DSL 的基本要素Kotlin 的 DSL 通常使用以下几个关键特性：  Lambda 表达式：用于创建嵌套结构。 扩展函数和扩展属性：用于为特定类型添加函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin的DSL">
+<meta property="og:url" content="http://example.com/2024/07/11/Kotlin%E7%9A%84DSL/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。 2. 创建 Kotlin DSL 的基本要素Kotlin 的 DSL 通常使用以下几个关键特性：  Lambda 表达式：用于创建嵌套结构。 扩展函数和扩展属性：用于为特定类型添加函">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-11T09:00:32.000Z">
+<meta property="article:modified_time" content="2024-07-11T09:01:14.975Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="kotlin">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/07/11/Kotlin%E7%9A%84DSL/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/07/11/Kotlin%E7%9A%84DSL/","path":"2024/07/11/Kotlin的DSL/","title":"Kotlin的DSL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Kotlin的DSL | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-DSL%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是 DSL？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA-Kotlin-DSL-%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A6%81%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">2. 创建 Kotlin DSL 的基本要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-DSL-%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 一个简单的 DSL 示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-DSL-%E4%B8%AD%E7%9A%84%E4%B8%AD%E7%BC%80%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4. DSL 中的中缀函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0%E5%92%8C%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">5. 使用命名参数和默认参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E4%B8%8E-Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">6. 高阶函数与 Lambda 表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%A1%A8%E5%8D%95-DSL"><span class="nav-number">7.</span> <span class="nav-text">7. 示例：构建一个简单的表单 DSL</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/11/Kotlin%E7%9A%84DSL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Kotlin的DSL | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kotlin的DSL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-07-11 17:00:32 / Modified: 17:01:14" itemprop="dateCreated datePublished" datetime="2024-07-11T17:00:32+08:00">2024-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/kotlin/" itemprop="url" rel="index"><span itemprop="name">kotlin</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-什么是-DSL？"><a href="#1-什么是-DSL？" class="headerlink" title="1. 什么是 DSL？"></a>1. 什么是 DSL？</h3><p>DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。</p>
+<h3 id="2-创建-Kotlin-DSL-的基本要素"><a href="#2-创建-Kotlin-DSL-的基本要素" class="headerlink" title="2. 创建 Kotlin DSL 的基本要素"></a>2. 创建 Kotlin DSL 的基本要素</h3><p>Kotlin 的 DSL 通常使用以下几个关键特性：</p>
+<ul>
+<li><strong>Lambda 表达式</strong>：用于创建嵌套结构。</li>
+<li><strong>扩展函数和扩展属性</strong>：用于为特定类型添加函数和属性。</li>
+<li><strong>中缀函数</strong>：使函数调用看起来更自然。</li>
+<li><strong>命名参数和默认参数</strong>：提高代码的可读性。</li>
+</ul>
+<h3 id="3-一个简单的-DSL-示例"><a href="#3-一个简单的-DSL-示例" class="headerlink" title="3. 一个简单的 DSL 示例"></a>3. 一个简单的 DSL 示例</h3><p>假设我们要创建一个用于构建 HTML 的 DSL。以下是一个简单的示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义 HTML 元素的类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HTML</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> elements = mutableListOf&lt;String&gt;()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">body</span><span class="params">(<span class="keyword">init</span>: <span class="type">Body</span>.() -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">        elements.add(Body().apply(<span class="keyword">init</span>).toString())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span> = elements.joinToString(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Body</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> elements = mutableListOf&lt;String&gt;()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">h1</span><span class="params">(<span class="keyword">init</span>: <span class="type">H1</span>.() -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">        elements.add(H1().apply(<span class="keyword">init</span>).toString())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">p</span><span class="params">(<span class="keyword">init</span>: <span class="type">P</span>.() -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">        elements.add(P().apply(<span class="keyword">init</span>).toString())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span> = <span class="string">&quot;&lt;body&gt;\n<span class="subst">$&#123;elements.joinToString(<span class="string">&quot;\n&quot;</span>)&#125;</span>\n&lt;/body&gt;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">H1</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> text = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span> = <span class="string">&quot;&lt;h1&gt;<span class="variable">$text</span>&lt;/h1&gt;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">P</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> text = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span> = <span class="string">&quot;&lt;p&gt;<span class="variable">$text</span>&lt;/p&gt;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// DSL 的入口函数</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">html</span><span class="params">(<span class="keyword">init</span>: <span class="type">HTML</span>.() -&gt; <span class="type">Unit</span>)</span></span>: HTML &#123;</span><br><span class="line">    <span class="keyword">return</span> HTML().apply(<span class="keyword">init</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 DSL 创建 HTML 内容</span></span><br><span class="line"><span class="keyword">val</span> htmlContent = html &#123;</span><br><span class="line">    body &#123;</span><br><span class="line">        h1 &#123;</span><br><span class="line">            text = <span class="string">&quot;Hello, World!&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        p &#123;</span><br><span class="line">            text = <span class="string">&quot;This is a paragraph.&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">println(htmlContent)</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，我们定义了一些类来表示 HTML 元素，然后使用 lambda 表达式和扩展函数来创建嵌套结构。</p>
+<h3 id="4-DSL-中的中缀函数"><a href="#4-DSL-中的中缀函数" class="headerlink" title="4. DSL 中的中缀函数"></a>4. DSL 中的中缀函数</h3><p>中缀函数可以使 DSL 更加自然和可读。使用 <code>infix</code> 关键字可以定义中缀函数。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">infix</span> <span class="function"><span class="keyword">fun</span> String.<span class="title">to</span><span class="params">(value: <span class="type">String</span>)</span></span>: Pair&lt;String, String&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> Pair(<span class="keyword">this</span>, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> map = mapOf(</span><br><span class="line">    <span class="string">&quot;key1&quot;</span> to <span class="string">&quot;value1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;key2&quot;</span> to <span class="string">&quot;value2&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ((key, value) <span class="keyword">in</span> map) &#123;</span><br><span class="line">    println(<span class="string">&quot;<span class="variable">$key</span> -&gt; <span class="variable">$value</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>to</code> 是一个中缀函数，使得创建键值对的语法更加自然。</p>
+<h3 id="5-使用命名参数和默认参数"><a href="#5-使用命名参数和默认参数" class="headerlink" title="5. 使用命名参数和默认参数"></a>5. 使用命名参数和默认参数</h3><p>命名参数和默认参数可以提高 DSL 的可读性和灵活性。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">greet</span><span class="params">(name: <span class="type">String</span> = <span class="string">&quot;World&quot;</span>, greeting: <span class="type">String</span> = <span class="string">&quot;Hello&quot;</span>)</span></span> &#123;</span><br><span class="line">    println(<span class="string">&quot;<span class="variable">$greeting</span>, <span class="variable">$name</span>!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet() <span class="comment">// 输出: Hello, World!</span></span><br><span class="line">greet(name = <span class="string">&quot;Kotlin&quot;</span>) <span class="comment">// 输出: Hello, Kotlin!</span></span><br><span class="line">greet(greeting = <span class="string">&quot;Hi&quot;</span>, name = <span class="string">&quot;DSL&quot;</span>) <span class="comment">// 输出: Hi, DSL!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-高阶函数与-Lambda-表达式"><a href="#6-高阶函数与-Lambda-表达式" class="headerlink" title="6. 高阶函数与 Lambda 表达式"></a>6. 高阶函数与 Lambda 表达式</h3><p>高阶函数和 Lambda 表达式是 Kotlin DSL 的核心，使得我们可以创建灵活的结构。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">buildString</span><span class="params">(builderAction: <span class="type">StringBuilder</span>.() -&gt; <span class="type">Unit</span>)</span></span>: String &#123;</span><br><span class="line">    <span class="keyword">val</span> sb = StringBuilder()</span><br><span class="line">    sb.builderAction()</span><br><span class="line">    <span class="keyword">return</span> sb.toString()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> result = buildString &#123;</span><br><span class="line">    append(<span class="string">&quot;Hello, &quot;</span>)</span><br><span class="line">    append(<span class="string">&quot;World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">println(result) <span class="comment">// 输出: Hello, World!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-示例：构建一个简单的表单-DSL"><a href="#7-示例：构建一个简单的表单-DSL" class="headerlink" title="7. 示例：构建一个简单的表单 DSL"></a>7. 示例：构建一个简单的表单 DSL</h3><p>以下是一个更复杂的 DSL 示例，用于构建表单：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Form</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> elements = mutableListOf&lt;String&gt;()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">input</span><span class="params">(type: <span class="type">String</span>, name: <span class="type">String</span>, value: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">        elements.add(<span class="string">&quot;&quot;&quot;&lt;input type=&quot;<span class="variable">$type</span>&quot; name=&quot;<span class="variable">$name</span>&quot; value=&quot;<span class="variable">$value</span>&quot;/&gt;&quot;&quot;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">submit</span><span class="params">(value: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">        elements.add(<span class="string">&quot;&quot;&quot;&lt;input type=&quot;submit&quot; value=&quot;<span class="variable">$value</span>&quot;/&gt;&quot;&quot;&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span> = elements.joinToString(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">form</span><span class="params">(<span class="keyword">init</span>: <span class="type">Form</span>.() -&gt; <span class="type">Unit</span>)</span></span>: Form &#123;</span><br><span class="line">    <span class="keyword">return</span> Form().apply(<span class="keyword">init</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> loginForm = form &#123;</span><br><span class="line">    input(type = <span class="string">&quot;text&quot;</span>, name = <span class="string">&quot;username&quot;</span>, value = <span class="string">&quot;&quot;</span>)</span><br><span class="line">    input(type = <span class="string">&quot;password&quot;</span>, name = <span class="string">&quot;password&quot;</span>, value = <span class="string">&quot;&quot;</span>)</span><br><span class="line">    submit(value = <span class="string">&quot;Login&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">println(loginForm) <span class="comment">// 输出构建的 HTML 表单</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/kotlin/" rel="tag"># kotlin</a>
+              <a href="/tags/android/" rel="tag"># android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/07/11/Kotlin%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/" rel="prev" title="Kotlin学习大纲">
+                  <i class="fa fa-angle-left"></i> Kotlin学习大纲
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/13/java%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="next" title="java语言学习">
+                  java语言学习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
