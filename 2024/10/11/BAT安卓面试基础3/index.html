@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="View的绘制面试讲解在Android开发中，视图（View）的绘制是一个非常重要的过程。理解视图的绘制机制不仅有助于创建自定义视图，还能优化应用的性能。 1. 基本概念Android视图的绘制是一个复杂的过程，涉及到多次测量（measure）、布局（layout）和绘制（draw）。视图树（View Tree）是一个层次结构，根节点通常是一个ViewGroup，如Activity的Window对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BAT安卓面试基础3">
+<meta property="og:url" content="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="View的绘制面试讲解在Android开发中，视图（View）的绘制是一个非常重要的过程。理解视图的绘制机制不仅有助于创建自定义视图，还能优化应用的性能。 1. 基本概念Android视图的绘制是一个复杂的过程，涉及到多次测量（measure）、布局（layout）和绘制（draw）。视图树（View Tree）是一个层次结构，根节点通常是一个ViewGroup，如Activity的Window对">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-11T12:19:50.000Z">
+<meta property="article:modified_time" content="2024-10-11T13:16:36.857Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/","path":"2024/10/11/BAT安卓面试基础3/","title":"BAT安卓面试基础3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BAT安卓面试基础3 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#View%E7%9A%84%E7%BB%98%E5%88%B6%E9%9D%A2%E8%AF%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">View的绘制面试讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2. 绘制流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Measure%EF%BC%88%E6%B5%8B%E9%87%8F%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Measure（测量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Layout%EF%BC%88%E5%B8%83%E5%B1%80%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Layout（布局）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Draw%EF%BC%88%E7%BB%98%E5%88%B6%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Draw（绘制）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E5%B7%A7"><span class="nav-number">1.3.</span> <span class="nav-text">3. 常见方法和技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 自定义视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E4%BC%98%E5%8C%96%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 优化绘制性能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">4. 常见面试问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E8%A7%A3%E9%87%8AAndroid%E8%A7%86%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 解释Android视图的绘制过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE%EF%BC%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 如何创建自定义视图？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD%EF%BC%9F"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 如何优化自定义视图的绘制性能？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-%E4%BB%80%E4%B9%88%E6%98%AF-ViewGroup-%E5%92%8C-View-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 什么是 ViewGroup 和 View 的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-%E4%BB%80%E4%B9%88%E6%98%AF-MeasureSpec%EF%BC%9F"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 什么是 MeasureSpec？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">View事件传递机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-number">2.1.</span> <span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2. 事件传递流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%EF%BC%88dispatchTouchEvent%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 事件分发（dispatchTouchEvent）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E4%BA%8B%E4%BB%B6%E6%8B%A6%E6%88%AA%EF%BC%88onInterceptTouchEvent%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 事件拦截（onInterceptTouchEvent）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%EF%BC%88onTouchEvent%EF%BC%89"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3 事件处理（onTouchEvent）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">3. 事件传递示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E7%9A%84%E5%B8%B8%E8%A7%81%E7%AD%96%E7%95%A5"><span class="nav-number">2.4.</span> <span class="nav-text">4. 事件传递的常见策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="nav-number">2.5.</span> <span class="nav-text">5. 常见面试问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B%EF%BC%9F"><span class="nav-number">2.5.1.</span> <span class="nav-text">5.1 事件传递机制的完整流程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E4%BA%8B%E4%BB%B6%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="nav-number">2.5.2.</span> <span class="nav-text">5.2 如何解决事件冲突？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-%E4%BB%80%E4%B9%88%E6%98%AFrequestDisallowInterceptTouchEvent-%EF%BC%9F"><span class="nav-number">2.5.3.</span> <span class="nav-text">5.3 什么是requestDisallowInterceptTouchEvent()？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6%EF%BC%9F"><span class="nav-number">2.5.4.</span> <span class="nav-text">5.4 如何实现一个点击事件？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView%E5%92%8CRecyclerView"><span class="nav-number">3.</span> <span class="nav-text">ListView和RecyclerView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ProGuard%E6%B7%B7%E6%B7%86"><span class="nav-number">4.</span> <span class="nav-text">ProGuard混淆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="nav-number">4.1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BC%98%E5%8C%96%EF%BC%88Optimization%EF%BC%89"><span class="nav-number">4.1.1.</span> <span class="nav-text">1.1 优化（Optimization）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%B7%B7%E6%B7%86%EF%BC%88Obfuscation%EF%BC%89"><span class="nav-number">4.1.2.</span> <span class="nav-text">1.2 混淆（Obfuscation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E7%BC%A9%E5%87%8F%EF%BC%88Shrinking%EF%BC%89"><span class="nav-number">4.1.3.</span> <span class="nav-text">1.3 缩减（Shrinking）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEProGuard"><span class="nav-number">4.2.</span> <span class="nav-text">2. 配置ProGuard</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%90%AF%E7%94%A8ProGuard"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.1 启用ProGuard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E9%85%8D%E7%BD%AEProGuard%E8%A7%84%E5%88%99"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.2 配置ProGuard规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ProGuard%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.</span> <span class="nav-text">3. ProGuard的常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%B7%B7%E6%B7%86%E5%90%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83"><span class="nav-number">4.3.1.</span> <span class="nav-text">3.1 混淆后应用程序崩溃</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E8%A2%AB%E6%B7%B7%E6%B7%86"><span class="nav-number">4.3.2.</span> <span class="nav-text">3.2 日志信息被混淆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%8F%8D%E5%B0%84%E7%9B%B8%E5%85%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.3.</span> <span class="nav-text">3.3 反射相关的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98-1"><span class="nav-number">4.4.</span> <span class="nav-text">4. 常见面试问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E4%BB%80%E4%B9%88%E6%98%AFProGuard%EF%BC%9F"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.1 什么是ProGuard？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E5%A6%82%E4%BD%95%E5%90%AF%E7%94%A8ProGuard%EF%BC%9F"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.2 如何启用ProGuard？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEProGuard%E4%BB%A5%E4%BF%9D%E7%95%99%E7%89%B9%E5%AE%9A%E7%9A%84%E7%B1%BB%E6%88%96%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">4.4.3.</span> <span class="nav-text">4.3 如何配置ProGuard以保留特定的类或方法？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E6%B7%B7%E6%B7%86%E5%90%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">4.4.4.</span> <span class="nav-text">4.4 如何解决混淆后应用程序崩溃的问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E6%B7%B7%E6%B7%86%E5%90%8E%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%9F"><span class="nav-number">4.4.5.</span> <span class="nav-text">4.5 如何查看混淆后的代码？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-ProGuard%E4%B8%8ER8%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">4.4.6.</span> <span class="nav-text">4.6 ProGuard与R8的区别？</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BAT安卓面试基础3 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BAT安卓面试基础3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-11 20:19:50 / Modified: 21:16:36" itemprop="dateCreated datePublished" datetime="2024-10-11T20:19:50+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="View的绘制面试讲解"><a href="#View的绘制面试讲解" class="headerlink" title="View的绘制面试讲解"></a>View的绘制面试讲解</h2><p>在Android开发中，视图（View）的绘制是一个非常重要的过程。理解视图的绘制机制不仅有助于创建自定义视图，还能优化应用的性能。</p>
+<h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><p>Android视图的绘制是一个复杂的过程，涉及到多次测量（measure）、布局（layout）和绘制（draw）。视图树（View Tree）是一个层次结构，根节点通常是一个<code>ViewGroup</code>，如<code>Activity</code>的<code>Window</code>对象。视图树的绘制过程可以分为以下几个步骤：</p>
+<ul>
+<li><strong>测量（Measure）</strong>：确定每个视图的宽度和高度。</li>
+<li><strong>布局（Layout）</strong>：确定每个视图的位置。</li>
+<li><strong>绘制（Draw）</strong>：将视图的内容绘制到屏幕上。</li>
+</ul>
+<h3 id="2-绘制流程"><a href="#2-绘制流程" class="headerlink" title="2. 绘制流程"></a>2. 绘制流程</h3><p>视图的绘制过程主要由三个步骤组成：<code>measure</code>、<code>layout</code> 和 <code>draw</code>。这些步骤是通过递归调用来完成的，从视图树的根节点开始从上向下遍历整个视图树。DecorView–&gt;ViewGroup–&gt;View</p>
+<h4 id="2-1-Measure（测量）"><a href="#2-1-Measure（测量）" class="headerlink" title="2.1 Measure（测量）"></a>2.1 Measure（测量）</h4><p><code>measure</code> 步骤的目的是确定视图的大小。视图通过 <code>measure</code> 方法开始测量过程，最终通过 <code>onMeasure</code> 方法计算出视图的宽高。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMeasure</span><span class="params">(<span class="type">int</span> widthMeasureSpec, <span class="type">int</span> heightMeasureSpec)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">    <span class="comment">// 自定义视图的测量逻辑</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">width</span> <span class="operator">=</span> MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">    <span class="type">int</span> <span class="variable">height</span> <span class="operator">=</span> MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">    setMeasuredDimension(width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-Layout（布局）"><a href="#2-2-Layout（布局）" class="headerlink" title="2.2 Layout（布局）"></a>2.2 Layout（布局）</h4><p><code>layout</code> 步骤的目的是确定每个视图的位置。视图通过 <code>layout</code> 方法开始布局过程，最终通过 <code>onLayout</code> 方法确定子视图的位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onLayout</span><span class="params">(<span class="type">boolean</span> changed, <span class="type">int</span> left, <span class="type">int</span> top, <span class="type">int</span> right, <span class="type">int</span> bottom)</span> &#123;</span><br><span class="line">    <span class="comment">// 自定义视图的布局逻辑</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">childCount</span> <span class="operator">=</span> getChildCount();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">        <span class="type">View</span> <span class="variable">child</span> <span class="operator">=</span> getChildAt(i);</span><br><span class="line">        child.layout(left, top, right, bottom); <span class="comment">// 设置子视图的位置</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-Draw（绘制）"><a href="#2-3-Draw（绘制）" class="headerlink" title="2.3 Draw（绘制）"></a>2.3 Draw（绘制）</h4><p><code>draw</code> 步骤的目的是将视图的内容绘制到屏幕上。视图通过 <code>draw</code> 方法开始绘制过程，最终通过 <code>onDraw</code> 方法绘制视图的内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onDraw</span><span class="params">(Canvas canvas)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onDraw(canvas);</span><br><span class="line">    <span class="comment">// 自定义视图的绘制逻辑</span></span><br><span class="line">    <span class="type">Paint</span> <span class="variable">paint</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Paint</span>();</span><br><span class="line">    paint.setColor(Color.RED);</span><br><span class="line">    canvas.drawRect(<span class="number">0</span>, <span class="number">0</span>, getWidth(), getHeight(), paint); <span class="comment">// 绘制一个红色矩形</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-常见方法和技巧"><a href="#3-常见方法和技巧" class="headerlink" title="3. 常见方法和技巧"></a>3. 常见方法和技巧</h3><h4 id="3-1-自定义视图"><a href="#3-1-自定义视图" class="headerlink" title="3.1 自定义视图"></a>3.1 自定义视图</h4><p>在创建自定义视图时，经常需要重写 <code>onMeasure</code>、<code>onLayout</code> 和 <code>onDraw</code> 方法。例如，创建一个自定义圆形视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CircleView</span> <span class="keyword">extends</span> <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Paint paint;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CircleView</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        paint = <span class="keyword">new</span> <span class="title class_">Paint</span>();</span><br><span class="line">        paint.setColor(Color.BLUE);</span><br><span class="line">        paint.setStyle(Paint.Style.FILL);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMeasure</span><span class="params">(<span class="type">int</span> widthMeasureSpec, <span class="type">int</span> heightMeasureSpec)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        <span class="type">int</span> <span class="variable">width</span> <span class="operator">=</span> MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">        <span class="type">int</span> <span class="variable">height</span> <span class="operator">=</span> MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> Math.min(width, height);</span><br><span class="line">        setMeasuredDimension(size, size); <span class="comment">// 设置视图为正方形</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onDraw</span><span class="params">(Canvas canvas)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onDraw(canvas);</span><br><span class="line">        <span class="type">int</span> <span class="variable">radius</span> <span class="operator">=</span> getWidth() / <span class="number">2</span>;</span><br><span class="line">        canvas.drawCircle(radius, radius, radius, paint); <span class="comment">// 绘制一个圆形</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-优化绘制性能"><a href="#3-2-优化绘制性能" class="headerlink" title="3.2 优化绘制性能"></a>3.2 优化绘制性能</h4><ul>
+<li><strong>减少过度绘制</strong>：避免不必要的绘制操作，通过 <code>clipRect</code> 方法限制绘制区域。</li>
+<li><strong>使用硬件加速</strong>：确保视图开启了硬件加速，提高绘制性能。</li>
+<li><strong>批量绘制</strong>：尽可能将多个绘制操作合并为一个，以减少绘制次数。</li>
+</ul>
+<h3 id="4-常见面试问题"><a href="#4-常见面试问题" class="headerlink" title="4. 常见面试问题"></a>4. 常见面试问题</h3><h4 id="4-1-解释Android视图的绘制过程"><a href="#4-1-解释Android视图的绘制过程" class="headerlink" title="4.1 解释Android视图的绘制过程"></a>4.1 解释Android视图的绘制过程</h4><p>这个问题旨在考察你对视图绘制流程的理解。你应该详细解释 <code>measure</code>、<code>layout</code> 和 <code>draw</code> 三个步骤，并描述它们的作用和实现方式。</p>
+<h4 id="4-2-如何创建自定义视图？"><a href="#4-2-如何创建自定义视图？" class="headerlink" title="4.2 如何创建自定义视图？"></a>4.2 如何创建自定义视图？</h4><p>重点描述如何重写 <code>onMeasure</code>、<code>onLayout</code> 和 <code>onDraw</code> 方法，并举例说明一个简单的自定义视图。</p>
+<h4 id="4-3-如何优化自定义视图的绘制性能？"><a href="#4-3-如何优化自定义视图的绘制性能？" class="headerlink" title="4.3 如何优化自定义视图的绘制性能？"></a>4.3 如何优化自定义视图的绘制性能？</h4><p>可以从减少过度绘制、使用硬件加速、批量绘制等方面来回答，展示你对性能优化的理解。</p>
+<h4 id="4-4-什么是-ViewGroup-和-View-的区别？"><a href="#4-4-什么是-ViewGroup-和-View-的区别？" class="headerlink" title="4.4 什么是 ViewGroup 和 View 的区别？"></a>4.4 什么是 <code>ViewGroup</code> 和 <code>View</code> 的区别？</h4><p>解释 <code>ViewGroup</code> 是一种特殊的 <code>View</code>，它可以包含其他子视图，而 <code>View</code> 是一个单一的视图组件。</p>
+<h4 id="4-5-什么是-MeasureSpec？"><a href="#4-5-什么是-MeasureSpec？" class="headerlink" title="4.5 什么是 MeasureSpec？"></a>4.5 什么是 <code>MeasureSpec</code>？</h4><p><code>MeasureSpec</code> 是一个由父视图传递给子视图的约束，用于确定子视图的大小。<code>MeasureSpec</code> 由模式（mode）和大小（size）组成，模式包括 <code>UNSPECIFIED</code>不确定、<code>EXACTLY</code>确定范围 和 <code>AT_MOST</code>最大尺寸范围。</p>
+<h2 id="View事件传递机制"><a href="#View事件传递机制" class="headerlink" title="View事件传递机制"></a>View事件传递机制</h2><p>层叠布局 Activity–&gt;Phonewindow–&gt;DecorView–&gt;ViewGroup–&gt;View</p>
+<h3 id="1-基本概念-1"><a href="#1-基本概念-1" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><p>事件传递机制主要涉及三个方法：</p>
+<ul>
+<li>**dispatchTouchEvent()**：负责事件的分发。</li>
+<li>**onInterceptTouchEvent()**：<code>ViewGroup</code> 用于拦截事件。</li>
+<li>**onTouchEvent()**：处理事件。</li>
+</ul>
+<h3 id="2-事件传递流程"><a href="#2-事件传递流程" class="headerlink" title="2. 事件传递流程"></a>2. 事件传递流程</h3><h4 id="2-1-事件分发（dispatchTouchEvent）"><a href="#2-1-事件分发（dispatchTouchEvent）" class="headerlink" title="2.1 事件分发（dispatchTouchEvent）"></a>2.1 事件分发（dispatchTouchEvent）</h4><p><code>dispatchTouchEvent(MotionEvent ev)</code> 是事件传递的起点。每个<code>ViewGroup</code>和<code>View</code>都有这个方法，用于分发事件。</p>
+<ul>
+<li><p><strong>ViewGroup</strong>：</p>
+<ul>
+<li>调用<code>onInterceptTouchEvent()</code>决定是否拦截事件。</li>
+<li>若不拦截，则将事件传递给子View的<code>dispatchTouchEvent()</code>。</li>
+<li>若没有子View处理，则调用自身的<code>onTouchEvent()</code>。</li>
+</ul>
+</li>
+<li><p><strong>View</strong>：</p>
+<ul>
+<li>直接调用<code>onTouchEvent()</code>处理事件。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-事件拦截（onInterceptTouchEvent）"><a href="#2-2-事件拦截（onInterceptTouchEvent）" class="headerlink" title="2.2 事件拦截（onInterceptTouchEvent）"></a>2.2 事件拦截（onInterceptTouchEvent）</h4><p><code>ViewGroup</code>特有的方法，用于决定是否拦截事件。</p>
+<ul>
+<li>返回<code>true</code>：拦截事件，执行自身的<code>onTouchEvent()</code>。</li>
+<li>返回<code>false</code>：不拦截，事件传递给子View。</li>
+</ul>
+<h4 id="2-3-事件处理（onTouchEvent）"><a href="#2-3-事件处理（onTouchEvent）" class="headerlink" title="2.3 事件处理（onTouchEvent）"></a>2.3 事件处理（onTouchEvent）</h4><p><code>onTouchEvent(MotionEvent ev)</code>用于处理事件。</p>
+<ul>
+<li>返回<code>true</code>：表示事件被处理。</li>
+<li>返回<code>false</code>：表示事件未被处理，向上传递到父View的<code>onTouchEvent()</code>。</li>
+</ul>
+<h3 id="3-事件传递示例"><a href="#3-事件传递示例" class="headerlink" title="3. 事件传递示例"></a>3. 事件传递示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomViewGroup</span> <span class="keyword">extends</span> <span class="title class_">ViewGroup</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> &#123;</span><br><span class="line">        Log.d(<span class="string">&quot;CustomViewGroup&quot;</span>, <span class="string">&quot;dispatchTouchEvent&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.dispatchTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> &#123;</span><br><span class="line">        Log.d(<span class="string">&quot;CustomViewGroup&quot;</span>, <span class="string">&quot;onInterceptTouchEvent&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 默认不拦截</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onTouchEvent</span><span class="params">(MotionEvent ev)</span> &#123;</span><br><span class="line">        Log.d(<span class="string">&quot;CustomViewGroup&quot;</span>, <span class="string">&quot;onTouchEvent&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 处理事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomView</span> <span class="keyword">extends</span> <span class="title class_">View</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> &#123;</span><br><span class="line">        Log.d(<span class="string">&quot;CustomView&quot;</span>, <span class="string">&quot;dispatchTouchEvent&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.dispatchTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onTouchEvent</span><span class="params">(MotionEvent ev)</span> &#123;</span><br><span class="line">        Log.d(<span class="string">&quot;CustomView&quot;</span>, <span class="string">&quot;onTouchEvent&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 处理事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-事件传递的常见策略"><a href="#4-事件传递的常见策略" class="headerlink" title="4. 事件传递的常见策略"></a>4. 事件传递的常见策略</h3><ul>
+<li><strong>ViewGroup拦截事件</strong>：可用于处理滑动冲突，例如在<code>ScrollView</code>中嵌套<code>ListView</code>。</li>
+<li><strong>子View处理事件</strong>：如按钮的点击事件。</li>
+</ul>
+<h3 id="5-常见面试问题"><a href="#5-常见面试问题" class="headerlink" title="5. 常见面试问题"></a>5. 常见面试问题</h3><h4 id="5-1-事件传递机制的完整流程？"><a href="#5-1-事件传递机制的完整流程？" class="headerlink" title="5.1 事件传递机制的完整流程？"></a>5.1 事件传递机制的完整流程？</h4><ul>
+<li>描述<code>dispatchTouchEvent()</code>、<code>onInterceptTouchEvent()</code>和<code>onTouchEvent()</code>的调用顺序及其作用。</li>
+</ul>
+<h4 id="5-2-如何解决事件冲突？"><a href="#5-2-如何解决事件冲突？" class="headerlink" title="5.2 如何解决事件冲突？"></a>5.2 如何解决事件冲突？</h4><ul>
+<li><strong>方法1</strong>：在<code>ViewGroup</code>中通过<code>onInterceptTouchEvent()</code>拦截。</li>
+<li><strong>方法2</strong>：在子View中通过<code>requestDisallowInterceptTouchEvent()</code>请求父View不拦截。</li>
+</ul>
+<h4 id="5-3-什么是requestDisallowInterceptTouchEvent-？"><a href="#5-3-什么是requestDisallowInterceptTouchEvent-？" class="headerlink" title="5.3 什么是requestDisallowInterceptTouchEvent()？"></a>5.3 什么是<code>requestDisallowInterceptTouchEvent()</code>？</h4><ul>
+<li>告诉父<code>ViewGroup</code>不要拦截当前事件序列。</li>
+</ul>
+<h4 id="5-4-如何实现一个点击事件？"><a href="#5-4-如何实现一个点击事件？" class="headerlink" title="5.4 如何实现一个点击事件？"></a>5.4 如何实现一个点击事件？</h4><ul>
+<li>重写<code>onTouchEvent()</code>，在<code>MotionEvent.ACTION_UP</code>时返回<code>true</code>并处理点击逻辑。</li>
+</ul>
+<h2 id="ListView和RecyclerView"><a href="#ListView和RecyclerView" class="headerlink" title="ListView和RecyclerView"></a>ListView和RecyclerView</h2><p><code>ListView</code> 是一个用于展示大量数据的视图组件，支持垂直滚动。</p>
+<p><code>RecyclerView</code> 是一个更灵活、更强大的列表视图组件，支持垂直和水平滚动，以及网格、瀑布流等多种布局。</p>
+<h2 id="ProGuard混淆"><a href="#ProGuard混淆" class="headerlink" title="ProGuard混淆"></a>ProGuard混淆</h2><p>ProGuard是一个用于Java和Android应用程序的开源工具，用于优化、混淆和缩减代码。在Android项目中，ProGuard通常用于减小APK文件的大小，提高代码的性能，并保护代码不被逆向工程。</p>
+<h3 id="1-基本概念-2"><a href="#1-基本概念-2" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><h4 id="1-1-优化（Optimization）"><a href="#1-1-优化（Optimization）" class="headerlink" title="1.1 优化（Optimization）"></a>1.1 优化（Optimization）</h4><p>优化代码以提高性能，包括删除未使用的类、方法和字段，以及优化字节码。</p>
+<h4 id="1-2-混淆（Obfuscation）"><a href="#1-2-混淆（Obfuscation）" class="headerlink" title="1.2 混淆（Obfuscation）"></a>1.2 混淆（Obfuscation）</h4><p>通过重命名类、方法和字段，使代码难以被逆向工程。混淆后的代码看起来像是随机的字符序列。</p>
+<h4 id="1-3-缩减（Shrinking）"><a href="#1-3-缩减（Shrinking）" class="headerlink" title="1.3 缩减（Shrinking）"></a>1.3 缩减（Shrinking）</h4><p>移除未使用的代码和资源，以减小APK文件的大小。</p>
+<h3 id="2-配置ProGuard"><a href="#2-配置ProGuard" class="headerlink" title="2. 配置ProGuard"></a>2. 配置ProGuard</h3><p>ProGuard的配置通过<code>proguard-rules.pro</code>文件实现。Android Studio默认生成一个<code>proguard-rules.pro</code>文件，用于存放ProGuard的配置规则。</p>
+<h4 id="2-1-启用ProGuard"><a href="#2-1-启用ProGuard" class="headerlink" title="2.1 启用ProGuard"></a>2.1 启用ProGuard</h4><p>在<code>build.gradle</code>文件中启用ProGuard：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="literal">true</span> <span class="comment">// 启用代码混淆</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">&#x27;proguard-android-optimize.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-配置ProGuard规则"><a href="#2-2-配置ProGuard规则" class="headerlink" title="2.2 配置ProGuard规则"></a>2.2 配置ProGuard规则</h4><p>在<code>proguard-rules.pro</code>文件中添加代码混淆规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 保留所有注释以避免混淆</span><br><span class="line">-keepattributes *Annotation*</span><br><span class="line"></span><br><span class="line"># 保留所有实现了android.os.Parcelable的类</span><br><span class="line">-keepclassmembers class * implements android.os.Parcelable &#123;</span><br><span class="line">    public static final android.os.Parcelable$Creator *;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 保留主Activity</span><br><span class="line">-keep class com.example.MyMainActivity &#123;</span><br><span class="line">    public &lt;init&gt;();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 保留所有被注解的类和方法</span><br><span class="line">-keep @interface com.example.MyAnnotation</span><br><span class="line">-keep class ** &#123;</span><br><span class="line">    @com.example.MyAnnotation *;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-ProGuard的常见问题"><a href="#3-ProGuard的常见问题" class="headerlink" title="3. ProGuard的常见问题"></a>3. ProGuard的常见问题</h3><h4 id="3-1-混淆后应用程序崩溃"><a href="#3-1-混淆后应用程序崩溃" class="headerlink" title="3.1 混淆后应用程序崩溃"></a>3.1 混淆后应用程序崩溃</h4><p>混淆后应用程序崩溃通常是因为某些代码被误混淆或移除。可以通过添加保留规则来解决：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 保留所有Activity、Service、BroadcastReceiver、ContentProvider</span><br><span class="line">-keep class * extends android.app.Activity</span><br><span class="line">-keep class * extends android.app.Service</span><br><span class="line">-keep class * extends android.content.BroadcastReceiver</span><br><span class="line">-keep class * extends android.content.ContentProvider</span><br><span class="line"></span><br><span class="line"># 保留所有带特定注解的方法</span><br><span class="line">-keepclassmembers class * &#123;</span><br><span class="line">    @com.example.MyAnnotation &lt;methods&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-日志信息被混淆"><a href="#3-2-日志信息被混淆" class="headerlink" title="3.2 日志信息被混淆"></a>3.2 日志信息被混淆</h4><p>可以通过保留日志方法来避免日志信息被混淆：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 保留所有日志方法</span><br><span class="line">-assumenosideeffects class android.util.Log &#123;</span><br><span class="line">    public static *** d(...);</span><br><span class="line">    public static *** w(...);</span><br><span class="line">    public static *** v(...);</span><br><span class="line">    public static *** i(...);</span><br><span class="line">    public static *** e(...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-反射相关的问题"><a href="#3-3-反射相关的问题" class="headerlink" title="3.3 反射相关的问题"></a>3.3 反射相关的问题</h4><p>反射在混淆后可能无法正常工作，可以通过保留相关类和方法来解决：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 保留所有使用反射的类和方法</span><br><span class="line">-keep class * &#123;</span><br><span class="line">    public *;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-常见面试问题-1"><a href="#4-常见面试问题-1" class="headerlink" title="4. 常见面试问题"></a>4. 常见面试问题</h3><h4 id="4-1-什么是ProGuard？"><a href="#4-1-什么是ProGuard？" class="headerlink" title="4.1 什么是ProGuard？"></a>4.1 什么是ProGuard？</h4><p>ProGuard是一个用于优化、混淆和缩减Java和Android代码的开源工具。它通过删除未使用的代码和资源、优化字节码、以及重命名类、方法和字段来减小APK文件的大小并保护代码不被逆向工程。</p>
+<h4 id="4-2-如何启用ProGuard？"><a href="#4-2-如何启用ProGuard？" class="headerlink" title="4.2 如何启用ProGuard？"></a>4.2 如何启用ProGuard？</h4><p>在<code>build.gradle</code>文件中启用ProGuard，通过设置<code>minifyEnabled true</code>并指定ProGuard配置文件：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="literal">true</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">&#x27;proguard-android-optimize.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-如何配置ProGuard以保留特定的类或方法？"><a href="#4-3-如何配置ProGuard以保留特定的类或方法？" class="headerlink" title="4.3 如何配置ProGuard以保留特定的类或方法？"></a>4.3 如何配置ProGuard以保留特定的类或方法？</h4><p>在<code>proguard-rules.pro</code>文件中添加保留规则，例如保留所有Activity：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-keep class * extends android.app.Activity</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-如何解决混淆后应用程序崩溃的问题？"><a href="#4-4-如何解决混淆后应用程序崩溃的问题？" class="headerlink" title="4.4 如何解决混淆后应用程序崩溃的问题？"></a>4.4 如何解决混淆后应用程序崩溃的问题？</h4><p>可以通过仔细检查混淆规则，确保所有必要的类和方法未被混淆或移除。例如，保留所有带特定注解的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-keepclassmembers class * &#123;</span><br><span class="line">    @com.example.MyAnnotation &lt;methods&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-如何查看混淆后的代码？"><a href="#4-5-如何查看混淆后的代码？" class="headerlink" title="4.5 如何查看混淆后的代码？"></a>4.5 如何查看混淆后的代码？</h4><p>ProGuard在混淆后会生成映射文件（mapping.txt），其中包含了原始类、方法和混淆后的名称之间的映射关系。这个文件通常位于<code>build/outputs/mapping/release/</code>目录下。</p>
+<h4 id="4-6-ProGuard与R8的区别？"><a href="#4-6-ProGuard与R8的区别？" class="headerlink" title="4.6 ProGuard与R8的区别？"></a>4.6 ProGuard与R8的区别？</h4><p>R8是Google推出的用于替代ProGuard的新工具。R8在功能上与ProGuard相似，但具有更高的性能和更好的代码优化能力。在Android项目中，可以通过设置<code>android.enableR8=true</code>来启用R8。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/" rel="prev" title="BAT安卓面试基础2">
+                  <i class="fa fa-angle-left"></i> BAT安卓面试基础2
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

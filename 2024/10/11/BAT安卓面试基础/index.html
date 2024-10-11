@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="https:&#x2F;&#x2F;github.com&#x2F;JsonChao&#x2F;Awesome-Android-Interview 1、良好的开发习惯    命名、组件、模式2、独立思考的能力3、主动并且善于沟通 设计模式（代理、单例、工厂、build）数据结构java语言基础（反射、注解、注入）UI布局和控件、自定义UI控件Http和Socket编程、性能优化、内存优化安全加解密算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BAT安卓面试基础">
+<meta property="og:url" content="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="https:&#x2F;&#x2F;github.com&#x2F;JsonChao&#x2F;Awesome-Android-Interview 1、良好的开发习惯    命名、组件、模式2、独立思考的能力3、主动并且善于沟通 设计模式（代理、单例、工厂、build）数据结构java语言基础（反射、注解、注入）UI布局和控件、自定义UI控件Http和Socket编程、性能优化、内存优化安全加解密算法">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-11T02:44:55.000Z">
+<meta property="article:modified_time" content="2024-10-11T10:01:33.227Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/","path":"2024/10/11/BAT安卓面试基础/","title":"BAT安卓面试基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BAT安卓面试基础 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">Activity面试详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1、Activity的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">状态：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">进程优先级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">2、Activity的启动模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Activity%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%A0%88"><span class="nav-number">1.3.</span> <span class="nav-text">3、Activity的任务栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81scheme%E8%B7%B3%E8%BD%AC%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.4.</span> <span class="nav-text">4、scheme跳转协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">Fragment面试详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Fragment%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.1.</span> <span class="nav-text">1、Fragment生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Fragment%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-number">2.2.</span> <span class="nav-text">2、Fragment的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Fragment%E7%9A%84%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.3.</span> <span class="nav-text">3、Fragment的懒加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81FragmentPagerAdapter%E5%92%8CFragmentStatePagerAdapter%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.4.</span> <span class="nav-text">4、FragmentPagerAdapter和FragmentStatePagerAdapter的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81Fragment%E7%9A%84replace%E5%92%8Cadd%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.5.</span> <span class="nav-text">5、Fragment的replace和add的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">Service面试详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Service%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.1.</span> <span class="nav-text">1、Service生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Service%E5%92%8CThread%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">2、Service和Thread的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Service%E5%92%8CIntentService%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">3、Service和IntentService的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Broadcast%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">Broadcast面试详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81BroadcastReceiver%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.1.</span> <span class="nav-text">1、BroadcastReceiver生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81BroadcastReceiver%E6%B3%A8%E5%86%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">2、BroadcastReceiver注册方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81BroadcastReceiver%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.3.</span> <span class="nav-text">3、BroadcastReceiver使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%9C%AC%E5%9C%B0%E5%B9%BF%E6%92%AD%E5%92%8C%E5%85%A8%E5%B1%80%E5%B9%BF%E6%92%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.4.</span> <span class="nav-text">4、本地广播和全局广播的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%9C%89%E5%BA%8F%E5%B9%BF%E6%92%AD%E5%92%8C%E6%97%A0%E5%BA%8F%E5%B9%BF%E6%92%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.5.</span> <span class="nav-text">5、有序广播和无序广播的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebView%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">WebView面试详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder%E9%9D%A2%E8%AF%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">Binder面试详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">6.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">6.2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">6.3.</span> <span class="nav-text">关键组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">6.4.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-number">6.5.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">6.6.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AIDL%E8%AF%A6%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">AIDL详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-number">7.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-1"><span class="nav-number">7.2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E6%AD%A5%E9%AA%A4"><span class="nav-number">7.3.</span> <span class="nav-text">示例步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%9A%E4%B9%89AIDL%E6%8E%A5%E5%8F%A3"><span class="nav-number">7.3.1.</span> <span class="nav-text">1. 定义AIDL接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%9E%E7%8E%B0AIDL%E6%8E%A5%E5%8F%A3"><span class="nav-number">7.3.2.</span> <span class="nav-text">2. 实现AIDL接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.3.3.</span> <span class="nav-text">3. 注册服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.3.4.</span> <span class="nav-text">4. 客户端连接服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.4.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">7.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BAT安卓面试基础 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BAT安卓面试基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-11 10:44:55 / Modified: 18:01:33" itemprop="dateCreated datePublished" datetime="2024-10-11T10:44:55+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://github.com/JsonChao/Awesome-Android-Interview">https://github.com/JsonChao/Awesome-Android-Interview</a></p>
+<p>1、良好的开发习惯    命名、组件、模式<br>2、独立思考的能力<br>3、主动并且善于沟通</p>
+<p>设计模式（代理、单例、工厂、build）<br>数据结构<br>java语言基础（反射、注解、注入）<br>UI布局和控件、自定义UI控件<br>Http和Socket编程、性能优化、内存优化<br>安全加解密算法</p>
+<span id="more"></span>
+<p>基本知识点（activity、service创建、广播、intent）<br>深入知识点 （AIDL、Binder、多进程通信、事件分发、UI绘制流程、Handler）<br>基本知识点细节（Service启动的区别、Activity启动模式，标记、异步任务）<br>系统核心机制（跨进程交互、Handler消息循环）</p>
+<p>dlna 投屏 soap协议 web service</p>
+<h2 id="Activity面试详解"><a href="#Activity面试详解" class="headerlink" title="Activity面试详解"></a>Activity面试详解</h2><h3 id="1、Activity的生命周期"><a href="#1、Activity的生命周期" class="headerlink" title="1、Activity的生命周期"></a>1、Activity的生命周期</h3><p>与用户交互的接口</p>
+<h4 id="状态："><a href="#状态：" class="headerlink" title="状态："></a>状态：</h4><p>running&#x2F;paused（不完全遮挡失去交互、内存紧张）&#x2F;stoped&#x2F;killed</p>
+<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>onCreate、onStart(无法交互)、onResume、onPause、onStop、onDestroy</p>
+<p>点击home键回到主界面 onPause-&gt;onStop<br>再次回到原Activity时，onRestart-&gt;onStart-&gt;onResume<br>退出当前Activity onPause-&gt;onStop-&gt;onDestroy</p>
+<p>横竖屏切换时，onPause-&gt;onSaveInstanceState-&gt;onStop-&gt;onDestroy-&gt;onCreate-&gt;onStart-&gt;onResume</p>
+<h4 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a>进程优先级</h4><p>前台进程、可见进程、服务进程、后台进程、空进程</p>
+<h3 id="2、Activity的启动模式"><a href="#2、Activity的启动模式" class="headerlink" title="2、Activity的启动模式"></a>2、Activity的启动模式</h3><p>standard 每次都会重新创建，都走生命周期</p>
+<p>singleTop<br>栈顶复用，如果栈顶是当前Activity，则不会重新创建，onNewIntent</p>
+<p>singleTask<br>栈内复用，如果栈内存在当前Activity，则将栈内该Activity以上的Activity全部出栈，onNewIntent</p>
+<p>singleInstance<br>单例模式，独占一个任务栈</p>
+<h3 id="3、Activity的任务栈"><a href="#3、Activity的任务栈" class="headerlink" title="3、Activity的任务栈"></a>3、Activity的任务栈</h3><p>后进先出的原则，一个activity的集合，与启动模式相关<br>任务栈全部退出应用程序<br>一个Activity可以独享一个任务栈</p>
+<h3 id="4、scheme跳转协议"><a href="#4、scheme跳转协议" class="headerlink" title="4、scheme跳转协议"></a>4、scheme跳转协议</h3><p>一种页面跳转协议，可以用于APP内跳转，也可以用于APP与H5页面跳转<br>通过Intent.setData(Uri.parse(“scheme:&#x2F;&#x2F;host:port&#x2F;path?query”))实现</p>
+<h2 id="Fragment面试详解"><a href="#Fragment面试详解" class="headerlink" title="Fragment面试详解"></a>Fragment面试详解</h2><h3 id="1、Fragment生命周期"><a href="#1、Fragment生命周期" class="headerlink" title="1、Fragment生命周期"></a>1、Fragment生命周期</h3><p>节省内存、可静态和动态加载、第5大组件<br>onAttach-&gt;onCreate-&gt;onCreateView-&gt;onActivityCreated-&gt;onStart-&gt;onResume-&gt;onPause-&gt;onStop-&gt;onDestroyView-&gt;onDestroy-&gt;onDetach</p>
+<h3 id="2、Fragment的通信"><a href="#2、Fragment的通信" class="headerlink" title="2、Fragment的通信"></a>2、Fragment的通信</h3><p>1、在fragment中调用activity中的方法 getActivity<br>2、通过接口回调，activity中调用fragment中的方法<br>3、通过setArguments<br>4、通过EventBus<br>5、通过Fragment.setTargetFragment<br>6、通过Fragment.getChildFragmentManager<br>7、通过Activity的FragmentManager<br>8、在fragment中调用fragment中的方法，getActivity，findFragmentById</p>
+<h3 id="3、Fragment的懒加载"><a href="#3、Fragment的懒加载" class="headerlink" title="3、Fragment的懒加载"></a>3、Fragment的懒加载</h3><p>1、通过setUserVisibleHint<br>2、通过onHiddenChanged</p>
+<h3 id="4、FragmentPagerAdapter和FragmentStatePagerAdapter的区别"><a href="#4、FragmentPagerAdapter和FragmentStatePagerAdapter的区别" class="headerlink" title="4、FragmentPagerAdapter和FragmentStatePagerAdapter的区别"></a>4、FragmentPagerAdapter和FragmentStatePagerAdapter的区别</h3><p>viewPager+Fragment 滑动使用<br>FragmentPagerAdapter适用于页面较少的情况，不会销毁不显示的Fragment，不会回收内存</p>
+<p>FragmentStatePagerAdapter使用于页面较多的情况，会销毁不显示的Fragment，真正释放内存</p>
+<h3 id="5、Fragment的replace和add的区别"><a href="#5、Fragment的replace和add的区别" class="headerlink" title="5、Fragment的replace和add的区别"></a>5、Fragment的replace和add的区别</h3><p>replace会销毁重建，add不会，添加到BackStack中，可以返回<br>remove移除</p>
+<h2 id="Service面试详解"><a href="#Service面试详解" class="headerlink" title="Service面试详解"></a>Service面试详解</h2><h3 id="1、Service生命周期"><a href="#1、Service生命周期" class="headerlink" title="1、Service生命周期"></a>1、Service生命周期</h3><p>概念：后台执行长时间运行而没有用户界面的应用组件。运行在主线程中，不能做长时间耗时操作</p>
+<p>两种启动方式：startService、bindService<br>startService-&gt;onCreate-&gt;onStartCommand-&gt;onDestroy<br>bindService-&gt;onCreate-&gt;onBind-&gt;onUnbind-&gt;onDestroy</p>
+<p>如何服务已经启动onCreate只执行一次，多次bindService，onBind只执行一次</p>
+<p>startService步骤：<br>1、创建Service类继承Service<br>2、在AndroidManifest.xml中注册Service<br>3、通过startService启动Service<br>4、通过stopService停止Service</p>
+<p>bindService步骤：activity和service绑定进行通信，进程间通信，多个activity可以绑定同一个service<br>1、创建Service类继承Service，创建一个实现IBiner接口的实例对象并提供公共方法给客户端调用，从onBind回调中返回此IBiner实例<br>2、在AndroidManifest.xml中注册Service<br>3、通过bindService绑定Service，在客户端中从onServiceConnected回调中获取IBinder实例，通过IBinder实例调用Service中的方法<br>4、通过unbindService解绑Service</p>
+<h3 id="2、Service和Thread的区别"><a href="#2、Service和Thread的区别" class="headerlink" title="2、Service和Thread的区别"></a>2、Service和Thread的区别</h3><p>Service运行在主线程，Thread运行在子线程<br>Service可以在后台运行（返回主界面时，播放音乐，数据统计等），Thread不能<br>Service可以和Activity进行通信，Thread不能<br>要做耗时操作可以在Service中开启子线程，如何在activity中开启子线程，很难做到通信控制</p>
+<h3 id="3、Service和IntentService的区别"><a href="#3、Service和IntentService的区别" class="headerlink" title="3、Service和IntentService的区别"></a>3、Service和IntentService的区别</h3><p>IntentService是Service的子类，用于执行后台任务<br>IntentService内部封装了HandlerThread和Handler</p>
+<h2 id="Broadcast面试详解"><a href="#Broadcast面试详解" class="headerlink" title="Broadcast面试详解"></a>Broadcast面试详解</h2><h3 id="1、BroadcastReceiver生命周期"><a href="#1、BroadcastReceiver生命周期" class="headerlink" title="1、BroadcastReceiver生命周期"></a>1、BroadcastReceiver生命周期</h3><p>一种传输信息的机制，广播内容是一个intent，这个intent可以传递数据，发送一个可以被很多接受者接受</p>
+<p>自定义广播接收器，用于接收系统或app发送的广播消息<br>onReceive，通过Binder机制向AMS发送广播<br>Binder机制是C&#x2F;S架构，用于进程间通信</p>
+<p>registerReceiver-&gt;onReceive-&gt;unregisterReceiver</p>
+<h3 id="2、BroadcastReceiver注册方式"><a href="#2、BroadcastReceiver注册方式" class="headerlink" title="2、BroadcastReceiver注册方式"></a>2、BroadcastReceiver注册方式</h3><p>静态注册：在AndroidManifest.xml中注册，全局有效，app退出后依然有效<br>动态注册：在代码中注册，只在当前组件有效，app退出后失效</p>
+<h3 id="3、BroadcastReceiver使用场景"><a href="#3、BroadcastReceiver使用场景" class="headerlink" title="3、BroadcastReceiver使用场景"></a>3、BroadcastReceiver使用场景</h3><p>同一个app具有多个进程的不同组件之间的消息通信<br>不同app直接组件直接的消息通信<br>1、系统广播：如开机、网络变化、拍照、短信等<br>2、App内广播：如登录、注销、支付成功等<br>3、App间广播：如订单状态改变、支付成功等</p>
+<h3 id="4、本地广播和全局广播的区别"><a href="#4、本地广播和全局广播的区别" class="headerlink" title="4、本地广播和全局广播的区别"></a>4、本地广播和全局广播的区别</h3><p>LocalBroadcastManager：发送和接收广播只在同一个app内，安全性高，效率高，内部主要使用Handler实现。</p>
+<p>全局广播：发送和接收广播可以在不同的app之间，安全性低，效率低</p>
+<h3 id="5、有序广播和无序广播的区别"><a href="#5、有序广播和无序广播的区别" class="headerlink" title="5、有序广播和无序广播的区别"></a>5、有序广播和无序广播的区别</h3><p>有序广播：发送的广播按照优先级从高到低接收，可以拦截广播，拦截后后面的接收者无法接收到<br>无序广播：发送的广播按照发送顺序接收，接收者无法拦截广播</p>
+<h2 id="WebView面试详解"><a href="#WebView面试详解" class="headerlink" title="WebView面试详解"></a>WebView面试详解</h2><ul>
+<li><p>常见的一些坑<br>1、API16及之前的本部存在远程代码执行漏洞，没有正确限制使用Webview.addJavascriptInterface接口，导致恶意代码执行，远程攻击者可以通过使用Java Reflection API，调用目标Android应用的任意Java对象方法，最终导致远程代码执行。<br>2、webview写在其他容器中，内存泄漏<br>3、webviewClient.onPageFinished方法在页面加载完成多次调用<br>需要调用webViewChromeClient.onProgressChanged方法，判断页面加载进度，当页面加载进度为100时，才调用onPageFinished方法<br>4、后台耗电问题，后台线程运行<br>5、硬件加速问题，webview开启硬件加速，会导致页面渲染速度变慢，消耗更多CPU和GPU资源，消耗电量</p>
+</li>
+<li><p>避免内存泄漏问题<br>1、独立进程，简单暴力，不过可鞥涉及进程间通信<br>2、动态添加webview，在不需要时，动态从ViewGroup中移除</p>
+</li>
+</ul>
+<h2 id="Binder面试详解"><a href="#Binder面试详解" class="headerlink" title="Binder面试详解"></a>Binder面试详解</h2><p>Android Binder是Android操作系统用于进程间通信（IPC）的一种机制。Binder机制以其高效、灵活以及安全的特点成为Android系统核心组件之间通信的基础。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p><strong>Binder驱动</strong>：</p>
+<ul>
+<li>Binder驱动是Linux内核的一部分，位于<code>/dev/binder</code>。</li>
+<li>它负责管理Binder通信的底层细节，包括内存管理、权限检查、线程调度等。</li>
+</ul>
+</li>
+<li><p><strong>Binder实体（Server）</strong>：</p>
+<ul>
+<li>Binder实体通常是一个服务，它实现了具体的业务逻辑。</li>
+<li>该实体在用户态程序中，通过注册到Binder驱动来对外提供服务。</li>
+</ul>
+</li>
+<li><p><strong>Binder代理（Client）</strong>：</p>
+<ul>
+<li>Binder代理是用于与Binder实体通信的对象。</li>
+<li>它通常位于客户端进程中，通过Binder驱动与Binder实体通信。</li>
+</ul>
+</li>
+<li><p><strong>Binder引用</strong>：</p>
+<ul>
+<li>Binder引用是实体或代理的句柄，客户端通过这个句柄向Binder驱动发送请求。</li>
+</ul>
+</li>
+</ol>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p>以下是Binder机制的工作流程：</p>
+<ol>
+<li><p><strong>服务注册</strong>：</p>
+<ul>
+<li>服务进程通过<code>Binder</code>驱动注册服务（<code>addService</code>）。</li>
+<li>Binder驱动为这个服务创建一个唯一标识的Binder引用。</li>
+</ul>
+</li>
+<li><p><strong>服务发现</strong>：</p>
+<ul>
+<li>客户端进程通过<code>ServiceManager</code>查找所需服务的Binder引用（<code>getService</code>）。</li>
+</ul>
+</li>
+<li><p><strong>发送请求</strong>：</p>
+<ul>
+<li>客户端通过Binder引用向Binder驱动发送请求。</li>
+<li>请求包含目标服务的引用、方法ID、参数等信息。</li>
+</ul>
+</li>
+<li><p><strong>处理请求</strong>：</p>
+<ul>
+<li>Binder驱动将请求传递给目标服务进程。</li>
+<li>服务进程处理请求，并通过Binder驱动将结果返回给客户端。</li>
+</ul>
+</li>
+</ol>
+<h3 id="关键组件"><a href="#关键组件" class="headerlink" title="关键组件"></a>关键组件</h3><ol>
+<li><p><strong>ServiceManager</strong>：</p>
+<ul>
+<li>是一个特殊的系统服务，负责管理所有的系统服务。</li>
+<li>提供服务注册和查询功能。</li>
+</ul>
+</li>
+<li><p><strong>Parcel</strong>：</p>
+<ul>
+<li>用于在进程间传递数据的容器。</li>
+<li>支持序列化和反序列化各种数据类型。</li>
+</ul>
+</li>
+<li><p><strong>IBinder</strong>：</p>
+<ul>
+<li>Binder通信的核心接口。</li>
+<li>所有Binder实体和代理都实现这个接口。</li>
+</ul>
+</li>
+<li><p><strong>Binder线程池</strong>：</p>
+<ul>
+<li>每个进程中都有一个Binder线程池，用于处理来自Binder驱动的请求。</li>
+<li>提高并发处理能力。</li>
+</ul>
+</li>
+</ol>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>Binder机制在设计上考虑了安全性：</p>
+<ol>
+<li><p><strong>权限检查</strong>：</p>
+<ul>
+<li>Binder驱动会对请求进行权限检查，确保只有有权限的进程可以访问服务。</li>
+</ul>
+</li>
+<li><p><strong>UID&#x2F;GID</strong>：</p>
+<ul>
+<li>每个请求都带有UID（用户ID）和GID（组ID），服务进程可以根据这些信息进行访问控制。</li>
+</ul>
+</li>
+<li><p><strong>身份验证</strong>：</p>
+<ul>
+<li>通过<code>SELinux</code>策略进行额外的访问控制，进一步提高安全性。</li>
+</ul>
+</li>
+</ol>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>Binder机制通过以下方式提高性能：</p>
+<ol>
+<li><p><strong>共享内存</strong>：</p>
+<ul>
+<li>使用共享内存减少数据拷贝，提高传输效率。</li>
+</ul>
+</li>
+<li><p><strong>内核级优化</strong>：</p>
+<ul>
+<li>利用内核态的高效性，减少上下文切换，提供高效的IPC通道。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p>以下是一个简单的服务端和客户端的示例：</p>
+<p><strong>服务端：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService</span> <span class="keyword">extends</span> <span class="title class_">Binder</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello from the service!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyServiceManager</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">MyService</span> <span class="variable">service</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyService</span>();</span><br><span class="line">        ServiceManager.addService(<span class="string">&quot;MyService&quot;</span>, service);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClient</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">IBinder</span> <span class="variable">binder</span> <span class="operator">=</span> ServiceManager.getService(<span class="string">&quot;MyService&quot;</span>);</span><br><span class="line">        <span class="type">MyService</span> <span class="variable">service</span> <span class="operator">=</span> MyService.Stub.asInterface(binder);</span><br><span class="line">        service.sayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Android Binder机制是一个高效、安全且灵活的IPC机制，通过Binder驱动、服务注册与发现、权限检查等一系列步骤，实现了进程间的高效通信。在Android系统中，Binder机制被广泛用于系统服务和应用程序之间的通信，是Android系统的核心组成部分之一。</p>
+<h2 id="AIDL详解"><a href="#AIDL详解" class="headerlink" title="AIDL详解"></a>AIDL详解</h2><p>Android接口定义语言（AIDL）是一种用于定义Android应用程序中不同进程间接口的工具。它允许你创建能够在不同进程之间通信的接口，类似于Binder机制。以下是AIDL的详细讲解：</p>
+<h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p><strong>AIDL文件</strong>：</p>
+<ul>
+<li>AIDL文件定义了进程间通信接口。</li>
+<li>使用<code>.aidl</code>作为文件扩展名。</li>
+</ul>
+</li>
+<li><p><strong>接口定义</strong>：</p>
+<ul>
+<li>在AIDL文件中定义接口和方法。</li>
+<li>支持基本数据类型、String、List、Map等。</li>
+</ul>
+</li>
+<li><p><strong>Parcelable对象</strong>：</p>
+<ul>
+<li>自定义数据类型需实现<code>Parcelable</code>接口，以便跨进程传输。</li>
+</ul>
+</li>
+</ol>
+<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li><p><strong>定义AIDL接口</strong>：</p>
+<ul>
+<li>创建一个<code>.aidl</code>文件，定义需要在进程间通信的方法。</li>
+</ul>
+</li>
+<li><p><strong>编写AIDL实现</strong>：</p>
+<ul>
+<li>在服务端实现定义的AIDL接口。</li>
+</ul>
+</li>
+<li><p><strong>生成Binder代理</strong>：</p>
+<ul>
+<li>Android编译器根据AIDL文件生成<code>Stub</code>和<code>Proxy</code>类。</li>
+</ul>
+</li>
+<li><p><strong>注册服务</strong>：</p>
+<ul>
+<li>在服务端注册AIDL接口，供客户端调用。</li>
+</ul>
+</li>
+<li><p><strong>客户端连接</strong>：</p>
+<ul>
+<li>客户端通过<code>ServiceConnection</code>获取服务，并调用AIDL方法。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例步骤"><a href="#示例步骤" class="headerlink" title="示例步骤"></a>示例步骤</h3><h4 id="1-定义AIDL接口"><a href="#1-定义AIDL接口" class="headerlink" title="1. 定义AIDL接口"></a>1. 定义AIDL接口</h4><p>创建一个AIDL文件，比如<code>IMyService.aidl</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">package com.example.myapp;</span><br><span class="line"></span><br><span class="line">interface IMyService &#123;</span><br><span class="line">    void sayHello();</span><br><span class="line">    int add(int a, int b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-实现AIDL接口"><a href="#2-实现AIDL接口" class="headerlink" title="2. 实现AIDL接口"></a>2. 实现AIDL接口</h4><p>在服务端实现这个接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService</span> <span class="keyword">extends</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> IMyService.<span class="type">Stub</span> <span class="variable">binder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IMyService</span>.Stub() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Hello from the service!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> a + b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> IBinder <span class="title function_">onBind</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> binder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-注册服务"><a href="#3-注册服务" class="headerlink" title="3. 注册服务"></a>3. 注册服务</h4><p>在<code>AndroidManifest.xml</code>中注册服务：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyService&quot;</span> <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.example.myapp.IMyService&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-客户端连接服务"><a href="#4-客户端连接服务" class="headerlink" title="4. 客户端连接服务"></a>4. 客户端连接服务</h4><p>在客户端，绑定服务并调用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> IMyService myService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">ServiceConnection</span> <span class="variable">connection</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServiceConnection</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> &#123;</span><br><span class="line">            myService = IMyService.Stub.asInterface(service);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                myService.sayHello();</span><br><span class="line">                <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> myService.add(<span class="number">5</span>, <span class="number">3</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;Result: &quot;</span> + result);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onServiceDisconnected</span><span class="params">(ComponentName name)</span> &#123;</span><br><span class="line">            myService = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onStart</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onStart();</span><br><span class="line">        <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;com.example.myapp.IMyService&quot;</span>);</span><br><span class="line">        bindService(intent, connection, Context.BIND_AUTO_CREATE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onStop</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onStop();</span><br><span class="line">        unbindService(connection);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><p><strong>线程和同步</strong>：</p>
+<ul>
+<li>默认情况下，AIDL方法在服务端的Binder线程池中执行，需要考虑线程安全。</li>
+</ul>
+</li>
+<li><p><strong>数据类型限制</strong>：</p>
+<ul>
+<li>AIDL支持的类型有限制，复杂类型需要实现<code>Parcelable</code>。</li>
+</ul>
+</li>
+<li><p><strong>性能</strong>：</p>
+<ul>
+<li>尽量减少跨进程调用，因为每次调用都涉及序列化和反序列化。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>AIDL是Android中用于实现进程间通信的关键工具。通过定义接口、实现方法及管理服务连接，可以在不同的应用程序组件之间实现高效、可管理的通信。AIDL特别适用于需要在不同应用程序之间共享复杂数据结构和进行频繁通信的场景。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/08/12/AndroidCompose%E6%95%99%E7%A8%8B/" rel="prev" title="AndroidCompose教程">
+                  <i class="fa fa-angle-left"></i> AndroidCompose教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/" rel="next" title="BAT安卓面试基础2">
+                  BAT安卓面试基础2 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
