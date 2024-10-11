@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Flutter 的状态管理是构建复杂应用的关键部分，因为它决定了如何在应用的不同部分之间共享和同步数据。Flutter 提供了多种状态管理方案，每种方案都有其适用的场景和优缺点。以下是一些常见的状态管理方案及其详细讲解： 1. StatefulWidget">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flutter状态管理">
+<meta property="og:url" content="http://example.com/2024/07/15/flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="Flutter 的状态管理是构建复杂应用的关键部分，因为它决定了如何在应用的不同部分之间共享和同步数据。Flutter 提供了多种状态管理方案，每种方案都有其适用的场景和优缺点。以下是一些常见的状态管理方案及其详细讲解： 1. StatefulWidget">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-15T00:47:41.000Z">
+<meta property="article:modified_time" content="2024-07-15T01:16:32.203Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="flutter">
+<meta property="article:tag" content="状态管理">
+<meta property="article:tag" content="声明式UI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/07/15/flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/07/15/flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/","path":"2024/07/15/flutter状态管理/","title":"flutter状态管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>flutter状态管理 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-StatefulWidget"><span class="nav-number">1.</span> <span class="nav-text">1. StatefulWidget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-InheritedWidget"><span class="nav-number">2.</span> <span class="nav-text">2. InheritedWidget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Provider"><span class="nav-number">3.</span> <span class="nav-text">3. Provider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Riverpod"><span class="nav-number">4.</span> <span class="nav-text">4. Riverpod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Redux"><span class="nav-number">5.</span> <span class="nav-text">5. Redux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-BLoC"><span class="nav-number">6.</span> <span class="nav-text">6.  BLoC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">1. 定义事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%9A%E4%B9%89%E7%8A%B6%E6%80%81"><span class="nav-number">6.2.</span> <span class="nav-text">2. 定义状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA-BLoC"><span class="nav-number">6.3.</span> <span class="nav-text">3. 创建 BLoC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8-BLoC-%E5%9C%A8-UI-%E4%B8%AD"><span class="nav-number">6.4.</span> <span class="nav-text">4. 使用 BLoC 在 UI 中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A"><span class="nav-number">6.5.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">6.6.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-GetX"><span class="nav-number">7.</span> <span class="nav-text">7. GetX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">7.1.</span> <span class="nav-text">1. 创建控制器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E6%8E%A7%E5%88%B6%E5%99%A8%E5%9C%A8-UI-%E4%B8%AD"><span class="nav-number">7.2.</span> <span class="nav-text">2. 使用控制器在 UI 中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A-1"><span class="nav-number">7.3.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-1"><span class="nav-number">7.4.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">7.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/15/flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="flutter状态管理 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          flutter状态管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-07-15 08:47:41 / Modified: 09:16:32" itemprop="dateCreated datePublished" datetime="2024-07-15T08:47:41+08:00">2024-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter/Flutter%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">Flutter状态管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Flutter 的状态管理是构建复杂应用的关键部分，因为它决定了如何在应用的不同部分之间共享和同步数据。Flutter 提供了多种状态管理方案，每种方案都有其适用的场景和优缺点。以下是一些常见的状态管理方案及其详细讲解：</p>
+<h3 id="1-StatefulWidget"><a href="#1-StatefulWidget" class="headerlink" title="1. StatefulWidget"></a>1. <strong>StatefulWidget</strong></h3><span id="more"></span>
+<p><code>StatefulWidget</code> 是 Flutter 中最基本的状态管理方式。它通过创建一个 <code>State</code> 对象来管理组件的状态。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _CounterState createState() =&gt; _CounterState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_CounterState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">Counter</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">int</span> _counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _incrementCounter() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _counter++;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Text(<span class="string">&#x27;Count: <span class="subst">$_counter</span>&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _incrementCounter,</span><br><span class="line">        child: Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ul>
+<li>简单直观。</li>
+<li>适用于小型应用或单个组件的状态管理。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>不适用于大型应用或需要在多个组件之间共享状态的场景。</li>
+</ul>
+<h3 id="2-InheritedWidget"><a href="#2-InheritedWidget" class="headerlink" title="2. InheritedWidget"></a>2. <strong>InheritedWidget</strong></h3><p><code>InheritedWidget</code> 是一种高效的共享状态的方式，它允许子组件访问父组件中的数据。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterInheritedWidget</span> <span class="keyword">extends</span> <span class="title">InheritedWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> counter;</span><br><span class="line"></span><br><span class="line">  CounterInheritedWidget(&#123;</span><br><span class="line">    Key? key,</span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">this</span>.counter,</span><br><span class="line">    <span class="keyword">required</span> Widget child,</span><br><span class="line">  &#125;) : <span class="keyword">super</span>(key: key, child: child);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> CounterInheritedWidget? of(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> context.dependOnInheritedWidgetOfExactType&lt;CounterInheritedWidget&gt;();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="built_in">bool</span> updateShouldNotify(CounterInheritedWidget oldWidget) &#123;</span><br><span class="line">    <span class="keyword">return</span> oldWidget.counter != counter;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: CounterPage(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _CounterPageState createState() =&gt; _CounterPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_CounterPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">CounterPage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">int</span> _counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _incrementCounter() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _counter++;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> CounterInheritedWidget(</span><br><span class="line">      counter: _counter,</span><br><span class="line">      child: Scaffold(</span><br><span class="line">        appBar: AppBar(</span><br><span class="line">          title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">        ),</span><br><span class="line">        body: Center(</span><br><span class="line">          child: CounterDisplay(),</span><br><span class="line">        ),</span><br><span class="line">        floatingActionButton: FloatingActionButton(</span><br><span class="line">          onPressed: _incrementCounter,</span><br><span class="line">          child: Icon(Icons.add),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterDisplay</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">final</span> counter = CounterInheritedWidget.of(context)?.counter ?? <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> Text(<span class="string">&#x27;Count: <span class="subst">$counter</span>&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ul>
+<li>高效的状态共享。</li>
+<li>适用于需要在多个组件之间共享状态的场景。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>代码相对复杂。</li>
+<li>需要手动管理依赖关系。</li>
+</ul>
+<h3 id="3-Provider"><a href="#3-Provider" class="headerlink" title="3. Provider"></a>3. <strong>Provider</strong></h3><p><code>Provider</code> 是一个基于 <code>InheritedWidget</code> 的封装库，简化了状态管理和依赖注入。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:provider/provider.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(</span><br><span class="line">    MultiProvider(</span><br><span class="line">      providers: [</span><br><span class="line">        ChangeNotifierProvider(create: (_) =&gt; CounterModel()),</span><br><span class="line">      ],</span><br><span class="line">      child: MyApp(),</span><br><span class="line">    ),</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: CounterPage(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterModel</span> <span class="title">with</span> <span class="title">ChangeNotifier</span> </span>&#123;</span><br><span class="line">  <span class="built_in">int</span> _counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">int</span> <span class="keyword">get</span> counter =&gt; _counter;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> increment() &#123;</span><br><span class="line">    _counter++;</span><br><span class="line">    notifyListeners();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Consumer&lt;CounterModel&gt;(</span><br><span class="line">          builder: (context, model, child) &#123;</span><br><span class="line">            <span class="keyword">return</span> Text(<span class="string">&#x27;Count: <span class="subst">$&#123;model.counter&#125;</span>&#x27;</span>);</span><br><span class="line">          &#125;,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: () &#123;</span><br><span class="line">          context.read&lt;CounterModel&gt;().increment();</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ul>
+<li>简单易用。</li>
+<li>支持多种类型的状态管理（如 <code>ChangeNotifier</code>, <code>ValueNotifier</code>, <code>Stream</code>, <code>Future</code> 等）。</li>
+<li>社区支持强大，文档和示例丰富。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>对于非常复杂的应用，可能需要结合其他状态管理方案。</li>
+</ul>
+<h3 id="4-Riverpod"><a href="#4-Riverpod" class="headerlink" title="4. Riverpod"></a>4. <strong>Riverpod</strong></h3><p><code>Riverpod</code> 是一个更灵活和强大的状态管理库，由 <code>Provider</code> 的作者开发，旨在解决 <code>Provider</code> 的一些限制。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter_riverpod/flutter_riverpod.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(ProviderScope(child: MyApp()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: CounterPage(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> counterProvider = StateProvider&lt;<span class="built_in">int</span>&gt;((ref) =&gt; <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">ConsumerWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context, ScopedReader watch) &#123;</span><br><span class="line">    <span class="keyword">final</span> counter = watch(counterProvider).state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Text(<span class="string">&#x27;Count: <span class="subst">$counter</span>&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: () &#123;</span><br><span class="line">          context.read(counterProvider).state++;</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ul>
+<li>完全解耦，没有依赖上下文的限制。</li>
+<li>支持全局和局部状态管理。</li>
+<li>强大的测试支持。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>学习曲线相对较高。</li>
+<li>对于简单应用可能过于复杂。</li>
+</ul>
+<h3 id="5-Redux"><a href="#5-Redux" class="headerlink" title="5. Redux"></a>5. <strong>Redux</strong></h3><p><code>Redux</code> 是一个流行的状态管理库，适用于大型应用，遵循单向数据流原则。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter_redux/flutter_redux.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:redux/redux.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">final</span> store = Store&lt;<span class="built_in">int</span>&gt;(reducer, initialState: <span class="number">0</span>);</span><br><span class="line">  runApp(MyApp(store: store));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> Store&lt;<span class="built_in">int</span>&gt; store;</span><br><span class="line"></span><br><span class="line">  MyApp(&#123;<span class="keyword">required</span> <span class="keyword">this</span>.store&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> StoreProvider&lt;<span class="built_in">int</span>&gt;(</span><br><span class="line">      store: store,</span><br><span class="line">      child: MaterialApp(</span><br><span class="line">        home: CounterPage(),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> reducer(<span class="built_in">int</span> state, <span class="built_in">dynamic</span> action) &#123;</span><br><span class="line">  <span class="keyword">if</span> (action == <span class="string">&#x27;INCREMENT&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: StoreConnector&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;(</span><br><span class="line">          converter: (store) =&gt; store.state,</span><br><span class="line">          builder: (context, count) &#123;</span><br><span class="line">            <span class="keyword">return</span> Text(<span class="string">&#x27;Count: <span class="subst">$count</span>&#x27;</span>);</span><br><span class="line">          &#125;,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: () &#123;</span><br><span class="line">          StoreProvider.of&lt;<span class="built_in">int</span>&gt;(context).dispatch(<span class="string">&#x27;INCREMENT&#x27;</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ul>
+<li>单一数据源，状态可预测。</li>
+<li>强大的中间件支持。</li>
+<li>丰富的开发工具和插件。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>学习曲线较高。</li>
+<li>对于小型应用可能过于复杂。</li>
+</ul>
+<h3 id="6-BLoC"><a href="#6-BLoC" class="headerlink" title="6.  BLoC"></a>6.  <strong>BLoC</strong></h3><ul>
+<li>BLoC 的基本概念<br>Event: 用户输入或应用事件。<br>State: 代表应用在某个时刻的状态。<br>Bloc: 负责接收事件，处理业务逻辑，并输出新的状态。</li>
+</ul>
+<h4 id="1-定义事件"><a href="#1-定义事件" class="headerlink" title="1. 定义事件"></a>1. 定义事件</h4><p>首先，定义一个计数器事件。通常建议使用 <code>sealed classes</code> 或 <code>enum</code> 来定义事件类型，但在 Dart 中我们可以通过创建抽象类和具体实现类来实现同样的效果：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter_event.dart</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CounterEvent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IncrementEvent</span> <span class="keyword">extends</span> <span class="title">CounterEvent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecrementEvent</span> <span class="keyword">extends</span> <span class="title">CounterEvent</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-定义状态"><a href="#2-定义状态" class="headerlink" title="2. 定义状态"></a>2. 定义状态</h4><p>然后，定义一个计数器状态：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter_state.dart</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterState</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> counter;</span><br><span class="line"></span><br><span class="line">  CounterState(<span class="keyword">this</span>.counter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-创建-BLoC"><a href="#3-创建-BLoC" class="headerlink" title="3. 创建 BLoC"></a>3. 创建 BLoC</h4><p>接下来，创建一个 <code>CounterBloc</code> 来处理事件并输出状态：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter_bloc.dart</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter_bloc/flutter_bloc.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_event.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_state.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterBloc</span> <span class="keyword">extends</span> <span class="title">Bloc</span>&lt;<span class="title">CounterEvent</span>, <span class="title">CounterState</span>&gt; </span>&#123;</span><br><span class="line">  CounterBloc() : <span class="keyword">super</span>(CounterState(<span class="number">0</span>)) &#123;</span><br><span class="line">    <span class="keyword">on</span>&lt;IncrementEvent&gt;((event, emit) &#123;</span><br><span class="line">      emit(CounterState(state.counter + <span class="number">1</span>));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">on</span>&lt;DecrementEvent&gt;((event, emit) &#123;</span><br><span class="line">      emit(CounterState(state.counter - <span class="number">1</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-使用-BLoC-在-UI-中"><a href="#4-使用-BLoC-在-UI-中" class="headerlink" title="4. 使用 BLoC 在 UI 中"></a>4. 使用 BLoC 在 UI 中</h4><p>最后，在你的 Flutter 应用中使用 <code>CounterBloc</code>：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter_bloc/flutter_bloc.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_bloc.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_event.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_state.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(MyApp());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: BlocProvider(</span><br><span class="line">        create: (context) =&gt; CounterBloc(),</span><br><span class="line">        child: CounterPage(),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: BlocBuilder&lt;CounterBloc, CounterState&gt;(</span><br><span class="line">          builder: (context, state) &#123;</span><br><span class="line">            <span class="keyword">return</span> Text(<span class="string">&#x27;Count: <span class="subst">$&#123;state.counter&#125;</span>&#x27;</span>, style: TextStyle(fontSize: <span class="number">24</span>));</span><br><span class="line">          &#125;,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: Column(</span><br><span class="line">        mainAxisAlignment: MainAxisAlignment.end,</span><br><span class="line">        children: [</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            onPressed: () &#123;</span><br><span class="line">              context.read&lt;CounterBloc&gt;().add(IncrementEvent());</span><br><span class="line">            &#125;,</span><br><span class="line">            child: Icon(Icons.add),</span><br><span class="line">          ),</span><br><span class="line">          SizedBox(height: <span class="number">8</span>),</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            onPressed: () &#123;</span><br><span class="line">              context.read&lt;CounterBloc&gt;().add(DecrementEvent());</span><br><span class="line">            &#125;,</span><br><span class="line">            child: Icon(Icons.remove),</span><br><span class="line">          ),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><ol>
+<li><strong>Event</strong>: <code>CounterEvent</code> 是一个抽象类，<code>IncrementEvent</code> 和 <code>DecrementEvent</code> 是具体的事件。</li>
+<li><strong>State</strong>: <code>CounterState</code> 包含计数值。</li>
+<li><strong>Bloc</strong>: <code>CounterBloc</code> 继承自 <code>Bloc&lt;CounterEvent, CounterState&gt;</code>，处理事件并输出新状态。<code>on&lt;IncrementEvent&gt;</code> 和 <code>on&lt;DecrementEvent&gt;</code> 方法用于分别处理增量和减量事件。</li>
+<li><strong>UI</strong>: <code>BlocProvider</code> 提供 <code>CounterBloc</code> 实例，<code>BlocBuilder</code> 监听 <code>CounterBloc</code> 的状态变化并更新 UI。</li>
+</ol>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li><strong>分离关注点</strong>: 将业务逻辑与 UI 分离，使代码更容易测试和维护。</li>
+<li><strong>强大的社区支持</strong>: <code>BLoC</code> 模式有大量的文档和社区资源。</li>
+<li><strong>可预测的状态</strong>: 所有状态变化都由事件驱动，使状态更加可预测和可管理。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>学习曲线</strong>: 对于初学者来说，<code>BLoC</code> 模式可能有一定的学习曲线。</li>
+<li><strong>代码冗长</strong>: 需要编写大量的样板代码来定义事件、状态和 <code>Bloc</code> 类。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><code>BLoC</code> 模式是管理复杂应用状态的强大工具，特别是在需要严格分离业务逻辑和 UI 的应用中非常有用。通过事件驱动的方式管理状态变化，<code>BLoC</code> 提供了一个结构化且可维护的解决方案。希望以上详细解释和示例代码能帮助你在 Flutter 应用中使用 <code>BLoC</code> 模式。</p>
+<h3 id="7-GetX"><a href="#7-GetX" class="headerlink" title="7. GetX"></a>7. <strong>GetX</strong></h3><h4 id="1-创建控制器"><a href="#1-创建控制器" class="headerlink" title="1. 创建控制器"></a>1. 创建控制器</h4><p>首先，创建一个控制器来管理计数器的状态：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter_controller.dart</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:get/get.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterController</span> <span class="keyword">extends</span> <span class="title">GetxController</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> counter = <span class="number">0.</span>obs;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> increment() =&gt; counter.value++;</span><br><span class="line">  <span class="keyword">void</span> decrement() =&gt; counter.value--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用控制器在-UI-中"><a href="#2-使用控制器在-UI-中" class="headerlink" title="2. 使用控制器在 UI 中"></a>2. 使用控制器在 UI 中</h4><p>接下来，在你的 Flutter 应用中使用 <code>CounterController</code>：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:get/get.dart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;counter_controller.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  runApp(MyApp());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> GetMaterialApp(</span><br><span class="line">      home: CounterPage(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> CounterController counterController = Get.put(CounterController());</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">&#x27;Counter&#x27;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Obx(() &#123;</span><br><span class="line">          <span class="keyword">return</span> Text(<span class="string">&#x27;Count: <span class="subst">$&#123;counterController.counter.value&#125;</span>&#x27;</span>, style: TextStyle(fontSize: <span class="number">24</span>));</span><br><span class="line">        &#125;),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: Column(</span><br><span class="line">        mainAxisAlignment: MainAxisAlignment.end,</span><br><span class="line">        children: [</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            onPressed: counterController.increment,</span><br><span class="line">            child: Icon(Icons.add),</span><br><span class="line">          ),</span><br><span class="line">          SizedBox(height: <span class="number">8</span>),</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            onPressed: counterController.decrement,</span><br><span class="line">            child: Icon(Icons.remove),</span><br><span class="line">          ),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="解释-1"><a href="#解释-1" class="headerlink" title="解释"></a>解释</h4><ol>
+<li><strong>控制器</strong>: <code>CounterController</code> 继承自 <code>GetxController</code>，并使用 <code>Rx</code> 类型（如 <code>0.obs</code>）来创建可观察的变量。</li>
+<li><strong>状态管理</strong>: <code>Obx</code> 是一个响应式小部件，它会自动更新 UI 当其内部的可观察变量发生变化时。</li>
+<li><strong>依赖注入</strong>: <code>Get.put</code> 用于将 <code>CounterController</code> 实例注入到 <code>GetX</code> 的依赖管理中，这样可以在整个应用中访问该实例。</li>
+<li><strong>UI</strong>: <code>GetMaterialApp</code> 是 <code>GetX</code> 提供的 <code>MaterialApp</code> 的替代品，用于初始化 <code>GetX</code> 的路由和依赖管理。</li>
+</ol>
+<h4 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li><strong>简单易用</strong>: <code>GetX</code> 提供了简洁的 API，减少了样板代码。</li>
+<li><strong>高效</strong>: 使用响应式编程模型，自动更新 UI。</li>
+<li><strong>多功能</strong>: 除了状态管理，还提供了路由管理、依赖注入等功能。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>过度依赖</strong>: 如果过度依赖 <code>GetX</code>，可能会导致代码结构混乱。</li>
+<li><strong>学习曲线</strong>: 虽然比 <code>BLoC</code> 简单，但仍然需要理解其核心概念和用法。</li>
+</ul>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p><code>GetX</code> 是一个功能强大且易于使用的 Flutter 状态管理库，适用于需要快速开发和简洁代码的应用。通过其响应式编程模型和依赖注入功能，<code>GetX</code> 提供了一个高效的状态管理解决方案。希望以上详细解释和示例代码能帮助你在 Flutter 应用中使用 <code>GetX</code>。</p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>选择合适的状态管理方案取决于你的应用需求、团队熟悉度和项目规模。对于小型应用，<code>StatefulWidget</code> 和 <code>Provider</code> 可能已经足够；对于大型应用，<code>Riverpod</code> 和 <code>Redux</code> 提供了更强大的功能和更好的可维护性。希望以上讲解能帮助你更好地理解 Flutter 中的状态管理。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/flutter/" rel="tag"># flutter</a>
+              <a href="/tags/%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" rel="tag"># 状态管理</a>
+              <a href="/tags/%E5%A3%B0%E6%98%8E%E5%BC%8FUI/" rel="tag"># 声明式UI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/07/13/java%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="prev" title="java语言学习">
+                  <i class="fa fa-angle-left"></i> java语言学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/15/Flutter%E4%B8%8E%E5%8E%9F%E7%94%9F%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" rel="next" title="Flutter与原生状态管理">
+                  Flutter与原生状态管理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

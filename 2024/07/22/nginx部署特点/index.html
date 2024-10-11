@@ -19,29 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="学习 Dart 2.0 语言可以分为几个主要阶段，每个阶段都包含了一系列的核心概念和实践练习。以下是一个详细的学习大纲，帮助你系统地掌握 Dart 2.0： 阶段 1: 入门基础 Dart 简介  Dart 的历史和特点 Dart 的应用场景 Dart 的安装和开发环境设置">
+    <meta name="description" content="在 CentOS 上部署 Spring Boot 应用时，使用 Nginx 作为反向代理并不是绝对必要的，但它有许多优点，很多情况下是推荐的。下面是一些考虑使用 Nginx 的理由以及在某些情况下可以不使用 Nginx 的情况。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dart2.0学习大纲">
-<meta property="og:url" content="http://example.com/2024/07/11/dart2%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/index.html">
+<meta property="og:title" content="nginx部署特点">
+<meta property="og:url" content="http://example.com/2024/07/22/nginx%E9%83%A8%E7%BD%B2%E7%89%B9%E7%82%B9/index.html">
 <meta property="og:site_name" content="学习笔记">
-<meta property="og:description" content="学习 Dart 2.0 语言可以分为几个主要阶段，每个阶段都包含了一系列的核心概念和实践练习。以下是一个详细的学习大纲，帮助你系统地掌握 Dart 2.0： 阶段 1: 入门基础 Dart 简介  Dart 的历史和特点 Dart 的应用场景 Dart 的安装和开发环境设置">
+<meta property="og:description" content="在 CentOS 上部署 Spring Boot 应用时，使用 Nginx 作为反向代理并不是绝对必要的，但它有许多优点，很多情况下是推荐的。下面是一些考虑使用 Nginx 的理由以及在某些情况下可以不使用 Nginx 的情况。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-07-11T06:01:45.000Z">
-<meta property="article:modified_time" content="2024-07-11T08:27:19.013Z">
+<meta property="article:published_time" content="2024-07-22T09:58:56.000Z">
+<meta property="article:modified_time" content="2024-07-22T10:09:56.592Z">
 <meta property="article:author" content="june chiu">
-<meta property="article:tag" content="flutter">
-<meta property="article:tag" content="dart">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Nginx">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2024/07/11/dart2%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/">
+<link rel="canonical" href="http://example.com/2024/07/22/nginx%E9%83%A8%E7%BD%B2%E7%89%B9%E7%82%B9/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/07/11/dart2%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/","path":"2024/07/11/dart2学习大纲/","title":"dart2.0学习大纲"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/07/22/nginx%E9%83%A8%E7%BD%B2%E7%89%B9%E7%82%B9/","path":"2024/07/22/nginx部署特点/","title":"nginx部署特点"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>dart2.0学习大纲 | 学习笔记</title>
+<title>nginx部署特点 | 学习笔记</title>
   
 
 
@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-1-%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">阶段 1: 入门基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-2-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">阶段 2: 面向对象编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-3-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">阶段 3: 高级特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-4-%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">阶段 4: 实战项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-5-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">阶段 5: 深入理解</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Nginx-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">使用 Nginx 的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8-Nginx-%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">不使用 Nginx 的情况</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -165,7 +165,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/11/dart2%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/22/nginx%E9%83%A8%E7%BD%B2%E7%89%B9%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,12 +178,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="dart2.0学习大纲 | 学习笔记">
+      <meta itemprop="name" content="nginx部署特点 | 学习笔记">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          dart2.0学习大纲
+          nginx部署特点
         </h1>
 
         <div class="post-meta-container">
@@ -195,7 +195,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-07-11 14:01:45 / Modified: 16:27:19" itemprop="dateCreated datePublished" datetime="2024-07-11T14:01:45+08:00">2024-07-11</time>
+      <time title="Created: 2024-07-22 17:58:56 / Modified: 18:09:56" itemprop="dateCreated datePublished" datetime="2024-07-22T17:58:56+08:00">2024-07-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -203,11 +203,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a>
+          <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">后端开发</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Flutter/Dart%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Dart基础</span></a>
+          <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
         </span>
     </span>
 
@@ -220,157 +220,57 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>学习 Dart 2.0 语言可以分为几个主要阶段，每个阶段都包含了一系列的核心概念和实践练习。以下是一个详细的学习大纲，帮助你系统地掌握 Dart 2.0：</p>
-<h3 id="阶段-1-入门基础"><a href="#阶段-1-入门基础" class="headerlink" title="阶段 1: 入门基础"></a>阶段 1: 入门基础</h3><ol>
-<li><p><strong>Dart 简介</strong></p>
+    <div class="post-body" itemprop="articleBody"><p>在 CentOS 上部署 Spring Boot 应用时，使用 Nginx 作为反向代理并不是绝对必要的，但它有许多优点，很多情况下是推荐的。下面是一些考虑使用 Nginx 的理由以及在某些情况下可以不使用 Nginx 的情况。</p>
+<span id="more"></span>
+<h3 id="使用-Nginx-的优点"><a href="#使用-Nginx-的优点" class="headerlink" title="使用 Nginx 的优点"></a>使用 Nginx 的优点</h3><ol>
+<li><p><strong>反向代理</strong>:</p>
 <ul>
-<li>Dart 的历史和特点</li>
-<li>Dart 的应用场景</li>
-<li>Dart 的安装和开发环境设置<span id="more"></span></li>
+<li>Nginx 可以作为反向代理，将客户端请求转发到 Spring Boot 应用。这可以提供更好的隔离，允许您在不影响用户的情况下重新启动应用程序。</li>
 </ul>
 </li>
-<li><p><strong>基本语法</strong></p>
+<li><p><strong>负载均衡</strong>:</p>
 <ul>
-<li>注释</li>
-<li>变量和数据类型（int, double, String, bool）</li>
-<li>常量（final 和 const）</li>
-<li>运算符（算术、比较、逻辑等）</li>
+<li>如果您有多个 Spring Boot 实例，Nginx 可以帮助均匀地分配请求，从而提高应用的可伸缩性和性能。</li>
 </ul>
 </li>
-<li><p><strong>控制流程</strong></p>
+<li><p><strong>静态文件服务</strong>:</p>
 <ul>
-<li>if-else 语句</li>
-<li>switch 语句</li>
-<li>for 循环</li>
-<li>while 和 do-while 循环</li>
-<li>break 和 continue 语句</li>
+<li>Nginx 非常高效地处理静态文件（如 HTML、CSS、JavaScript 和图像），这可以减轻 Spring Boot 应用的负担。</li>
 </ul>
 </li>
-<li><p><strong>函数</strong></p>
+<li><p><strong>SSL&#x2F;TLS 终止</strong>:</p>
 <ul>
-<li>函数的定义和调用</li>
-<li>参数（位置参数、命名参数、默认参数）</li>
-<li>返回值</li>
-<li>匿名函数和箭头函数</li>
+<li>Nginx 可以处理 HTTPS 流量，您可以将 SSL&#x2F;TLS 证书安装在 Nginx 上，而不必在 Spring Boot 应用中处理。</li>
 </ul>
 </li>
-<li><p><strong>集合</strong></p>
+<li><p><strong>请求缓冲</strong>:</p>
 <ul>
-<li>List（列表）</li>
-<li>Set（集合）</li>
-<li>Map（映射）</li>
-<li>集合的常用操作（添加、删除、遍历等）</li>
+<li>Nginx 可以缓冲请求，从而提高响应速度，尤其是在处理较慢的后端服务时。</li>
+</ul>
+</li>
+<li><p><strong>安全性</strong>:</p>
+<ul>
+<li>通过配置 Nginx，您可以增加额外的安全层，例如IP过滤、请求速率限制等。</li>
 </ul>
 </li>
 </ol>
-<h3 id="阶段-2-面向对象编程"><a href="#阶段-2-面向对象编程" class="headerlink" title="阶段 2: 面向对象编程"></a>阶段 2: 面向对象编程</h3><ol>
-<li><p><strong>类和对象</strong></p>
+<h3 id="不使用-Nginx-的情况"><a href="#不使用-Nginx-的情况" class="headerlink" title="不使用 Nginx 的情况"></a>不使用 Nginx 的情况</h3><ol>
+<li><p><strong>小型或开发环境</strong>:</p>
 <ul>
-<li>类的定义</li>
-<li>构造函数（默认构造函数、命名构造函数）</li>
-<li>实例变量和方法</li>
-<li>对象的创建和使用</li>
+<li>如果您正处于开发阶段或只有一个小型的应用程序，并且用户访问量不大，直接通过 Spring Boot 的内嵌服务器（如 Tomcat）提供服务可能是足够的。</li>
 </ul>
 </li>
-<li><p><strong>继承和多态</strong></p>
+<li><p><strong>简单的应用</strong>:</p>
 <ul>
-<li>继承的概念</li>
-<li>重写方法</li>
-<li>抽象类和接口</li>
-<li>多态的实现</li>
+<li>对于一些简单的应用，您可能不需要 Nginx 额外的功能，直接运行 Spring Boot 应用可能更简单直接。</li>
 </ul>
 </li>
-<li><p><strong>Mixin</strong></p>
+<li><p><strong>资源限制</strong>:</p>
 <ul>
-<li>Mixin 的概念和用途</li>
-<li>使用 <code>with</code> 关键字实现 Mixin</li>
-</ul>
-</li>
-<li><p><strong>静态成员</strong></p>
-<ul>
-<li>静态变量和静态方法</li>
-<li>静态成员的使用场景</li>
-</ul>
-</li>
-<li><p><strong>泛型</strong></p>
-<ul>
-<li>泛型的概念</li>
-<li>泛型类和泛型方法</li>
-<li>泛型的约束</li>
+<li>在某些资源有限的情况下，增加 Nginx 可能会消耗额外的系统资源，您可以根据具体情况评估是否需要。</li>
 </ul>
 </li>
 </ol>
-<h3 id="阶段-3-高级特性"><a href="#阶段-3-高级特性" class="headerlink" title="阶段 3: 高级特性"></a>阶段 3: 高级特性</h3><ol>
-<li><p><strong>异步编程</strong></p>
-<ul>
-<li>Future 和 async&#x2F;await</li>
-<li>Stream 和异步处理</li>
-<li>异步编程的最佳实践</li>
-</ul>
-</li>
-<li><p><strong>异常处理</strong></p>
-<ul>
-<li>异常的抛出和捕获</li>
-<li>自定义异常</li>
-<li>异常处理的策略</li>
-</ul>
-</li>
-<li><p><strong>库和包管理</strong></p>
-<ul>
-<li>导入和导出库</li>
-<li>使用 pubspec.yaml 管理依赖</li>
-<li>创建和发布包</li>
-</ul>
-</li>
-<li><p><strong>元数据</strong></p>
-<ul>
-<li>注解的使用</li>
-<li>自定义注解</li>
-<li>反射和元编程</li>
-</ul>
-</li>
-</ol>
-<h3 id="阶段-4-实战项目"><a href="#阶段-4-实战项目" class="headerlink" title="阶段 4: 实战项目"></a>阶段 4: 实战项目</h3><ol>
-<li><p><strong>小型项目</strong></p>
-<ul>
-<li>构建一个简单的命令行应用</li>
-<li>实现一个基本的 Web 服务器</li>
-</ul>
-</li>
-<li><p><strong>中型项目</strong></p>
-<ul>
-<li>开发一个具有用户界面的桌面应用</li>
-<li>创建一个移动应用（使用 Flutter）</li>
-</ul>
-</li>
-<li><p><strong>大型项目</strong></p>
-<ul>
-<li>设计并实现一个复杂的系统架构</li>
-<li>优化性能和代码质量</li>
-</ul>
-</li>
-</ol>
-<h3 id="阶段-5-深入理解"><a href="#阶段-5-深入理解" class="headerlink" title="阶段 5: 深入理解"></a>阶段 5: 深入理解</h3><ol>
-<li><p><strong>Dart 虚拟机</strong></p>
-<ul>
-<li>Dart VM 的工作原理</li>
-<li>内存管理和垃圾回收</li>
-</ul>
-</li>
-<li><p><strong>Dart 编译器</strong></p>
-<ul>
-<li>Dart 到 JavaScript 的编译</li>
-<li>AOT 和 JIT 编译</li>
-</ul>
-</li>
-<li><p><strong>Dart 生态系统</strong></p>
-<ul>
-<li>探索 Dart 社区和资源</li>
-<li>学习高级 Dart 库和框架</li>
-</ul>
-</li>
-</ol>
-<p>通过这个大纲，你可以逐步深入学习 Dart 2.0，从基础语法到高级特性，再到实际项目的开发。每个阶段都包含了理论学习和实践练习，帮助你全面掌握 Dart 语言。</p>
 
     </div>
 
@@ -380,21 +280,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/flutter/" rel="tag"># flutter</a>
-              <a href="/tags/dart/" rel="tag"># dart</a>
+              <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"># 后端</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/07/11/Dart%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" rel="prev" title="Dart语言学习">
-                  <i class="fa fa-angle-left"></i> Dart语言学习
+                <a href="/2024/07/22/springboot2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="prev" title="springboot2性能优化">
+                  <i class="fa fa-angle-left"></i> springboot2性能优化
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/07/11/dart2%E5%BC%82%E6%AD%A5/" rel="next" title="dart异步">
-                  dart异步 <i class="fa fa-angle-right"></i>
+                <a href="/2024/07/22/SpringBoot2%E4%B8%AD%E4%BD%BF%E7%94%A8MyBatis/" rel="next" title="SpringBoot2中使用MyBatis">
+                  SpringBoot2中使用MyBatis <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

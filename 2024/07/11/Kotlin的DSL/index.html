@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。 2. 创建 Kotlin DSL 的基本要素Kotlin 的 DSL 通常使用以下几个关键特性：  Lambda 表达式：用于创建嵌套结构。 扩展函数和扩展属性：用于为特定类型添加函">
+    <meta name="description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin的DSL">
 <meta property="og:url" content="http://example.com/2024/07/11/Kotlin%E7%9A%84DSL/index.html">
 <meta property="og:site_name" content="学习笔记">
-<meta property="og:description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。 2. 创建 Kotlin DSL 的基本要素Kotlin 的 DSL 通常使用以下几个关键特性：  Lambda 表达式：用于创建嵌套结构。 扩展函数和扩展属性：用于为特定类型添加函">
+<meta property="og:description" content="1. 什么是 DSL？DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-07-11T09:00:32.000Z">
-<meta property="article:modified_time" content="2024-07-11T09:01:14.975Z">
+<meta property="article:modified_time" content="2024-07-15T00:50:28.630Z">
 <meta property="article:author" content="june chiu">
 <meta property="article:tag" content="kotlin">
 <meta property="article:tag" content="android">
@@ -127,18 +127,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -193,9 +193,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-07-11 17:00:32 / Modified: 17:01:14" itemprop="dateCreated datePublished" datetime="2024-07-11T17:00:32+08:00">2024-07-11</time>
+      <time title="Created: 2024-07-11 17:00:32" itemprop="dateCreated datePublished" datetime="2024-07-11T17:00:32+08:00">2024-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-07-15 08:50:28" itemprop="dateModified" datetime="2024-07-15T08:50:28+08:00">2024-07-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -221,6 +227,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><h3 id="1-什么是-DSL？"><a href="#1-什么是-DSL？" class="headerlink" title="1. 什么是 DSL？"></a>1. 什么是 DSL？</h3><p>DSL 是一种专门用于特定领域的编程语言，它允许开发者以更接近自然语言的方式编写代码。Kotlin 的 DSL 通常是内部 DSL，这意味着它们是通过 Kotlin 的语法和特性创建的库或框架。</p>
+<span id="more"></span>
 <h3 id="2-创建-Kotlin-DSL-的基本要素"><a href="#2-创建-Kotlin-DSL-的基本要素" class="headerlink" title="2. 创建 Kotlin DSL 的基本要素"></a>2. 创建 Kotlin DSL 的基本要素</h3><p>Kotlin 的 DSL 通常使用以下几个关键特性：</p>
 <ul>
 <li><strong>Lambda 表达式</strong>：用于创建嵌套结构。</li>

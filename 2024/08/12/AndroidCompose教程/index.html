@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Composable 函数的生命周期 Composable 函数的生命周期在 Jetpack Compose 中，Composable 函数的生命周期与其在 UI 树中的状态密切相关。下面是几个关键点：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AndroidCompose教程">
+<meta property="og:url" content="http://example.com/2024/08/12/AndroidCompose%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="Composable 函数的生命周期 Composable 函数的生命周期在 Jetpack Compose 中，Composable 函数的生命周期与其在 UI 树中的状态密切相关。下面是几个关键点：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-12T03:40:27.000Z">
+<meta property="article:modified_time" content="2024-08-12T07:21:35.131Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Compose">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/08/12/AndroidCompose%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/08/12/AndroidCompose%E6%95%99%E7%A8%8B/","path":"2024/08/12/AndroidCompose教程/","title":"AndroidCompose教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AndroidCompose教程 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Composable-%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">Composable 函数的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LaunchedEffect%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">LaunchedEffect使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-rememberCoroutineScope"><span class="nav-number">4.</span> <span class="nav-text">1. 什么是 rememberCoroutineScope</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-rememberCoroutineScope"><span class="nav-number">4.2.</span> <span class="nav-text">3. 如何使用 rememberCoroutineScope</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%8D%8F%E7%A8%8B"><span class="nav-number">4.2.1.</span> <span class="nav-text">启动协程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.3.</span> <span class="nav-text">4. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">4.4.</span> <span class="nav-text">5. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.5.</span> <span class="nav-text">6. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-rememberUpdatedState"><span class="nav-number">5.</span> <span class="nav-text">1. 什么是 rememberUpdatedState</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">5.1.</span> <span class="nav-text">2. 使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">3. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">5.3.</span> <span class="nav-text">4. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93-1"><span class="nav-number">5.4.</span> <span class="nav-text">5. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-1"><span class="nav-number">5.5.</span> <span class="nav-text">6. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-DisposableEffect"><span class="nav-number">6.</span> <span class="nav-text">1. 什么是 DisposableEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1"><span class="nav-number">6.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B"><span class="nav-number">6.2.</span> <span class="nav-text">3. 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E9%94%AE%EF%BC%88Key%EF%BC%89"><span class="nav-number">6.3.</span> <span class="nav-text">4. 使用键（Key）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="nav-number">6.4.</span> <span class="nav-text">5. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">6.5.</span> <span class="nav-text">6. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">6.6.</span> <span class="nav-text">7. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-SideEffect"><span class="nav-number">7.</span> <span class="nav-text">1. 什么是 SideEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-2"><span class="nav-number">7.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">7.2.</span> <span class="nav-text">3. 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">7.3.</span> <span class="nav-text">4. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">7.4.</span> <span class="nav-text">5. 适用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93-1"><span class="nav-number">7.5.</span> <span class="nav-text">6. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-1"><span class="nav-number">7.6.</span> <span class="nav-text">7. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-produceState"><span class="nav-number">8.</span> <span class="nav-text">1. 什么是 produceState</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-3"><span class="nav-number">8.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">8.2.</span> <span class="nav-text">3. 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">8.3.</span> <span class="nav-text">4. 使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">8.4.</span> <span class="nav-text">5. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93-2"><span class="nav-number">8.5.</span> <span class="nav-text">6. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-2"><span class="nav-number">8.6.</span> <span class="nav-text">7. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-derivedStateOf"><span class="nav-number">9.</span> <span class="nav-text">1. 什么是 derivedStateOf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-4"><span class="nav-number">9.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B-3"><span class="nav-number">9.2.</span> <span class="nav-text">3. 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">9.3.</span> <span class="nav-text">4. 使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">9.4.</span> <span class="nav-text">5. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93-3"><span class="nav-number">9.5.</span> <span class="nav-text">6. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-3"><span class="nav-number">9.6.</span> <span class="nav-text">7. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-snapshotFlow"><span class="nav-number">10.</span> <span class="nav-text">1. 什么是 snapshotFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-5"><span class="nav-number">10.1.</span> <span class="nav-text">2. 基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B-4"><span class="nav-number">10.2.</span> <span class="nav-text">3. 示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">10.3.</span> <span class="nav-text">4. 使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B-3"><span class="nav-number">10.4.</span> <span class="nav-text">5. 完整示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93-4"><span class="nav-number">10.5.</span> <span class="nav-text">6. 关键点总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-4"><span class="nav-number">10.6.</span> <span class="nav-text">7. 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-remember"><span class="nav-number">11.</span> <span class="nav-text">1. remember</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-rememberSaveable"><span class="nav-number">11.1.</span> <span class="nav-text">2. rememberSaveable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="nav-number">11.2.</span> <span class="nav-text">3. 关键区别总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">11.3.</span> <span class="nav-text">4. 适用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%B0%8F%E7%BB%93"><span class="nav-number">11.4.</span> <span class="nav-text">5. 小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-CompositionLocal%EF%BC%9F"><span class="nav-number">12.</span> <span class="nav-text">1. 什么是 CompositionLocal？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA-CompositionLocal"><span class="nav-number">12.1.</span> <span class="nav-text">2. 创建 CompositionLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">12.1.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%8F%90%E4%BE%9B-CompositionLocal-%E7%9A%84%E5%80%BC"><span class="nav-number">12.2.</span> <span class="nav-text">3. 提供 CompositionLocal 的值</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-1"><span class="nav-number">12.2.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%AE%BF%E9%97%AE-CompositionLocal-%E7%9A%84%E5%80%BC"><span class="nav-number">12.3.</span> <span class="nav-text">4. 访问 CompositionLocal 的值</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-2"><span class="nav-number">12.3.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA-CompositionLocal"><span class="nav-number">12.4.</span> <span class="nav-text">5. 使用多个 CompositionLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-3"><span class="nav-number">12.4.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%B5%8C%E5%A5%97-CompositionLocal"><span class="nav-number">12.5.</span> <span class="nav-text">6. 嵌套 CompositionLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-4"><span class="nav-number">12.5.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">12.6.</span> <span class="nav-text">7. 使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">12.7.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/12/AndroidCompose%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AndroidCompose教程 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AndroidCompose教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-08-12 11:40:27 / Modified: 15:21:35" itemprop="dateCreated datePublished" datetime="2024-08-12T11:40:27+08:00">2024-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/Compose/" itemprop="url" rel="index"><span itemprop="name">Compose</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="Composable-函数的生命周期"><a href="#Composable-函数的生命周期" class="headerlink" title="Composable 函数的生命周期"></a>Composable 函数的生命周期</h3><ol>
+<li><p>Composable 函数的生命周期<br>在 Jetpack Compose 中，Composable 函数的生命周期与其在 UI 树中的状态密切相关。下面是几个关键点：</p>
+<span id="more"></span>
+<p>首次组合：当 Composable 函数首次被调用并绘制在 UI 上时，它进入组合状态。<br>重组：当状态变化导致 Composable 函数重新绘制时，它会经历重组过程。重组是一个高效的过程，只会更新变化的部分。<br>释放：当 Composable 不再被显示时，它会被释放，相应的状态和资源也会被清理。</p>
+</li>
+<li><p>生命周期状态<br>Active: Composable 函数处于活动状态，可以接收用户输入和事件。<br>Inactive: Composable 被隐藏或不再可见，但仍然在内存中。<br>Disposed: Composable 被移除并且不再保留状态，在这种情况下，它的资源会被释放。</p>
+</li>
+</ol>
+<h3 id="LaunchedEffect使用"><a href="#LaunchedEffect使用" class="headerlink" title="LaunchedEffect使用"></a>LaunchedEffect使用</h3><p>1、LaunchedEffect用于在 Composable 函数中启动协程，并在特定的键发生变化时执行相关的代码。<br>    它通常用于处理需要在 Composable 生命周期内启动的副作用，比如网络请求、数据库操作、动画等。<br>2、能够在 Composable 生命周期内简化异步操作的处理。通过监控键的变化，LaunchedEffect 确保了协程的正确启动和取消， 从而增强了代码的可读性和维护性。<br>1: LaunchedEffect必须有至少一个key<br>2: 进入Composable代码块的时候 LaunchedEffect 开始执行，离开的时候取消<br>3: LaunchedEffect的key变化的时候会引起block代码块重新执行</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Composable</span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">UserProfileScreen</span><span class="params">(userId: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">      <span class="keyword">var</span> userData <span class="keyword">by</span> remember &#123; mutableStateOf&lt;User?&gt;(<span class="literal">null</span>) &#125;</span><br><span class="line"> </span><br><span class="line">      LaunchedEffect(userId) &#123;</span><br><span class="line">          userData = fetchUserData(userId)</span><br><span class="line">      &#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">// UI 展示</span></span><br><span class="line">      userData?.let &#123;</span><br><span class="line">          Text(<span class="string">&quot;User Name: <span class="subst">$&#123;it.name&#125;</span>&quot;</span>)</span><br><span class="line">      &#125; ?: run &#123;</span><br><span class="line">          Text(<span class="string">&quot;Loading...&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id><a href="#" class="headerlink" title></a></h3><p><code>rememberCoroutineScope</code> 是 Jetpack Compose 中一个非常有用的 API，它允许你在 Composable 函数中创建和管理 <code>CoroutineScope</code>。使用 <code>rememberCoroutineScope</code>，你可以在 Composable 中轻松启动协程，并确保它们的生命周期与 Composable 的生命周期相符。</p>
+<h3 id="1-什么是-rememberCoroutineScope"><a href="#1-什么是-rememberCoroutineScope" class="headerlink" title="1. 什么是 rememberCoroutineScope"></a>1. 什么是 <code>rememberCoroutineScope</code></h3><ul>
+<li><p><strong>作用域管理</strong>：<code>rememberCoroutineScope</code> 用于创建一个 <code>CoroutineScope</code>，这个作用域在 Composable 被组合时创建，并在 Composable 被释放时自动取消所有的协程。这避免了内存泄漏和未完成的协程执行。</p>
+</li>
+<li><p><strong>状态保持</strong>：与 <code>remember</code> 类似，<code>rememberCoroutineScope</code> 在 Composable 重组时保持作用域的状态。</p>
+</li>
+</ul>
+<h4 id="2-基本用法"><a href="#2-基本用法" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p>使用 <code>rememberCoroutineScope</code> 非常简单。以下是一段基本示例，展示了如何在 Composable 中使用它：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">CoroutineScopeExample</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> coroutineScope = rememberCoroutineScope() <span class="comment">// 创建 CoroutineScope</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    Button(onClick = &#123;</span><br><span class="line">        coroutineScope.launch &#123;</span><br><span class="line">            <span class="comment">// 在此处执行异步操作，例如长时间运行的任务</span></span><br><span class="line">            count++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;) &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-如何使用-rememberCoroutineScope"><a href="#3-如何使用-rememberCoroutineScope" class="headerlink" title="3. 如何使用 rememberCoroutineScope"></a>3. 如何使用 <code>rememberCoroutineScope</code></h4><h5 id="启动协程"><a href="#启动协程" class="headerlink" title="启动协程"></a>启动协程</h5><p>使用 <code>rememberCoroutineScope</code> 可以轻松启动协程。以下是一些常见的使用场景：</p>
+<ul>
+<li><strong>响应用户输入</strong>：在按钮点击事件中启动协程。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Button(onClick = &#123;</span><br><span class="line">    coroutineScope.launch &#123;</span><br><span class="line">        <span class="comment">// 模拟网络请求或长时间的计算</span></span><br><span class="line">        delay(<span class="number">2000</span>) <span class="comment">// 假设这是一个长操作</span></span><br><span class="line">        <span class="comment">// 执行其他操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    Text(<span class="string">&quot;Perform Action&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>在状态变化时执行操作</strong>：你可以在状态变化时触发某些操作，确保在合适的时机启动协程。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isActive <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="literal">false</span>) &#125;</span><br><span class="line"></span><br><span class="line">LaunchedEffect(isActive) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isActive) &#123;</span><br><span class="line">        coroutineScope.launch &#123;</span><br><span class="line">            <span class="comment">// 执行一些操作</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-完整示例"><a href="#4-完整示例" class="headerlink" title="4. 完整示例"></a>4. 完整示例</h4><p>以下是一个完整的示例，展示了如何在 Composable 中使用 <code>rememberCoroutineScope</code> 来处理按钮点击事件，并在后台执行操作：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> androidx.compose.ui.tooling.preview.Preview</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.delay</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">CoroutineCounter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> coroutineScope = rememberCoroutineScope() <span class="comment">// 创建 CoroutineScope</span></span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123;</span><br><span class="line">            coroutineScope.launch &#123;</span><br><span class="line">                delay(<span class="number">1000</span>) <span class="comment">// 模拟长时间操作</span></span><br><span class="line">                count++ <span class="comment">// 更新状态</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Increase Count&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Preview(showBackground = true)</span></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">PreviewCoroutineCounter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    CoroutineCounter()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-关键点总结"><a href="#5-关键点总结" class="headerlink" title="5. 关键点总结"></a>5. 关键点总结</h4><ul>
+<li><p><strong>生命周期管理</strong>：<code>rememberCoroutineScope</code> 确保在 Composable 组合期间创建的协程会在 Composable 被释放时自动取消。</p>
+</li>
+<li><p><strong>简化协程使用</strong>：它使得在 Composable 中使用协程变得简单，不需要手动管理作用域的创建和取消。</p>
+</li>
+<li><p><strong>适用于用户交互</strong>：非常适合在用户交互（如按钮点击）时执行异步任务。</p>
+</li>
+</ul>
+<h4 id="6-注意事项"><a href="#6-注意事项" class="headerlink" title="6. 注意事项"></a>6. 注意事项</h4><ul>
+<li><p><code>rememberCoroutineScope</code> 只能在 Composable 函数中使用，不能在普通的 Kotlin 类或函数中使用。</p>
+</li>
+<li><p>你可以在多个 Composable 函数中调用 <code>rememberCoroutineScope</code>，但要确保适当管理不同的协程作用域。</p>
+</li>
+</ul>
+<p>通过理解 <code>rememberCoroutineScope</code> 的使用，你可以更好地在 Jetpack Compose 中处理异步操作，提升应用的响应性和性能。 </p>
+<p><code>rememberUpdatedState</code> 是 Jetpack Compose 中的一个重要函数，用于在状态更新时保持对某个值的引用。它允许你在 Composable 函数中安全地使用可能会变化的外部状态，而不会引发不必要的重组或保持过时的状态。</p>
+<h3 id="1-什么是-rememberUpdatedState"><a href="#1-什么是-rememberUpdatedState" class="headerlink" title="1. 什么是 rememberUpdatedState"></a>1. 什么是 <code>rememberUpdatedState</code></h3><ul>
+<li><p><strong>保持最新状态</strong>：<code>rememberUpdatedState</code> 的主要作用是确保你在 Composable 中引用的状态是最新的。它会在 Composable 重组时更新其内部状态，而不会引起额外的重新组合。</p>
+</li>
+<li><p><strong>避免闭包问题</strong>：当你使用外部状态（例如，来自 ViewModel 的状态或其他 Composable 的状态）时，如果这些状态发生变化，你的闭包可能会引用旧的状态。<code>rememberUpdatedState</code> 解决了这个问题。</p>
+</li>
+</ul>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ul>
+<li><p><strong>回调函数</strong>：在处理回调函数时，如果你需要引用某个状态，而这个状态可能会在回调执行期间发生变化，<code>rememberUpdatedState</code> 将非常有用。</p>
+</li>
+<li><p><strong>协程</strong>：在协程中使用外部状态时，确保你引用的是最新状态，而不是旧的状态。</p>
+</li>
+</ul>
+<h4 id="3-基本用法"><a href="#3-基本用法" class="headerlink" title="3. 基本用法"></a>3. 基本用法</h4><p>这里是 <code>rememberUpdatedState</code> 的基本用法示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">RememberUpdatedStateExample</span><span class="params">(userInput: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 使用 rememberUpdatedState 来保持对 userInput 的引用</span></span><br><span class="line">    <span class="keyword">val</span> currentUserInput <span class="keyword">by</span> rememberUpdatedState(userInput)</span><br><span class="line"></span><br><span class="line">    LaunchedEffect(<span class="built_in">Unit</span>) &#123;</span><br><span class="line">        <span class="comment">// 假设这里是一个协程</span></span><br><span class="line">        launch &#123;</span><br><span class="line">            <span class="comment">// 使用 currentUserInput 而不是 userInput</span></span><br><span class="line">            println(<span class="string">&quot;Current User Input: <span class="variable">$currentUserInput</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，即使 <code>userInput</code> 在 Composable 中发生变化，<code>currentUserInput</code> 也会保持最新的值。</p>
+<h4 id="4-完整示例-1"><a href="#4-完整示例-1" class="headerlink" title="4. 完整示例"></a>4. 完整示例</h4><p>以下是一个完整的示例，展示了如何在处理一个按钮的点击事件时使用 <code>rememberUpdatedState</code>，以确保获取到最新的输入状态。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.delay</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">InputWithButton</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> input <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="string">&quot;Initial Input&quot;</span>) &#125;</span><br><span class="line">    <span class="keyword">var</span> message <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="string">&quot;&quot;</span>) &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Current Input: <span class="variable">$input</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123;</span><br><span class="line">            <span class="comment">// 使用 rememberUpdatedState 确保获取到最新的 input</span></span><br><span class="line">            <span class="keyword">val</span> currentInput <span class="keyword">by</span> rememberUpdatedState(input)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 启动协程</span></span><br><span class="line">            LaunchedEffect(<span class="built_in">Unit</span>) &#123;</span><br><span class="line">                delay(<span class="number">1000</span>) <span class="comment">// 模拟长操作</span></span><br><span class="line">                message = <span class="string">&quot;Processed: <span class="variable">$currentInput</span>&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Process Input&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        Text(<span class="string">&quot;Message: <span class="variable">$message</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Preview(showBackground = true)</span></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">PreviewInputWithButton</span><span class="params">()</span></span> &#123;</span><br><span class="line">    InputWithButton()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-关键点总结-1"><a href="#5-关键点总结-1" class="headerlink" title="5. 关键点总结"></a>5. 关键点总结</h4><ul>
+<li><p><strong>保持最新状态</strong>：<code>rememberUpdatedState</code> 确保在状态变化时你获取到的是最新的值，避免使用过期的状态。</p>
+</li>
+<li><p><strong>避免闭包问题</strong>：在使用闭包（如回调和协程）时，能确保引用的状态是最新的。</p>
+</li>
+<li><p><strong>性能优化</strong>：通过避免不必要的重新组合和状态引用过期，可以提高应用性能。</p>
+</li>
+</ul>
+<h4 id="6-注意事项-1"><a href="#6-注意事项-1" class="headerlink" title="6. 注意事项"></a>6. 注意事项</h4><ul>
+<li><p><code>rememberUpdatedState</code> 仅能在 Composable 函数中使用，不能在普通的 Kotlin 函数或类中使用。</p>
+</li>
+<li><p>由于它不会引发重新组合，因此在使用时需确保状态的变化是明确的，并且在合适的地方调用。</p>
+</li>
+</ul>
+<p>通过合理使用 <code>rememberUpdatedState</code>，你可以在 Jetpack Compose 中更加安全和有效地管理状态，提升应用的响应性和用户体验。        </p>
+<p><code>DisposableEffect</code> 是 Jetpack Compose 中一个用于处理副作用的 API，主要用于管理资源和清理任务。它能够在 <code>Composable</code> 的生命周期内执行一些操作，并确保在 <code>Composable</code> 被移除时进行适当的清理，类似于传统 Android 中的 <code>View</code> 生命周期管理。</p>
+<h3 id="1-什么是-DisposableEffect"><a href="#1-什么是-DisposableEffect" class="headerlink" title="1. 什么是 DisposableEffect"></a>1. 什么是 <code>DisposableEffect</code></h3><ul>
+<li><p><strong>生命周期感知</strong>：<code>DisposableEffect</code> 的核心功能是在 <code>Composable</code> 被组合和取消时自动处理资源的分配和释放。它与 <code>LaunchedEffect</code> 类似，但更适合需要清理资源的场景。</p>
+</li>
+<li><p><strong>清理操作</strong>：当 <code>DisposableEffect</code> 被取消时，它会执行提供的清理逻辑。这非常适合用于注册和取消监听器、打开和关闭数据库连接、启动和停止动画等场景。</p>
+</li>
+</ul>
+<h4 id="2-基本用法-1"><a href="#2-基本用法-1" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p><code>DisposableEffect</code> 的基本用法是传入一个 <code>key</code> 和一个 lambda 表达式，后者返回一个清理操作的 lambda。在组合期间，<code>DisposableEffect</code> 会执行你的代码，并在取消时自动调用清理逻辑。</p>
+<h4 id="3-示例"><a href="#3-示例" class="headerlink" title="3. 示例"></a>3. 示例</h4><p>以下是一个使用 <code>DisposableEffect</code> 的基本示例，用于注册和取消一个观察者（如传感器、网络状态等）：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">SensorComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> sensorManager = remember &#123; SensorManager() &#125; <span class="comment">// 假设 SensorManager 是某个传感器管理类</span></span><br><span class="line"></span><br><span class="line">    DisposableEffect(<span class="built_in">Unit</span>) &#123;</span><br><span class="line">        sensorManager.registerListener() <span class="comment">// 注册传感器监听器</span></span><br><span class="line"></span><br><span class="line">        onDispose &#123;</span><br><span class="line">            sensorManager.unregisterListener() <span class="comment">// 清理资源，取消监听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Text(<span class="string">&quot;Listening to sensor data...&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-使用键（Key）"><a href="#4-使用键（Key）" class="headerlink" title="4. 使用键（Key）"></a>4. 使用键（Key）</h4><p>如果你想要在特定条件下重新执行 <code>DisposableEffect</code>，可以提供一个键，这样在键值发生变化时，旧的 <code>DisposableEffect</code> 会被取消，新的则会被创建。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">DataFetcher</span><span class="params">(url: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">    DisposableEffect(url) &#123;</span><br><span class="line">        <span class="comment">// 执行网络请求</span></span><br><span class="line">        <span class="keyword">val</span> job = fetchData(url)</span><br><span class="line"></span><br><span class="line">        onDispose &#123;</span><br><span class="line">            job.cancel() <span class="comment">// 清理资源</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// UI 逻辑...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-完整示例"><a href="#5-完整示例" class="headerlink" title="5. 完整示例"></a>5. 完整示例</h4><p>下面是一个完整的示例，展示了如何使用 <code>DisposableEffect</code> 来管理一个计时器：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.delay</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">TimerComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line">    <span class="keyword">var</span> isRunning <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="literal">false</span>) &#125;</span><br><span class="line"></span><br><span class="line">    DisposableEffect(isRunning) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isRunning) &#123;</span><br><span class="line">            <span class="keyword">val</span> job = rememberCoroutineScope().launch &#123;</span><br><span class="line">                <span class="keyword">while</span> (isRunning) &#123;</span><br><span class="line">                    delay(<span class="number">1000</span>)</span><br><span class="line">                    count++</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            onDispose &#123;</span><br><span class="line">                isRunning = <span class="literal">false</span> <span class="comment">// 停止计时器</span></span><br><span class="line">                job.cancel() <span class="comment">// 清理协程</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        onDispose &#123; <span class="comment">/* 这里可以放置其他清理逻辑 */</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123; isRunning = !isRunning &#125;) &#123;</span><br><span class="line">            Text(<span class="keyword">if</span> (isRunning) <span class="string">&quot;Stop&quot;</span> <span class="keyword">else</span> <span class="string">&quot;Start&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-关键点总结"><a href="#6-关键点总结" class="headerlink" title="6. 关键点总结"></a>6. 关键点总结</h4><ul>
+<li><p><strong>清理资源</strong>：<code>DisposableEffect</code> 适合需要在 <code>Composable</code> 被移除时执行清理逻辑的场景。</p>
+</li>
+<li><p><strong>自动处理生命周期</strong>：它会自动处理注册和取消的操作，避免了手动管理的复杂性。</p>
+</li>
+<li><p><strong>支持键</strong>：可以通过指定键来控制 <code>DisposableEffect</code> 的重组。</p>
+</li>
+</ul>
+<h4 id="7-注意事项"><a href="#7-注意事项" class="headerlink" title="7. 注意事项"></a>7. 注意事项</h4><ul>
+<li><p><code>DisposableEffect</code> 只能在 <code>Composable</code> 函数中使用，不能在普通的 Kotlin 函数或类中使用。</p>
+</li>
+<li><p>确保在 <code>onDispose</code> 逻辑中执行的清理操作是安全的，避免资源泄漏或未定义的行为。</p>
+</li>
+</ul>
+<p>通过利用 <code>DisposableEffect</code>，你可以在 Jetpack Compose 中更加有效地管理资源和副作用，提高应用的可靠性和性能。</p>
+<p><code>SideEffect</code> 是 Jetpack Compose 中用于处理副作用的一个 API。它允许你在 <code>Composable</code> 函数中执行一些操作，这些操作并不应影响 UI 状态，但可能会产生其他效果，比如更新数据库、记录日志或触发动画等。</p>
+<h3 id="1-什么是-SideEffect"><a href="#1-什么是-SideEffect" class="headerlink" title="1. 什么是 SideEffect"></a>1. 什么是 <code>SideEffect</code></h3><ul>
+<li><p><strong>副作用管理</strong>：<code>SideEffect</code> 主要用于执行那些不会影响 UI 的操作，但可能需要在每次重新组合时执行。这些副作用通常是外部系统的交互或某种持久性操作。</p>
+</li>
+<li><p><strong>每次重组执行</strong>：与 <code>LaunchedEffect</code> 和 <code>DisposableEffect</code> 不同，<code>SideEffect</code> 在每次重组时都会执行，而不关心其状态是否变化。这使它适合某些类型的操作，比如更新全局状态或发送数据到日志。</p>
+</li>
+</ul>
+<h4 id="2-基本用法-2"><a href="#2-基本用法-2" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p><code>SideEffect</code> 的使用非常简单。你只需在 <code>Composable</code> 函数中调用它，并传入一个 lambda 表达式，该表达式包含你想要执行的副作用代码。</p>
+<h4 id="3-示例-1"><a href="#3-示例-1" class="headerlink" title="3. 示例"></a>3. 示例</h4><p>以下是一个简单的示例，展示了如何使用 <code>SideEffect</code> 来记录每次重组时的状态变化：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">SideEffectExample</span><span class="params">(count: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 每次重组时记录日志</span></span><br><span class="line">    SideEffect &#123;</span><br><span class="line">        println(<span class="string">&quot;Current count: <span class="variable">$count</span>&quot;</span>) <span class="comment">// 记录当前的计数值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，每次 <code>count</code> 变化导致 <code>SideEffectExample</code> 重新组合时，都会执行 <code>println</code> 语句。</p>
+<h4 id="4-完整示例-2"><a href="#4-完整示例-2" class="headerlink" title="4. 完整示例"></a>4. 完整示例</h4><p>以下是一个完整的示例，展示了如何利用 <code>SideEffect</code> 在一个计数器中更新某个外部状态（比如记录日志或更新某个值）：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">Counter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每次 count 变化时，记录该值</span></span><br><span class="line">    SideEffect &#123;</span><br><span class="line">        println(<span class="string">&quot;Count has been updated to: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123; count++ &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Increment&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-适用场景"><a href="#5-适用场景" class="headerlink" title="5. 适用场景"></a>5. 适用场景</h4><ul>
+<li><strong>记录日志</strong>：在 UI 更新时记录用户活动或错误信息。</li>
+<li><strong>更新外部状态</strong>：在 UI 更新时通知外部系统（例如，Analytics、数据库）。</li>
+<li><strong>动画触发</strong>：在某些 UI 变化时触发动画效果。</li>
+</ul>
+<h4 id="6-关键点总结-1"><a href="#6-关键点总结-1" class="headerlink" title="6. 关键点总结"></a>6. 关键点总结</h4><ul>
+<li><p><strong>每次重组执行</strong>：<code>SideEffect</code> 在 <code>Composable</code> 每次重组时都会执行，非常适合那些需要在每次状态变化时进行的操作。</p>
+</li>
+<li><p><strong>适用于副作用</strong>：它特别适用于那些不需要依赖于 <code>Composable</code> 的状态，但需要在 UI 更新时执行的操作。</p>
+</li>
+<li><p><strong>避免不必要的副作用</strong>：由于 <code>SideEffect</code> 每次都会执行，你需要确保操作是必要的，避免不必要的性能开销。</p>
+</li>
+</ul>
+<h4 id="7-注意事项-1"><a href="#7-注意事项-1" class="headerlink" title="7. 注意事项"></a>7. 注意事项</h4><ul>
+<li><p><code>SideEffect</code> 只能在 <code>Composable</code> 函数中使用，不能在普通的 Kotlin 函数或类中使用。</p>
+</li>
+<li><p>由于 <code>SideEffect</code> 在每次重组时都会执行，确保你的副作用是线程安全的，并且不影响 UI 状态。</p>
+</li>
+</ul>
+<p>通过利用 <code>SideEffect</code>，你可以在 Jetpack Compose 中更有效地管理副作用，提高应用的可靠性和可维护性。</p>
+<p><code>produceState</code> 是 Jetpack Compose 中的一个非常有用的 API，主要用于在 <code>Composable</code> 函数中管理和生成状态。这种状态的生成过程可以是异步的，适合用于处理从网络或其他异步源获取的数据。</p>
+<h3 id="1-什么是-produceState"><a href="#1-什么是-produceState" class="headerlink" title="1. 什么是 produceState"></a>1. 什么是 <code>produceState</code></h3><ul>
+<li><p><strong>异步状态生成</strong>：<code>produceState</code> 允许你在 <code>Composable</code> 函数中异步生成状态，并在生成完成后自动更新 UI。这使得它非常适合用于执行长时间运行的操作，比如 API 请求或数据处理。</p>
+</li>
+<li><p><strong>状态的自动管理</strong>：通过使用 <code>produceState</code>，Compose 会自动管理状态的生命周期，包括重组时的状态保持和清理。</p>
+</li>
+</ul>
+<h4 id="2-基本用法-3"><a href="#2-基本用法-3" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p><code>produceState</code> 接受一个初始值和一个 suspend lambda 表达式，该表达式定义了如何异步生成新的状态。它会在状态生成完成后自动更新 UI。</p>
+<h4 id="3-示例-2"><a href="#3-示例-2" class="headerlink" title="3. 示例"></a>3. 示例</h4><p>以下是一个使用 <code>produceState</code> 的基本示例，展示如何从网络获取数据并在 UI 中显示它：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.delay</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">DataFetcher</span><span class="params">(url: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 使用 produceState 来异步获取数据</span></span><br><span class="line">    <span class="keyword">val</span> <span class="keyword">data</span> <span class="keyword">by</span> produceState(initialValue = <span class="string">&quot;Loading...&quot;</span>, key1 = url) &#123;</span><br><span class="line">        <span class="comment">// 模拟网络请求</span></span><br><span class="line">        delay(<span class="number">2000</span>) <span class="comment">// 模拟网络延迟</span></span><br><span class="line">        value = <span class="string">&quot;Fetched data from <span class="variable">$url</span>&quot;</span> <span class="comment">// 更新状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Text(text = <span class="keyword">data</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，<code>produceState</code> 用于异步获取数据。当 <code>url</code> 变化时，<code>produceState</code> 会重新执行，更新 UI。</p>
+<h4 id="4-使用场景"><a href="#4-使用场景" class="headerlink" title="4. 使用场景"></a>4. 使用场景</h4><ul>
+<li><strong>网络请求</strong>：从 API 获取数据并在 UI 中显示。</li>
+<li><strong>长时间计算</strong>：执行需要时间的计算并将结果显示在 UI 中。</li>
+<li><strong>状态管理</strong>：在 <code>Composable</code> 中处理与外部数据源的交互，保持 UI 和数据的一致性。</li>
+</ul>
+<h4 id="5-完整示例-1"><a href="#5-完整示例-1" class="headerlink" title="5. 完整示例"></a>5. 完整示例</h4><p>以下是一个完整的示例，展示如何使用 <code>produceState</code> 来从网络获取用户信息并显示：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.delay</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">UserProfile</span><span class="params">(userId: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 使用 produceState 来异步获取用户数据</span></span><br><span class="line">    <span class="keyword">val</span> userData <span class="keyword">by</span> produceState(initialValue = <span class="string">&quot;Loading...&quot;</span>, key1 = userId) &#123;</span><br><span class="line">        <span class="comment">// 模拟网络请求</span></span><br><span class="line">        delay(<span class="number">2000</span>) <span class="comment">// 模拟网络延迟</span></span><br><span class="line">        value = <span class="string">&quot;User Data for <span class="variable">$userId</span>&quot;</span> <span class="comment">// 更新状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(text = userData)</span><br><span class="line">        Button(onClick = &#123; <span class="comment">/* 可能触发其他操作 */</span> &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Refresh Data&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">loadNetworkImage</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    url: <span class="type">String</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    imageRepository: <span class="type">ImageRepository</span> = ImageRepository()</span></span></span><br><span class="line">): State&lt;Result&lt;Image&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Creates a State&lt;T&gt; with Result.Loading as initial value</span></span><br><span class="line">    <span class="comment">// If either `url` or `imageRepository` changes, the running producer</span></span><br><span class="line">    <span class="comment">// will cancel and will be re-launched with the new inputs.</span></span><br><span class="line">    <span class="keyword">return</span> produceState&lt;Result&lt;Image&gt;&gt;(initialValue = Result.Loading, url, imageRepository) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// In a coroutine, can make suspend calls</span></span><br><span class="line">        <span class="keyword">val</span> image = imageRepository.load(url)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Update State with either an Error or Success result.</span></span><br><span class="line">        <span class="comment">// This will trigger a recomposition where this State is read</span></span><br><span class="line">        value = <span class="keyword">if</span> (image == <span class="literal">null</span>) &#123;</span><br><span class="line">            Result.Error</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Result.Success(image)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-关键点总结-2"><a href="#6-关键点总结-2" class="headerlink" title="6. 关键点总结"></a>6. 关键点总结</h4><ul>
+<li><p><strong>异步状态生成</strong>：<code>produceState</code> 适用于异步生成状态，可以有效处理长期运行的操作。</p>
+</li>
+<li><p><strong>自动管理生命周期</strong>：Compose 会自动管理 <code>produceState</code> 的生命周期，确保在重组时状态保持一致。</p>
+</li>
+<li><p><strong>关键参数</strong>：<code>key1</code> 参数可以用于指示依赖关系，当依赖变化时，<code>produceState</code> 会重新生成状态。</p>
+</li>
+</ul>
+<h4 id="7-注意事项-2"><a href="#7-注意事项-2" class="headerlink" title="7. 注意事项"></a>7. 注意事项</h4><ul>
+<li><p><strong>初始值</strong>：确保为 <code>initialValue</code> 提供合理的初始值，以便在状态生成完成之前显示一些内容。</p>
+</li>
+<li><p><strong>性能考虑</strong>：在状态生成期间可能会引入延迟，考虑用户体验，确保提供适当的加载状态反馈。</p>
+</li>
+<li><p><strong>线程安全</strong>：在异步操作中，确保更新状态时是线程安全的。</p>
+</li>
+</ul>
+<p>通过利用 <code>produceState</code>，你可以在 Jetpack Compose 中高效地管理异步状态，提高应用的响应性和可维护性。</p>
+<p><code>derivedStateOf</code> 是 Jetpack Compose 中用于创建派生状态的 API。派生状态是指基于其他状态的计算结果，通常用于提高性能和减少不必要的重新计算。使用 <code>derivedStateOf</code> 可以确保仅在依赖的状态发生变化时重新计算值，从而优化性能。</p>
+<h3 id="1-什么是-derivedStateOf"><a href="#1-什么是-derivedStateOf" class="headerlink" title="1. 什么是 derivedStateOf"></a>1. 什么是 <code>derivedStateOf</code></h3><ul>
+<li><p><strong>派生状态</strong>：<code>derivedStateOf</code> 允许你创建一个新的状态，其值依赖于一个或多个其他状态。当这些依赖的状态发生变化时，派生的状态会自动重新计算。</p>
+</li>
+<li><p><strong>性能优化</strong>：通过使用 <code>derivedStateOf</code>，你可以避免在每次重组时都进行昂贵的计算。在依赖未变化时，Compose 将复用之前的计算结果，从而提高性能。</p>
+</li>
+</ul>
+<h4 id="2-基本用法-4"><a href="#2-基本用法-4" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p><code>derivedStateOf</code> 接受一个 lambda 表达式，该表达式返回派生状态的计算值。你可以将其与 <code>remember</code> 一起使用，以确保在整个 <code>Composable</code> 生命周期内保持派生状态。</p>
+<h4 id="3-示例-3"><a href="#3-示例-3" class="headerlink" title="3. 示例"></a>3. 示例</h4><p>以下是一个简单的示例，展示如何使用 <code>derivedStateOf</code> 来计算一个值：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">Counter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建派生状态，计算平方值</span></span><br><span class="line">    <span class="keyword">val</span> squaredCount <span class="keyword">by</span> derivedStateOf &#123;</span><br><span class="line">        count * count</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// UI 逻辑</span></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">        Text(<span class="string">&quot;Squared Count: <span class="variable">$squaredCount</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123; count++ &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Increment&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，<code>squaredCount</code> 是 <code>count</code> 的平方值。只有在 <code>count</code> 改变时，<code>squaredCount</code> 才会被重新计算。</p>
+<h4 id="4-使用场景-1"><a href="#4-使用场景-1" class="headerlink" title="4. 使用场景"></a>4. 使用场景</h4><ul>
+<li><strong>计算派生值</strong>：在 UI 中计算某个值的派生结果，例如计算百分比、总和等。</li>
+<li><strong>性能优化</strong>：在复杂的 UI 逻辑中使用，减少不必要的重新计算和重组，提高性能。</li>
+<li><strong>依赖管理</strong>：在多个状态之间管理依赖关系，自动更新相关的 UI 组件。</li>
+</ul>
+<h4 id="5-完整示例-2"><a href="#5-完整示例-2" class="headerlink" title="5. 完整示例"></a>5. 完整示例</h4><p>以下是一个完整的示例，展示如何使用 <code>derivedStateOf</code> 来计算并显示购物车中商品的总价：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">ShoppingCart</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> items <span class="keyword">by</span> remember &#123; mutableStateOf(listOf(<span class="number">10.0</span>, <span class="number">20.0</span>, <span class="number">30.0</span>)) &#125; <span class="comment">// 商品价格列表</span></span><br><span class="line">    <span class="keyword">var</span> totalPrice <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0.0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算总价</span></span><br><span class="line">    <span class="keyword">val</span> total <span class="keyword">by</span> derivedStateOf &#123;</span><br><span class="line">        items.sum() <span class="comment">// 计算总和</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Total Price: <span class="variable">$total</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        Button(onClick = &#123;</span><br><span class="line">            items = items + <span class="number">40.0</span> <span class="comment">// 添加商品</span></span><br><span class="line">        &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Add Item ($40.0)&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Button(onClick = &#123;</span><br><span class="line">            <span class="keyword">if</span> (items.isNotEmpty()) &#123;</span><br><span class="line">                items = items.dropLast(<span class="number">1</span>) <span class="comment">// 移除最后一个商品</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Remove Last Item&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-关键点总结-3"><a href="#6-关键点总结-3" class="headerlink" title="6. 关键点总结"></a>6. 关键点总结</h4><ul>
+<li><p><strong>高效计算</strong>：<code>derivedStateOf</code> 适用于需要基于其他状态计算的场景，可以有效避免不必要的计算。</p>
+</li>
+<li><p><strong>自动更新</strong>：当依赖的状态发生变化时，派生状态会自动更新，确保 UI 始终保持最新。</p>
+</li>
+<li><p><strong>记忆状态</strong>：结合 <code>remember</code> 使用，可以确保派生状态在 <code>Composable</code> 生命周期内保持不变。</p>
+</li>
+</ul>
+<h4 id="7-注意事项-3"><a href="#7-注意事项-3" class="headerlink" title="7. 注意事项"></a>7. 注意事项</h4><ul>
+<li><p><strong>确保性能</strong>：仅在需要时使用 <code>derivedStateOf</code>，避免在简单计算中使用，以免增加不必要的复杂性。</p>
+</li>
+<li><p><strong>依赖管理</strong>：确保你正确管理依赖关系，避免潜在的错误或未更新的状态。</p>
+</li>
+</ul>
+<p>通过使用 <code>derivedStateOf</code>，你可以在 Jetpack Compose 中高效地管理派生状态，优化性能并提高代码的可读性和可维护性。</p>
+<p><code>snapshotFlow</code> 是 Jetpack Compose 中的一个 API，主要用于在 Compose 中创建一个 <code>Flow</code>，该 <code>Flow</code> 会在 Compose 状态发生变化时发出更新。这使得它特别适合在需要与其他 Kotlin 协程或流结合时使用，例如在数据层与 UI 层之间传递状态变化。</p>
+<h3 id="1-什么是-snapshotFlow"><a href="#1-什么是-snapshotFlow" class="headerlink" title="1. 什么是 snapshotFlow"></a>1. 什么是 <code>snapshotFlow</code></h3><ul>
+<li><p><strong>状态观察</strong>：<code>snapshotFlow</code> 允许你将 Compose 的状态变化转化为流，这样你可以在需要的地方观察这些变化，进行相应的操作。</p>
+</li>
+<li><p><strong>协程兼容</strong>：由于它返回的是一个 <code>Flow</code>，你可以将其与 Kotlin 协程一起使用，这使得它在处理异步操作时非常有用。</p>
+</li>
+</ul>
+<h4 id="2-基本用法-5"><a href="#2-基本用法-5" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h4><p><code>snapshotFlow</code> 接受一个 lambda 表达式，该表达式指定了你想要观察的 Compose 状态。当这些状态发生变化时，<code>Flow</code> 将发出更新。</p>
+<h4 id="3-示例-4"><a href="#3-示例-4" class="headerlink" title="3. 示例"></a>3. 示例</h4><p>以下是一个简单的示例，展示如何使用 <code>snapshotFlow</code> 来观察一个可变状态并在变化时执行操作：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.layout.Column</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.flow.collect</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">Counter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line">    <span class="keyword">val</span> coroutineScope = rememberCoroutineScope()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个 Flow 来观察 count 的变化</span></span><br><span class="line">    <span class="keyword">val</span> countFlow = snapshotFlow &#123; count &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动一个协程来收集 Flow</span></span><br><span class="line">    LaunchedEffect(<span class="built_in">Unit</span>) &#123;</span><br><span class="line">        launch &#123;</span><br><span class="line">            countFlow.collect &#123; newCount -&gt;</span><br><span class="line">                println(<span class="string">&quot;Count changed to <span class="variable">$newCount</span>&quot;</span>) <span class="comment">// 在控制台打印新值</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">        Button(onClick = &#123; count++ &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Increment&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，<code>snapshotFlow</code> 被用来观察 <code>count</code> 的变化。当 <code>count</code> 变化时，流会发出新的值，并在控制台打印。</p>
+<h4 id="4-使用场景-2"><a href="#4-使用场景-2" class="headerlink" title="4. 使用场景"></a>4. 使用场景</h4><ul>
+<li><p><strong>状态监控</strong>：当需要监控 Compose 状态并在状态变化时采取行动，比如更新数据库、发送网络请求或通知其他组件时。</p>
+</li>
+<li><p><strong>集成其他库</strong>：将 Compose 的状态和其他流库（例如 Retrofit、Room）结合时，用于处理异步数据流。</p>
+</li>
+<li><p><strong>调试</strong>：在开发过程中使用 <code>snapshotFlow</code> 来跟踪状态变化，有助于查找问题。</p>
+</li>
+</ul>
+<h4 id="5-完整示例-3"><a href="#5-完整示例-3" class="headerlink" title="5. 完整示例"></a>5. 完整示例</h4><p>以下是一个更复杂的示例，展示如何使用 <code>snapshotFlow</code> 来观察一个输入框的文本变化，并在变化时进行处理：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.foundation.text.BasicTextField</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Button</span><br><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.*</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.flow.collect</span><br><span class="line"><span class="keyword">import</span> kotlinx.coroutines.launch</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">TextInput</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> text <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="string">&quot;&quot;</span>) &#125;</span><br><span class="line">    <span class="keyword">val</span> coroutineScope = rememberCoroutineScope()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个 Flow 来观察 text 的变化</span></span><br><span class="line">    <span class="keyword">val</span> textFlow = snapshotFlow &#123; text &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动一个协程收集 Flow</span></span><br><span class="line">    LaunchedEffect(<span class="built_in">Unit</span>) &#123;</span><br><span class="line">        launch &#123;</span><br><span class="line">            textFlow.collect &#123; newText -&gt;</span><br><span class="line">                println(<span class="string">&quot;Text changed to: <span class="variable">$newText</span>&quot;</span>) <span class="comment">// 在控制台打印新值</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Column &#123;</span><br><span class="line">        BasicTextField(</span><br><span class="line">            value = text,</span><br><span class="line">            onValueChange = &#123; text = it &#125;</span><br><span class="line">        )</span><br><span class="line">        Button(onClick = &#123; <span class="comment">/* 处理提交操作 */</span> &#125;) &#123;</span><br><span class="line">            Text(<span class="string">&quot;Submit&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-关键点总结-4"><a href="#6-关键点总结-4" class="headerlink" title="6. 关键点总结"></a>6. 关键点总结</h4><ul>
+<li><p><strong>观察状态变化</strong>：<code>snapshotFlow</code> 使你能够轻松观察 Compose 状态的变化，并将其转化为流。</p>
+</li>
+<li><p><strong>与协程结合</strong>：它可以与协程一起使用，使得在状态变化时执行异步操作变得简单。</p>
+</li>
+<li><p><strong>简化状态管理</strong>：通过将状态变化转化为流，你可以简化对状态的管理，避免了在 UI 和数据层之间的直接耦合。</p>
+</li>
+</ul>
+<h4 id="7-注意事项-4"><a href="#7-注意事项-4" class="headerlink" title="7. 注意事项"></a>7. 注意事项</h4><ul>
+<li><p><strong>性能考虑</strong>：在 <code>LaunchedEffect</code> 中收集 <code>Flow</code> 时，确保不要造成不必要的性能开销。</p>
+</li>
+<li><p><strong>状态清理</strong>：确保在不再需要时适当地清理或停止收集 <code>Flow</code>，以避免内存泄漏。</p>
+</li>
+<li><p><strong>线程安全</strong>：在访问和修改状态时，确保遵循 Compose 的状态管理原则，以避免潜在的问题。</p>
+</li>
+</ul>
+<p>通过利用 <code>snapshotFlow</code>，你可以在 Jetpack Compose 中实现更灵活和强大的状态管理，提高应用的响应性和可维护性。</p>
+<p><code>remember</code> 和 <code>rememberSaveable</code> 是 Jetpack Compose 中用于管理状态的两个重要 API，但它们的用途和行为有所不同。以下是这两者的比较和详细解释。</p>
+<h3 id="1-remember"><a href="#1-remember" class="headerlink" title="1. remember"></a>1. <code>remember</code></h3><ul>
+<li><p><strong>描述</strong>：<code>remember</code> 用于在 <code>Composable</code> 的重组过程中保存状态。它会在 <code>Composable</code> 被重新创建（例如由于配置更改）时丢失状态。</p>
+</li>
+<li><p><strong>用法</strong>：适用于在 <code>Composable</code> 内部需要保留的临时状态，但不需要在应用的生命周期中持久保存。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">Counter</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> remember &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    Button(onClick = &#123; count++ &#125;) &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，<code>count</code> 将在每次重组时保留，但如果 <code>Composable</code> 被移除或配置更改（例如旋转屏幕），<code>count</code> 将被重置为初始值。</p>
+<h4 id="2-rememberSaveable"><a href="#2-rememberSaveable" class="headerlink" title="2. rememberSaveable"></a>2. <code>rememberSaveable</code></h4><ul>
+<li><p><strong>描述</strong>：<code>rememberSaveable</code> 不仅在 <code>Composable</code> 的重组过程中保存状态，还可以在配置更改（如屏幕旋转）或进程死亡时持久保存状态。它会自动将状态保存到 Bundle 中，因此在恢复时可以获取到之前的状态。</p>
+</li>
+<li><p><strong>用法</strong>：适合于需要在配置更改或进程死亡后恢复的状态（例如表单输入、用户选择等）。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">CounterSaveable</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="keyword">by</span> rememberSaveable &#123; mutableStateOf(<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line">    Button(onClick = &#123; count++ &#125;) &#123;</span><br><span class="line">        Text(<span class="string">&quot;Count: <span class="variable">$count</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，<code>count</code> 将在屏幕旋转或进程死亡后保留其值，而不仅仅是重组时。</p>
+<h4 id="3-关键区别总结"><a href="#3-关键区别总结" class="headerlink" title="3. 关键区别总结"></a>3. 关键区别总结</h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>remember</code></th>
+<th><code>rememberSaveable</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>保存状态的范围</td>
+<td>在 <code>Composable</code> 重组期间</td>
+<td>在重组、配置更改和进程死亡期间</td>
+</tr>
+<tr>
+<td>状态恢复</td>
+<td>不会恢复</td>
+<td>会从 Bundle 中恢复</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>临时状态</td>
+<td>需要持久保存的状态</td>
+</tr>
+</tbody></table>
+<h4 id="4-适用场景"><a href="#4-适用场景" class="headerlink" title="4. 适用场景"></a>4. 适用场景</h4><ul>
+<li><p><strong>使用 <code>remember</code> 的场景</strong>：</p>
+<ul>
+<li>临时状态，例如动画状态、按钮当前状态等。</li>
+<li>状态不需要跨配置更改或进程死亡保存。</li>
+</ul>
+</li>
+<li><p><strong>使用 <code>rememberSaveable</code> 的场景</strong>：</p>
+<ul>
+<li>表单字段、输入框、用户选择等需要在配置更改或进程死亡后恢复的状态。</li>
+<li>状态需要在整个应用生命周期中保持。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-小结"><a href="#5-小结" class="headerlink" title="5. 小结"></a>5. 小结</h4><p>在 Compose 中选择使用 <code>remember</code> 还是 <code>rememberSaveable</code> 时，考虑你的状态是否需要在配置更改或进程死亡后持续存在。如果只需要在重组时保存并可以丢弃，那么使用 <code>remember</code>；如果需要持久化状态，那么 <code>rememberSaveable</code> 是更合适的选择。</p>
+<p><code>CompositionLocal</code> 是 Jetpack Compose 中用于在组件树中传递和管理状态的一种机制。它允许在不通过每个组件的参数逐层传递的情况下，轻松地在组件之间共享数据。以下是关于 <code>CompositionLocal</code> 的详细讲解，包括其创建、提供和使用的方式。</p>
+<h3 id="1-什么是-CompositionLocal？"><a href="#1-什么是-CompositionLocal？" class="headerlink" title="1. 什么是 CompositionLocal？"></a>1. 什么是 CompositionLocal？</h3><p><code>CompositionLocal</code> 使得在 Compose 中能够定义和访问局部状态。这些状态可以在组件树中向下传递，特别适合用于主题、语言设置、用户信息等全局配置。</p>
+<h4 id="2-创建-CompositionLocal"><a href="#2-创建-CompositionLocal" class="headerlink" title="2. 创建 CompositionLocal"></a>2. 创建 CompositionLocal</h4><p>要创建一个 <code>CompositionLocal</code>，可以使用 <code>compositionLocalOf</code> 函数，定义一个新的局部状态。</p>
+<h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.compositionLocalOf</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 CompositionLocal</span></span><br><span class="line"><span class="keyword">val</span> LocalExample = compositionLocalOf&lt;String&gt; &#123; error(<span class="string">&quot;No value provided for LocalExample&quot;</span>) &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，<code>LocalExample</code> 是一个 <code>CompositionLocal</code> 实例，类型为 <code>String</code>，并定义了一个默认错误消息。</p>
+<h4 id="3-提供-CompositionLocal-的值"><a href="#3-提供-CompositionLocal-的值" class="headerlink" title="3. 提供 CompositionLocal 的值"></a>3. 提供 CompositionLocal 的值</h4><p>在组件树的上层，可以使用 <code>CompositionLocalProvider</code> 来提供 <code>CompositionLocal</code> 的值。</p>
+<h5 id="示例：-1"><a href="#示例：-1" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.runtime.Composable</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.CompositionLocalProvider</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">MyApp</span><span class="params">()</span></span> &#123;</span><br><span class="line">    CompositionLocalProvider(LocalExample provides <span class="string">&quot;Hello, Composition Local!&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// 子组件可以访问 LocalExample 的值</span></span><br><span class="line">        ChildComponent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>CompositionLocalProvider</code> 提供了一个值 <code>&quot;Hello, Composition Local!&quot;</code> 给 <code>LocalExample</code>。</p>
+<h4 id="4-访问-CompositionLocal-的值"><a href="#4-访问-CompositionLocal-的值" class="headerlink" title="4. 访问 CompositionLocal 的值"></a>4. 访问 CompositionLocal 的值</h4><p>在子组件中，可以直接调用 <code>LocalExample.current</code> 来获取提供的值。</p>
+<h5 id="示例：-2"><a href="#示例：-2" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.material.Text</span><br><span class="line"><span class="keyword">import</span> androidx.compose.runtime.Composable</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">ChildComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> exampleValue = LocalExample.current</span><br><span class="line"></span><br><span class="line">    Text(text = exampleValue) <span class="comment">// 显示 &quot;Hello, Composition Local!&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>ChildComponent</code> 通过 <code>LocalExample.current</code> 来访问传递的值。</p>
+<h4 id="5-使用多个-CompositionLocal"><a href="#5-使用多个-CompositionLocal" class="headerlink" title="5. 使用多个 CompositionLocal"></a>5. 使用多个 CompositionLocal</h4><p>可以同时使用多个 <code>CompositionLocal</code>，只要在 <code>CompositionLocalProvider</code> 中提供它们的值。</p>
+<h5 id="示例：-3"><a href="#示例：-3" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.compose.ui.graphics.Color</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> LocalColor = compositionLocalOf&lt;Color&gt; &#123; error(<span class="string">&quot;No color provided&quot;</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">MyApp</span><span class="params">()</span></span> &#123;</span><br><span class="line">    CompositionLocalProvider(</span><br><span class="line">        LocalExample provides <span class="string">&quot;Hello!&quot;</span>,</span><br><span class="line">        LocalColor provides Color.Red</span><br><span class="line">    ) &#123;</span><br><span class="line">        ChildComponent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-嵌套-CompositionLocal"><a href="#6-嵌套-CompositionLocal" class="headerlink" title="6. 嵌套 CompositionLocal"></a>6. 嵌套 CompositionLocal</h4><p><code>CompositionLocal</code> 支持嵌套，可以在不同的层级中提供不同的值。</p>
+<h5 id="示例：-4"><a href="#示例：-4" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">ParentComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    CompositionLocalProvider(LocalExample provides <span class="string">&quot;Hello from Parent&quot;</span>) &#123;</span><br><span class="line">        ChildComponent() <span class="comment">// 这里会使用父级提供的值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">ChildComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> exampleValue = LocalExample.current</span><br><span class="line">    Text(text = exampleValue) <span class="comment">// 显示 &quot;Hello from Parent&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Composable</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">AnotherChildComponent</span><span class="params">()</span></span> &#123;</span><br><span class="line">    CompositionLocalProvider(LocalExample provides <span class="string">&quot;Hello from Another Child&quot;</span>) &#123;</span><br><span class="line">        ChildComponent() <span class="comment">// 这里会使用新的提供值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>ChildComponent</code> 可以根据它的父级所提供的不同值而显示不同的内容。</p>
+<h4 id="7-使用场景"><a href="#7-使用场景" class="headerlink" title="7. 使用场景"></a>7. 使用场景</h4><ul>
+<li><p><strong>主题</strong>：使用 <code>CompositionLocal</code> 来传递主题颜色、字体样式等。</p>
+</li>
+<li><p><strong>语言</strong>：用于传递当前语言或文本方向。</p>
+</li>
+<li><p><strong>用户信息</strong>：在整个应用中共享用户配置或设置。</p>
+</li>
+</ul>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p><code>CompositionLocal</code> 是 Jetpack Compose 中非常有用的一个特性，它通过简化数据传递，降低了组件之间的耦合。通过 <code>CompositionLocalProvider</code> 提供数据，子组件可以方便地访问这些数据，而不需要逐层传递参数。这使得在构建响应式 UI 时更加灵活和高效。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Compose/" rel="tag"># Compose</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/07/25/Vue3-0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Vue3.0学习笔记">
+                  <i class="fa fa-angle-left"></i> Vue3.0学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
