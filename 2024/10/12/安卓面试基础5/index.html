@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Okhttp 框架源码OkHttp是一个高效、灵活的HTTP客户端框架，其源码设计精巧，其中包含了许多值得学习的设计模式和实现技术。以下是OkHttp框架的主要组成部分及其源码分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓面试基础5">
+<meta property="og:url" content="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="Okhttp 框架源码OkHttp是一个高效、灵活的HTTP客户端框架，其源码设计精巧，其中包含了许多值得学习的设计模式和实现技术。以下是OkHttp框架的主要组成部分及其源码分析。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-12T00:43:33.000Z">
+<meta property="article:modified_time" content="2024-10-12T01:25:17.970Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/","path":"2024/10/12/安卓面试基础5/","title":"安卓面试基础5"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>安卓面试基础5 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Okhttp-%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">Okhttp 框架源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2. 主要组件源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-OkHttpClient"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 OkHttpClient</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Request%E5%92%8CResponse"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Request和Response</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Call"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Call</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Dispatcher"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Dispatcher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Interceptor"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 Interceptor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">3. 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8B%A6%E6%88%AA%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">4. 拦截器源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%9E%E6%8E%A5%E5%A4%8D%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">5. 连接复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">6. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Retrofift-%E6%A1%86%E6%9E%B6%E8%AE%B2%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">Retrofift 框架讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84-1"><span class="nav-number">2.1.</span> <span class="nav-text">1. 基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-1"><span class="nav-number">2.2.</span> <span class="nav-text">2. 主要组件源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Retrofit"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 Retrofit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-API%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 API接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3 动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-ServiceMethod"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4 ServiceMethod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-CallAdapter"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.5 CallAdapter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-Converter"><span class="nav-number">2.2.6.</span> <span class="nav-text">2.6 Converter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-1"><span class="nav-number">2.3.</span> <span class="nav-text">3. 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">4. 源码分析示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%80%BB%E7%BB%93"><span class="nav-number">2.5.</span> <span class="nav-text">5. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Glide-%E6%A1%86%E6%9E%B6%E8%AE%B2%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">Glide 框架讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84-2"><span class="nav-number">3.1.</span> <span class="nav-text">1. 基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-2"><span class="nav-number">3.2.</span> <span class="nav-text">2. 主要组件源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Glide"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 Glide</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-RequestManager"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 RequestManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RequestBuilder"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 RequestBuilder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Engine"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.4 Engine</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-DiskCacheStrategy"><span class="nav-number">3.2.5.</span> <span class="nav-text">2.5 DiskCacheStrategy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-ModelLoader"><span class="nav-number">3.2.6.</span> <span class="nav-text">2.6 ModelLoader</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-2"><span class="nav-number">3.3.</span> <span class="nav-text">3. 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">3.4.</span> <span class="nav-text">4. 源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.5.</span> <span class="nav-text">5. 设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93-1"><span class="nav-number">3.6.</span> <span class="nav-text">6. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eventbus%E5%BC%82%E6%AD%A5%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">Eventbus异步框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">4.1.</span> <span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-3"><span class="nav-number">4.2.</span> <span class="nav-text">2. 主要组件源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-EventBus"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.1 EventBus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Subscriber"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.2 Subscriber</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-ThreadMode"><span class="nav-number">4.2.3.</span> <span class="nav-text">2.3 ThreadMode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-3"><span class="nav-number">4.3.</span> <span class="nav-text">3. 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-1"><span class="nav-number">4.4.</span> <span class="nav-text">4. 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E6%B3%A8%E5%86%8C%E8%AE%A2%E9%98%85%E8%80%85"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.1 注册订阅者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E6%9F%A5%E6%89%BE%E8%AE%A2%E9%98%85%E6%96%B9%E6%B3%95"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.2 查找订阅方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E5%8F%91%E5%B8%83%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.4.3.</span> <span class="nav-text">4.3 发布事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-%E5%88%86%E5%8F%91%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.4.4.</span> <span class="nav-text">4.4 分发事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-number">4.5.</span> <span class="nav-text">5. 线程模式处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93-2"><span class="nav-number">4.6.</span> <span class="nav-text">6. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rxjava2-%E6%A1%86%E6%9E%B6%E8%AE%B2%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">Rxjava2 框架讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84-3"><span class="nav-number">5.1.</span> <span class="nav-text">1. 基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-4"><span class="nav-number">5.2.</span> <span class="nav-text">2. 主要组件源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Observable"><span class="nav-number">5.2.1.</span> <span class="nav-text">2.1 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Observer"><span class="nav-number">5.2.2.</span> <span class="nav-text">2.2 Observer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Scheduler"><span class="nav-number">5.2.3.</span> <span class="nav-text">2.3 Scheduler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Operator"><span class="nav-number">5.2.4.</span> <span class="nav-text">2.4 Operator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-4"><span class="nav-number">5.3.</span> <span class="nav-text">3. 工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-2"><span class="nav-number">5.4.</span> <span class="nav-text">4. 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E5%88%9B%E5%BB%BAObservable"><span class="nav-number">5.4.1.</span> <span class="nav-text">4.1 创建Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E8%AE%A2%E9%98%85%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="nav-number">5.4.2.</span> <span class="nav-text">4.2 订阅事件流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92"><span class="nav-number">5.4.3.</span> <span class="nav-text">4.3 事件传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">5.5.</span> <span class="nav-text">5. 线程调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93-3"><span class="nav-number">5.6.</span> <span class="nav-text">6. 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="安卓面试基础5 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓面试基础5
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-12 08:43:33 / Modified: 09:25:17" itemprop="dateCreated datePublished" datetime="2024-10-12T08:43:33+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Okhttp-框架源码"><a href="#Okhttp-框架源码" class="headerlink" title="Okhttp 框架源码"></a>Okhttp 框架源码</h2><p>OkHttp是一个高效、灵活的HTTP客户端框架，其源码设计精巧，其中包含了许多值得学习的设计模式和实现技术。以下是OkHttp框架的主要组成部分及其源码分析。</p>
+<span id="more"></span>
+<h3 id="1-基本架构"><a href="#1-基本架构" class="headerlink" title="1. 基本架构"></a>1. 基本架构</h3><p>OkHttp的基本架构包括以下几个核心组件：</p>
+<ul>
+<li><strong>OkHttpClient</strong>：核心配置类，用于构建HTTP请求。</li>
+<li><strong>Request</strong>：表示一个HTTP请求。</li>
+<li><strong>Response</strong>：表示一个HTTP响应。</li>
+<li><strong>Call</strong>：表示一个可以执行的请求。</li>
+<li><strong>Dispatcher</strong>：负责请求的调度和执行。</li>
+<li><strong>Interceptor</strong>：拦截器，用于在请求、响应的过程中进行处理。</li>
+</ul>
+<h3 id="2-主要组件源码分析"><a href="#2-主要组件源码分析" class="headerlink" title="2. 主要组件源码分析"></a>2. 主要组件源码分析</h3><h4 id="2-1-OkHttpClient"><a href="#2-1-OkHttpClient" class="headerlink" title="2.1 OkHttpClient"></a>2.1 OkHttpClient</h4><p><code>OkHttpClient</code>是OkHttp的核心类，负责配置和执行请求。它是一个不可变的对象，通过<code>Builder</code>模式进行创建。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">OkHttpClient</span> <span class="variable">client</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpClient</span>.Builder()</span><br><span class="line">        .connectTimeout(<span class="number">10</span>, TimeUnit.SECONDS)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-Request和Response"><a href="#2-2-Request和Response" class="headerlink" title="2.2 Request和Response"></a>2.2 Request和Response</h4><p><code>Request</code>和<code>Response</code>分别用于表示HTTP请求和响应，这两个类都使用了<code>Builder</code>模式来构建。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Request</span>.Builder()</span><br><span class="line">        .url(<span class="string">&quot;https://example.com&quot;</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-Call"><a href="#2-3-Call" class="headerlink" title="2.3 Call"></a>2.3 Call</h4><p><code>Call</code>是对一次HTTP请求的抽象，通过<code>OkHttpClient</code>的<code>newCall</code>方法创建。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Call</span> <span class="variable">call</span> <span class="operator">=</span> client.newCall(request);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>同步执行</strong>：<code>call.execute()</code>，返回一个<code>Response</code>对象。</li>
+<li><strong>异步执行</strong>：<code>call.enqueue(Callback)</code>，回调会在请求完成或失败时触发。</li>
+</ul>
+<h4 id="2-4-Dispatcher"><a href="#2-4-Dispatcher" class="headerlink" title="2.4 Dispatcher"></a>2.4 Dispatcher</h4><p><code>Dispatcher</code>负责管理并发请求，控制最大同时请求数等。</p>
+<ul>
+<li>通过线程池管理请求。</li>
+<li>可配置最大并发请求数。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Dispatcher</span> <span class="variable">dispatcher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dispatcher</span>();</span><br><span class="line">dispatcher.setMaxRequests(<span class="number">64</span>);</span><br><span class="line">client = client.newBuilder().dispatcher(dispatcher).build();</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5-Interceptor"><a href="#2-5-Interceptor" class="headerlink" title="2.5 Interceptor"></a>2.5 Interceptor</h4><p>拦截器是OkHttp中的重要概念，用于在请求和响应的过程中进行干预。</p>
+<ul>
+<li><strong>应用拦截器</strong>：不受重试和重定向的影响。</li>
+<li><strong>网络拦截器</strong>：能够处理重试和重定向。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">client = client.newBuilder()</span><br><span class="line">        .addInterceptor(<span class="keyword">new</span> <span class="title class_">LoggingInterceptor</span>())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-工作流程"><a href="#3-工作流程" class="headerlink" title="3. 工作流程"></a>3. 工作流程</h3><ol>
+<li><strong>创建Request</strong>：使用<code>Request.Builder</code>构建请求。</li>
+<li><strong>创建Call</strong>：通过<code>OkHttpClient.newCall()</code>创建请求任务。</li>
+<li><strong>执行Call</strong>：使用<code>execute()</code>同步请求或<code>enqueue()</code>异步请求。</li>
+<li><strong>拦截器链</strong>：请求在执行前后会经过一系列拦截器。</li>
+<li><strong>Dispatcher调度</strong>：管理请求任务的调度。</li>
+<li><strong>返回Response</strong>：请求完成后返回<code>Response</code>对象。</li>
+</ol>
+<h3 id="4-拦截器源码分析"><a href="#4-拦截器源码分析" class="headerlink" title="4. 拦截器源码分析"></a>4. 拦截器源码分析</h3><p>拦截器链的核心实现通过<code>RealInterceptorChain</code>类，负责将请求一个个传递给下一个拦截器。</p>
+<ul>
+<li><p><strong>拦截器接口</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line">    Response <span class="title function_">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>拦截器链</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">RealInterceptorChain</span> <span class="keyword">implements</span> <span class="title class_">Interceptor</span>.Chain &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Interceptor&gt; interceptors;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> index;</span><br><span class="line">    <span class="comment">// 省略其他属性</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">proceed</span><span class="params">(Request request)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">if</span> (index &gt;= interceptors.size()) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AssertionError</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Call the next interceptor in the chain.</span></span><br><span class="line">        <span class="type">RealInterceptorChain</span> <span class="variable">next</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RealInterceptorChain</span>(interceptors, index + <span class="number">1</span>);</span><br><span class="line">        <span class="type">Interceptor</span> <span class="variable">interceptor</span> <span class="operator">=</span> interceptors.get(index);</span><br><span class="line">        <span class="type">Response</span> <span class="variable">response</span> <span class="operator">=</span> interceptor.intercept(next);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="5-连接复用"><a href="#5-连接复用" class="headerlink" title="5. 连接复用"></a>5. 连接复用</h3><p>OkHttp使用连接池来管理HTTP连接，提高请求效率。连接池通过<code>ConnectionPool</code>类管理，默认情况下会复用HTTP&#x2F;1.1的持久连接和HTTP&#x2F;2的多路复用连接。</p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>OkHttp通过合理的设计模式（如<code>Builder</code>模式、责任链模式）和高效的资源管理（如连接池、线程池），实现了功能强大且易于使用的HTTP客户端。通过深入理解其源码，可以学习到许多关于Java网络编程及设计模式的优秀实践。</p>
+<h2 id="Retrofift-框架讲解"><a href="#Retrofift-框架讲解" class="headerlink" title="Retrofift 框架讲解"></a>Retrofift 框架讲解</h2><p>Retrofit是一个基于OkHttp的类型安全的HTTP客户端库，广泛用于Android开发中进行网络请求。它通过注解将HTTP API转换为Java接口，使得网络请求更加简洁和易于维护。</p>
+<h3 id="1-基本架构-1"><a href="#1-基本架构-1" class="headerlink" title="1. 基本架构"></a>1. 基本架构</h3><p>Retrofit的核心组件包括：</p>
+<ul>
+<li><strong>Retrofit</strong>：核心配置类，用于创建API接口的实现。</li>
+<li><strong>Call</strong>：表示一次HTTP请求。</li>
+<li><strong>Converter</strong>：负责将请求和响应数据进行序列化和反序列化。</li>
+<li><strong>CallAdapter</strong>：适配器，用于将<code>Call</code>对象转换为所需的返回类型。</li>
+</ul>
+<h3 id="2-主要组件源码分析-1"><a href="#2-主要组件源码分析-1" class="headerlink" title="2. 主要组件源码分析"></a>2. 主要组件源码分析</h3><h4 id="2-1-Retrofit"><a href="#2-1-Retrofit" class="headerlink" title="2.1 Retrofit"></a>2.1 Retrofit</h4><p><code>Retrofit</code>类是整个库的核心，它通过<code>Builder</code>模式进行配置和创建。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Retrofit</span> <span class="variable">retrofit</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Retrofit</span>.Builder()</span><br><span class="line">        .baseUrl(<span class="string">&quot;https://api.example.com/&quot;</span>)</span><br><span class="line">        .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p><code>Retrofit.Builder</code>类提供了一系列方法来配置<code>Retrofit</code>实例，比如设置基础URL、添加转换器工厂、添加Call适配器工厂等。</p>
+<h4 id="2-2-API接口"><a href="#2-2-API接口" class="headerlink" title="2.2 API接口"></a>2.2 API接口</h4><p>API接口通过注解定义HTTP请求，Retrofit会自动生成实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ApiService</span> &#123;</span><br><span class="line">    <span class="meta">@GET(&quot;users/&#123;id&#125;&quot;)</span></span><br><span class="line">    Call&lt;User&gt; <span class="title function_">getUser</span><span class="params">(<span class="meta">@Path(&quot;id&quot;)</span> <span class="type">int</span> userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-动态代理"><a href="#2-3-动态代理" class="headerlink" title="2.3 动态代理"></a>2.3 动态代理</h4><p>Retrofit通过Java的动态代理来创建API接口的实现。<code>create()</code>方法中，使用<code>Proxy.newProxyInstance()</code>生成接口的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; T <span class="title function_">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> <span class="title class_">Class</span>&lt;?&gt;[]&#123;service&#125;, <span class="keyword">new</span> <span class="title class_">InvocationHandler</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">            <span class="comment">// 省略具体实现</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-ServiceMethod"><a href="#2-4-ServiceMethod" class="headerlink" title="2.4 ServiceMethod"></a>2.4 ServiceMethod</h4><p><code>ServiceMethod</code>类是解析注解和处理方法调用的核心。<code>parseAnnotations()</code>方法解析API接口的方法注解，构建相应的请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &lt;T&gt; ServiceMethod&lt;T&gt; <span class="title function_">parseAnnotations</span><span class="params">(Retrofit retrofit, Method method)</span> &#123;</span><br><span class="line">    <span class="comment">// 解析注解，构建ServiceMethod实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5-CallAdapter"><a href="#2-5-CallAdapter" class="headerlink" title="2.5 CallAdapter"></a>2.5 CallAdapter</h4><p><code>CallAdapter</code>负责将<code>Call</code>对象转换为所需的返回类型。默认的<code>CallAdapter</code>返回<code>Call</code>对象，但可以通过添加自定义的适配器工厂来支持RxJava等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">CallAdapter</span>&lt;R, T&gt; &#123;</span><br><span class="line">    Type <span class="title function_">responseType</span><span class="params">()</span>;</span><br><span class="line">    T <span class="title function_">adapt</span><span class="params">(Call&lt;R&gt; call)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-Converter"><a href="#2-6-Converter" class="headerlink" title="2.6 Converter"></a>2.6 Converter</h4><p><code>Converter</code>用于将请求体转换为特定格式的请求数据，以及将响应体转换为所需的数据类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Converter</span>&lt;F, T&gt; &#123;</span><br><span class="line">    T <span class="title function_">convert</span><span class="params">(F value)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-工作流程-1"><a href="#3-工作流程-1" class="headerlink" title="3. 工作流程"></a>3. 工作流程</h3><ol>
+<li><strong>创建Retrofit实例</strong>：通过<code>Retrofit.Builder</code>配置和构建<code>Retrofit</code>实例。</li>
+<li><strong>创建API接口实现</strong>：使用<code>create()</code>方法生成API接口的动态代理实现。</li>
+<li><strong>调用API方法</strong>：调用API接口方法时，代理对象会拦截方法调用，并通过<code>ServiceMethod</code>解析注解构建请求。</li>
+<li><strong>执行网络请求</strong>：构建的请求通过OkHttp执行，并返回<code>Call</code>对象。</li>
+<li><strong>适配器和转换器</strong>：<code>CallAdapter</code>和<code>Converter</code>负责将请求和响应数据进行转换。</li>
+</ol>
+<h3 id="4-源码分析示例"><a href="#4-源码分析示例" class="headerlink" title="4. 源码分析示例"></a>4. 源码分析示例</h3><p>以下是一个简单的API接口调用示例，结合源码进行详细分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ApiService</span> &#123;</span><br><span class="line">    <span class="meta">@GET(&quot;users/&#123;id&#125;&quot;)</span></span><br><span class="line">    Call&lt;User&gt; <span class="title function_">getUser</span><span class="params">(<span class="meta">@Path(&quot;id&quot;)</span> <span class="type">int</span> userId)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Retrofit</span> <span class="variable">retrofit</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Retrofit</span>.Builder()</span><br><span class="line">        .baseUrl(<span class="string">&quot;https://api.example.com/&quot;</span>)</span><br><span class="line">        .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line"><span class="type">ApiService</span> <span class="variable">apiService</span> <span class="operator">=</span> retrofit.create(ApiService.class);</span><br><span class="line">Call&lt;User&gt; call = apiService.getUser(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>Step 1: 创建Retrofit实例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Retrofit</span> <span class="variable">retrofit</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Retrofit</span>.Builder()</span><br><span class="line">        .baseUrl(<span class="string">&quot;https://api.example.com/&quot;</span>)</span><br><span class="line">        .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+<p><code>Retrofit.Builder</code>通过一系列方法设置基础URL、转换器工厂等，最终调用<code>build()</code>方法创建<code>Retrofit</code>实例。</p>
+</li>
+<li><p><strong>Step 2: 创建API接口实现</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApiService</span> <span class="variable">apiService</span> <span class="operator">=</span> retrofit.create(ApiService.class);</span><br></pre></td></tr></table></figure>
+<p><code>create()</code>方法通过动态代理生成<code>ApiService</code>接口的实现类。当调用<code>apiService.getUser(1)</code>时，<code>InvocationHandler</code>会拦截方法调用。</p>
+</li>
+<li><p><strong>Step 3: 解析注解和构建ServiceMethod</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">    ServiceMethod&lt;?&gt; serviceMethod = loadServiceMethod(method);</span><br><span class="line">    <span class="type">OkHttpCall</span> <span class="variable">okHttpCall</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpCall</span>&lt;&gt;(serviceMethod, args);</span><br><span class="line">    <span class="keyword">return</span> serviceMethod.callAdapter.adapt(okHttpCall);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>loadServiceMethod(method)</code>方法解析注解并构建<code>ServiceMethod</code>实例，<code>OkHttpCall</code>封装了具体的请求和参数。</p>
+</li>
+<li><p><strong>Step 4: 执行网络请求</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;User&gt; call = apiService.getUser(<span class="number">1</span>);</span><br><span class="line">call.enqueue(<span class="keyword">new</span> <span class="title class_">Callback</span>&lt;User&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(Call&lt;User&gt; call, Response&lt;User&gt; response)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理成功响应</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(Call&lt;User&gt; call, Throwable t)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理失败响应</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>enqueue()</code>方法将请求放入OkHttp的调度队列中执行，并在请求完成时回调<code>onResponse</code>或<code>onFailure</code>。</p>
+</li>
+</ul>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h3><p>Retrofit通过动态代理、注解解析、拦截器、适配器和转换器等机制，简化了HTTP API的调用流程，大大提高了代码的可读性和可维护性。了解其源码设计，可以帮助开发者更好地掌握Java高级特性和设计模式。</p>
+<h2 id="Glide-框架讲解"><a href="#Glide-框架讲解" class="headerlink" title="Glide 框架讲解"></a>Glide 框架讲解</h2><p>Glide是一个强大的图片加载和缓存库，广泛用于Android开发中。它的源码设计精巧，涉及到很多设计模式和架构理念。</p>
+<h3 id="1-基本架构-2"><a href="#1-基本架构-2" class="headerlink" title="1. 基本架构"></a>1. 基本架构</h3><p>Glide的核心组件包括：</p>
+<ul>
+<li><strong>Glide</strong>：主要入口，负责配置和启动图片请求。</li>
+<li><strong>RequestManager</strong>：管理和发起图片请求。</li>
+<li><strong>RequestBuilder</strong>：构建具体的图片请求。</li>
+<li><strong>Engine</strong>：负责加载和缓存图片资源。</li>
+<li><strong>DiskCacheStrategy</strong>：磁盘缓存策略。</li>
+<li><strong>ModelLoader</strong>：加载数据模型。</li>
+</ul>
+<h3 id="2-主要组件源码分析-2"><a href="#2-主要组件源码分析-2" class="headerlink" title="2. 主要组件源码分析"></a>2. 主要组件源码分析</h3><h4 id="2-1-Glide"><a href="#2-1-Glide" class="headerlink" title="2.1 Glide"></a>2.1 Glide</h4><p><code>Glide</code>类是整个库的入口，通过<code>with(Context)</code>方法获取<code>RequestManager</code>实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(context)</span><br><span class="line">     .load(url)</span><br><span class="line">     .into(imageView);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-RequestManager"><a href="#2-2-RequestManager" class="headerlink" title="2.2 RequestManager"></a>2.2 RequestManager</h4><p><code>RequestManager</code>负责管理和发起图片请求。每个<code>Activity</code>或<code>Fragment</code>都有自己的<code>RequestManager</code>实例，确保其生命周期与视图同步。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RequestManager</span> <span class="variable">requestManager</span> <span class="operator">=</span> Glide.with(context);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-RequestBuilder"><a href="#2-3-RequestBuilder" class="headerlink" title="2.3 RequestBuilder"></a>2.3 RequestBuilder</h4><p><code>RequestBuilder</code>用于构建具体的图片请求。它允许链式调用来配置请求细节，例如占位图、错误图、以及缓存策略等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(context)</span><br><span class="line">     .load(url)</span><br><span class="line">     .placeholder(R.drawable.placeholder)</span><br><span class="line">     .error(R.drawable.error)</span><br><span class="line">     .into(imageView);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-Engine"><a href="#2-4-Engine" class="headerlink" title="2.4 Engine"></a>2.4 Engine</h4><p><code>Engine</code>是Glide的核心，负责图片的加载和缓存。它通过<code>EngineJob</code>和<code>DecodeJob</code>来管理加载任务，并使用<code>LruCache</code>进行内存缓存。</p>
+<ul>
+<li><strong>EngineJob</strong>：管理加载任务的执行。</li>
+<li><strong>DecodeJob</strong>：负责图片解码。</li>
+<li><strong>LruCache</strong>：实现缓存管理。</li>
+</ul>
+<h4 id="2-5-DiskCacheStrategy"><a href="#2-5-DiskCacheStrategy" class="headerlink" title="2.5 DiskCacheStrategy"></a>2.5 DiskCacheStrategy</h4><p><code>DiskCacheStrategy</code>定义了磁盘缓存策略，如只缓存原始数据、只缓存转换后的数据等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(context)</span><br><span class="line">     .load(url)</span><br><span class="line">     .diskCacheStrategy(DiskCacheStrategy.ALL)</span><br><span class="line">     .into(imageView);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-ModelLoader"><a href="#2-6-ModelLoader" class="headerlink" title="2.6 ModelLoader"></a>2.6 ModelLoader</h4><p><code>ModelLoader</code>负责将数据模型转换为数据流，支持多种数据源，如本地文件、网络URL等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ModelLoader</span>&lt;Model, Data&gt; &#123;</span><br><span class="line">    LoadData&lt;Data&gt; <span class="title function_">buildLoadData</span><span class="params">(Model model, <span class="type">int</span> width, <span class="type">int</span> height, Options options)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-工作流程-2"><a href="#3-工作流程-2" class="headerlink" title="3. 工作流程"></a>3. 工作流程</h3><ol>
+<li><strong>获取RequestManager</strong>：通过<code>Glide.with(context)</code>获取<code>RequestManager</code>实例。</li>
+<li><strong>构建RequestBuilder</strong>：链式调用<code>load()</code>、<code>placeholder()</code>等方法配置请求。</li>
+<li><strong>Engine加载图片</strong>：<code>Engine</code>负责加载图片并缓存。</li>
+<li><strong>显示图片</strong>：将图片加载到目标<code>View</code>中，通过<code>into(imageView)</code>方法完成。</li>
+</ol>
+<h3 id="4-源码分析"><a href="#4-源码分析" class="headerlink" title="4. 源码分析"></a>4. 源码分析</h3><p>以下是一个简单的图片加载示例，结合源码进行详细分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(context)</span><br><span class="line">     .load(url)</span><br><span class="line">     .into(imageView);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>Step 1: 获取RequestManager</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RequestManager</span> <span class="variable">requestManager</span> <span class="operator">=</span> Glide.with(context);</span><br></pre></td></tr></table></figure>
+<p><code>with()</code>方法根据上下文获取<code>RequestManagerRetriever</code>，来管理<code>RequestManager</code>实例。</p>
+</li>
+<li><p><strong>Step 2: 构建RequestBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestBuilder&lt;Drawable&gt; requestBuilder = requestManager.load(url);</span><br></pre></td></tr></table></figure>
+<p><code>load()</code>方法返回一个<code>RequestBuilder</code>，可以进一步配置请求参数。</p>
+</li>
+<li><p><strong>Step 3: 发起图片请求</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requestBuilder.into(imageView);</span><br></pre></td></tr></table></figure>
+<p><code>into()</code>方法将请求提交到<code>Engine</code>，<code>Engine</code>会检查缓存并加载图片。</p>
+</li>
+<li><p><strong>Step 4: Engine加载图片</strong><br><code>Engine</code>根据缓存策略，通过<code>EngineJob</code>和<code>DecodeJob</code>执行加载任务。</p>
+</li>
+</ul>
+<h3 id="5-设计模式"><a href="#5-设计模式" class="headerlink" title="5. 设计模式"></a>5. 设计模式</h3><ul>
+<li><strong>建造者模式</strong>：<code>RequestBuilder</code>使用建造者模式配置请求。</li>
+<li><strong>单例模式</strong>：<code>Glide</code>和<code>Engine</code>使用单例模式管理实例。</li>
+<li><strong>责任链模式</strong>：请求处理通过一系列拦截器和加载器链式进行。</li>
+</ul>
+<h3 id="6-总结-1"><a href="#6-总结-1" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>Glide通过模块化设计和灵活的架构，实现了高效的图片加载和缓存。了解其源码设计，可以帮助开发者学习Android中如何实现复杂功能及提高代码效率。</p>
+<h2 id="Eventbus异步框架"><a href="#Eventbus异步框架" class="headerlink" title="Eventbus异步框架"></a>Eventbus异步框架</h2><p>EventBus 是一个开源的发布&#x2F;订阅事件总线框架，广泛应用于 Android 应用程序。它使组件之间的通信变得更加简单和解耦。EventBus 支持同步和异步事件处理。</p>
+<h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><ul>
+<li><strong>EventBus</strong>：事件总线，负责注册、注销和发送事件。</li>
+<li><strong>Subscriber</strong>：订阅者，接收特定类型的事件。</li>
+<li><strong>Event</strong>：事件对象，携带需要传递的信息。</li>
+<li><strong>ThreadMode</strong>：线程模式，指定事件处理的方法在哪个线程执行。</li>
+</ul>
+<h3 id="2-主要组件源码分析-3"><a href="#2-主要组件源码分析-3" class="headerlink" title="2. 主要组件源码分析"></a>2. 主要组件源码分析</h3><h4 id="2-1-EventBus"><a href="#2-1-EventBus" class="headerlink" title="2.1 EventBus"></a>2.1 EventBus</h4><p><code>EventBus</code> 是核心类，负责管理订阅者和事件的分发。核心方法包括 <code>register</code>, <code>unregister</code>, <code>post</code> 等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EventBus</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">EventBus</span> <span class="variable">defaultInstance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EventBus</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> EventBus <span class="title function_">getDefault</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> defaultInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(Object subscriber)</span> &#123; ... &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">unregister</span><span class="params">(Object subscriber)</span> &#123; ... &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">post</span><span class="params">(Object event)</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-Subscriber"><a href="#2-2-Subscriber" class="headerlink" title="2.2 Subscriber"></a>2.2 Subscriber</h4><p>订阅者类中的方法使用 <code>@Subscribe</code> 注解标记，指定接收事件的方法和处理线程模式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySubscriber</span> &#123;</span><br><span class="line">    <span class="meta">@Subscribe(threadMode = ThreadMode.MAIN)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onEventMainThread</span><span class="params">(MyEvent event)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理事件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-ThreadMode"><a href="#2-3-ThreadMode" class="headerlink" title="2.3 ThreadMode"></a>2.3 ThreadMode</h4><p><code>ThreadMode</code> 指定事件处理方法在哪个线程执行：</p>
+<ul>
+<li><code>POSTING</code>：在发布事件的线程处理事件。</li>
+<li><code>MAIN</code>：在主线程处理事件。</li>
+<li><code>BACKGROUND</code>：在后台线程处理事件。</li>
+<li><code>ASYNC</code>：使用线程池异步处理事件。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">ThreadMode</span> &#123;</span><br><span class="line">    POSTING,</span><br><span class="line">    MAIN,</span><br><span class="line">    BACKGROUND,</span><br><span class="line">    ASYNC</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-工作流程-3"><a href="#3-工作流程-3" class="headerlink" title="3. 工作流程"></a>3. 工作流程</h3><ol>
+<li><strong>注册订阅者</strong>：通过 <code>register</code> 方法注册订阅者。</li>
+<li><strong>发布事件</strong>：通过 <code>post</code> 方法发布事件。</li>
+<li><strong>查找订阅方法</strong>：找到订阅者中标记了 <code>@Subscribe</code> 注解的方法。</li>
+<li><strong>分发事件</strong>：根据 <code>ThreadMode</code> 将事件分发到相应的线程处理。</li>
+</ol>
+<h3 id="4-源码分析-1"><a href="#4-源码分析-1" class="headerlink" title="4. 源码分析"></a>4. 源码分析</h3><p>以下是对关键方法的详细分析：</p>
+<h4 id="4-1-注册订阅者"><a href="#4-1-注册订阅者" class="headerlink" title="4.1 注册订阅者"></a>4.1 注册订阅者</h4><p><code>register</code> 方法将订阅者注册到 <code>EventBus</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(Object subscriber)</span> &#123;</span><br><span class="line">    Class&lt;?&gt; subscriberClass = subscriber.getClass();</span><br><span class="line">    List&lt;SubscriberMethod&gt; subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (SubscriberMethod subscriberMethod : subscriberMethods) &#123;</span><br><span class="line">            subscribe(subscriber, subscriberMethod);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>findSubscriberMethods</code>：查找订阅者中标记了 <code>@Subscribe</code> 注解的方法。</li>
+<li><code>subscribe</code>：将订阅者和订阅方法存储到内部映射中。</li>
+</ul>
+<h4 id="4-2-查找订阅方法"><a href="#4-2-查找订阅方法" class="headerlink" title="4.2 查找订阅方法"></a>4.2 查找订阅方法</h4><p><code>SubscriberMethodFinder</code> 查找订阅方法并缓存结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;SubscriberMethod&gt; <span class="title function_">findSubscriberMethods</span><span class="params">(Class&lt;?&gt; subscriberClass)</span> &#123;</span><br><span class="line">    List&lt;SubscriberMethod&gt; subscriberMethods = methodCache.get(subscriberClass);</span><br><span class="line">    <span class="keyword">if</span> (subscriberMethods != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> subscriberMethods;</span><br><span class="line">    &#125;</span><br><span class="line">    subscriberMethods = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">// 省略具体实现</span></span><br><span class="line">    methodCache.put(subscriberClass, subscriberMethods);</span><br><span class="line">    <span class="keyword">return</span> subscriberMethods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-发布事件"><a href="#4-3-发布事件" class="headerlink" title="4.3 发布事件"></a>4.3 发布事件</h4><p><code>post</code> 方法发布事件并分发给所有订阅者。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">post</span><span class="params">(Object event)</span> &#123;</span><br><span class="line">    <span class="type">PostingThreadState</span> <span class="variable">postingState</span> <span class="operator">=</span> currentPostingThreadState.get();</span><br><span class="line">    List&lt;Object&gt; eventQueue = postingState.eventQueue;</span><br><span class="line">    eventQueue.add(event);</span><br><span class="line">    <span class="keyword">if</span> (!postingState.isPosting) &#123;</span><br><span class="line">        postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();</span><br><span class="line">        postingState.isPosting = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (!eventQueue.isEmpty()) &#123;</span><br><span class="line">                postSingleEvent(eventQueue.remove(<span class="number">0</span>), postingState);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            postingState.isPosting = <span class="literal">false</span>;</span><br><span class="line">            postingState.isMainThread = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>postSingleEvent</code>：处理单个事件，按照订阅者和优先级分发事件。</li>
+</ul>
+<h4 id="4-4-分发事件"><a href="#4-4-分发事件" class="headerlink" title="4.4 分发事件"></a>4.4 分发事件</h4><p><code>postSingleEvent</code> 具体实现，根据 <code>ThreadMode</code> 分发事件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">postSingleEvent</span><span class="params">(Object event, PostingThreadState postingState)</span> <span class="keyword">throws</span> Error &#123;</span><br><span class="line">    Class&lt;?&gt; eventClass = event.getClass();</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">subscriptionFound</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (Class&lt;?&gt; clazz = eventClass; clazz != <span class="literal">null</span>; clazz = clazz.getSuperclass()) &#123;</span><br><span class="line">        subscriptionFound |= postSingleEventForEventType(event, postingState, clazz);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!subscriptionFound) &#123;</span><br><span class="line">        <span class="comment">// 没有找到订阅者</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>postSingleEventForEventType</code>：根据事件类型找到订阅者，并通过反射调用订阅方法。</li>
+</ul>
+<h3 id="5-线程模式处理"><a href="#5-线程模式处理" class="headerlink" title="5. 线程模式处理"></a>5. 线程模式处理</h3><p>根据 <code>ThreadMode</code> 不同，事件处理方法可能在不同的线程执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">handleSubscriberEvent</span><span class="params">(Subscription subscription, Object event)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (subscription.subscriberMethod.threadMode) &#123;</span><br><span class="line">        <span class="keyword">case</span> POSTING:</span><br><span class="line">            invokeSubscriber(subscription, event);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MAIN:</span><br><span class="line">            <span class="keyword">if</span> (isMainThread()) &#123;</span><br><span class="line">                invokeSubscriber(subscription, event);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 切换到主线程</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> BACKGROUND:</span><br><span class="line">            <span class="keyword">if</span> (isMainThread()) &#123;</span><br><span class="line">                <span class="comment">// 切换到后台线程</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                invokeSubscriber(subscription, event);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ASYNC:</span><br><span class="line">            <span class="comment">// 在线程池中执行</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Unknown thread mode: &quot;</span> + subscription.subscriberMethod.threadMode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-总结-2"><a href="#6-总结-2" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>EventBus 通过注册和注销订阅者、发布事件、根据线程模式分发事件等机制，简化了组件之间的通信，解耦了各个模块。它的设计模式包括：</p>
+<ul>
+<li><strong>观察者模式</strong>：订阅者观察特定类型的事件。</li>
+<li><strong>反射机制</strong>：通过反射找到订阅方法并调用。</li>
+<li><strong>线程池</strong>：使用线程池处理异步事件。</li>
+</ul>
+<h2 id="Rxjava2-框架讲解"><a href="#Rxjava2-框架讲解" class="headerlink" title="Rxjava2 框架讲解"></a>Rxjava2 框架讲解</h2><p>RxJava 2 是一个用于异步编程的响应式扩展库，广泛应用于 Android 开发中。它通过事件流和函数式编程简化了异步任务的处理。</p>
+<h3 id="1-基本架构-3"><a href="#1-基本架构-3" class="headerlink" title="1. 基本架构"></a>1. 基本架构</h3><p>RxJava 2 的核心组件包括：</p>
+<ul>
+<li><strong>Observable</strong> &#x2F; <strong>Flowable</strong>：代表可观察的事件流。</li>
+<li><strong>Observer</strong> &#x2F; <strong>Subscriber</strong>：订阅者，接收和处理事件。</li>
+<li><strong>Scheduler</strong>：调度器，控制事件在哪个线程执行。</li>
+<li><strong>Operator</strong>：操作符，用于转换和组合事件流。</li>
+</ul>
+<h3 id="2-主要组件源码分析-4"><a href="#2-主要组件源码分析-4" class="headerlink" title="2. 主要组件源码分析"></a>2. 主要组件源码分析</h3><h4 id="2-1-Observable"><a href="#2-1-Observable" class="headerlink" title="2.1 Observable"></a>2.1 Observable</h4><p><code>Observable</code> 是事件流的核心类，定义了事件的发射和传递。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Observable</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Observable&lt;T&gt; <span class="title function_">create</span><span class="params">(ObservableOnSubscribe&lt;T&gt; source)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ObservableCreate</span>&lt;&gt;(source);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">subscribe</span><span class="params">(Observer&lt;? <span class="built_in">super</span> T&gt; observer)</span> &#123;</span><br><span class="line">        <span class="comment">// 省略具体实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>create()</code>：用于创建一个 <code>Observable</code> 实例。</li>
+<li><code>subscribe()</code>：用于订阅事件流。</li>
+</ul>
+<h4 id="2-2-Observer"><a href="#2-2-Observer" class="headerlink" title="2.2 Observer"></a>2.2 Observer</h4><p><code>Observer</code> 接口定义了接收事件的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Observer</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onSubscribe</span><span class="params">(Disposable d)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onNext</span><span class="params">(T t)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onError</span><span class="params">(Throwable e)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">onComplete</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>onSubscribe()</code>：在订阅时调用。</li>
+<li><code>onNext()</code>：接收每个事件。</li>
+<li><code>onError()</code>：如果发生错误，调用此方法。</li>
+<li><code>onComplete()</code>：当事件流完成时调用。</li>
+</ul>
+<h4 id="2-3-Scheduler"><a href="#2-3-Scheduler" class="headerlink" title="2.3 Scheduler"></a>2.3 Scheduler</h4><p><code>Scheduler</code> 用于控制事件流在哪个线程执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Scheduler</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> Worker <span class="title function_">createWorker</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Scheduler <span class="title function_">io</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> RxJavaPlugins.onIoScheduler(InstanceHolder.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>io()</code>：返回一个用于I&#x2F;O操作的调度器。</li>
+<li><code>createWorker()</code>：用于创建工作线程。</li>
+</ul>
+<h4 id="2-4-Operator"><a href="#2-4-Operator" class="headerlink" title="2.4 Operator"></a>2.4 Operator</h4><p>操作符用于转换和组合事件流，通过链式调用实现复杂的数据流处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> &lt;R&gt; Observable&lt;R&gt; <span class="title function_">map</span><span class="params">(Function&lt;? <span class="built_in">super</span> T, ? extends R&gt; mapper)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ObservableMap</span>&lt;&gt;(<span class="built_in">this</span>, mapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>map()</code>：对每个事件应用一个函数，返回新的 <code>Observable</code>。</li>
+</ul>
+<h3 id="3-工作流程-4"><a href="#3-工作流程-4" class="headerlink" title="3. 工作流程"></a>3. 工作流程</h3><ol>
+<li><strong>创建Observable</strong>：通过 <code>create()</code> 方法定义事件发射逻辑。</li>
+<li><strong>定义Observer</strong>：实现 <code>Observer</code> 接口，定义处理事件的方法。</li>
+<li><strong>订阅事件流</strong>：调用 <code>subscribe()</code> 方法，连接 <code>Observable</code> 和 <code>Observer</code>。</li>
+<li><strong>事件传递</strong>：通过操作符转换数据，使用 <code>Scheduler</code> 控制线程。</li>
+</ol>
+<h3 id="4-源码分析-2"><a href="#4-源码分析-2" class="headerlink" title="4. 源码分析"></a>4. 源码分析</h3><p>以下是对创建和订阅事件流的详细源码分析：</p>
+<h4 id="4-1-创建Observable"><a href="#4-1-创建Observable" class="headerlink" title="4.1 创建Observable"></a>4.1 创建Observable</h4><p><code>ObservableCreate</code> 类是 <code>create()</code> 方法返回的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">ObservableCreate</span>&lt;T&gt; <span class="keyword">extends</span> <span class="title class_">Observable</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">final</span> ObservableOnSubscribe&lt;T&gt; source;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ObservableCreate</span><span class="params">(ObservableOnSubscribe&lt;T&gt; source)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.source = source;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">subscribeActual</span><span class="params">(Observer&lt;? <span class="built_in">super</span> T&gt; observer)</span> &#123;</span><br><span class="line">        CreateEmitter&lt;T&gt; parent = <span class="keyword">new</span> <span class="title class_">CreateEmitter</span>&lt;&gt;(observer);</span><br><span class="line">        observer.onSubscribe(parent);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            source.subscribe(parent);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            parent.onError(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>subscribeActual()</code>：实际的订阅逻辑，将事件发射器与观察者连接。</li>
+</ul>
+<h4 id="4-2-订阅事件流"><a href="#4-2-订阅事件流" class="headerlink" title="4.2 订阅事件流"></a>4.2 订阅事件流</h4><p><code>subscribe()</code> 方法用于连接 <code>Observable</code> 和 <code>Observer</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">subscribe</span><span class="params">(Observer&lt;? <span class="built_in">super</span> T&gt; observer)</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        observer = RxJavaPlugins.onSubscribe(<span class="built_in">this</span>, observer);</span><br><span class="line">        subscribeActual(observer);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NullPointerException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>subscribeActual()</code>：调用 <code>Observable</code> 的实际订阅实现。</li>
+</ul>
+<h4 id="4-3-事件传递"><a href="#4-3-事件传递" class="headerlink" title="4.3 事件传递"></a>4.3 事件传递</h4><p>操作符通过装饰模式实现事件的转换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">ObservableMap</span>&lt;T, U&gt; <span class="keyword">extends</span> <span class="title class_">AbstractObservableWithUpstream</span>&lt;T, U&gt; &#123;</span><br><span class="line">    <span class="keyword">final</span> Function&lt;? <span class="built_in">super</span> T, ? <span class="keyword">extends</span> <span class="title class_">U</span>&gt; function;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">subscribeActual</span><span class="params">(Observer&lt;? <span class="built_in">super</span> U&gt; observer)</span> &#123;</span><br><span class="line">        source.subscribe(<span class="keyword">new</span> <span class="title class_">MapObserver</span>&lt;&gt;(observer, function));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ObservableMap</code>：通过应用函数转换事件。</li>
+</ul>
+<h3 id="5-线程调度"><a href="#5-线程调度" class="headerlink" title="5. 线程调度"></a>5. 线程调度</h3><p>RxJava 使用 <code>Scheduler</code> 控制事件在哪个线程执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Observable&lt;T&gt; <span class="title function_">subscribeOn</span><span class="params">(Scheduler scheduler)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> <span class="title class_">ObservableSubscribeOn</span>&lt;&gt;(<span class="built_in">this</span>, scheduler));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>subscribeOn()</code>：指定事件流在哪个线程开始执行。</li>
+</ul>
+<h3 id="6-总结-3"><a href="#6-总结-3" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>RxJava 2 通过事件流、操作符和调度器，提供了强大的异步编程能力。其设计模式包括：</p>
+<ul>
+<li><strong>观察者模式</strong>：<code>Observable</code> 和 <code>Observer</code> 实现事件观察。</li>
+<li><strong>装饰模式</strong>：操作符通过装饰模式实现事件流的转换。</li>
+<li><strong>策略模式</strong>：<code>Scheduler</code> 控制线程执行策略。</li>
+</ul>
+<p>了解 RxJava 2 的源码设计，可以帮助开发者更好地掌握响应式编程及其在 Android 开发中的应用。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/" rel="prev" title="安卓面试基础4">
+                  <i class="fa fa-angle-left"></i> 安卓面试基础4
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%806/" rel="next" title="安卓面试基础6">
+                  安卓面试基础6 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

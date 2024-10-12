@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解在Android开发中，设计模式有助于组织代码，提高代码的可维护性和可扩展性。MVC、MVP和MVVM是三种常见的设计模式。以下是对这三种设计模式的详细讲解，包括它们的基本概念、结构图、优缺点以及在实际开发中的应用示例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓面试基础4">
+<meta property="og:url" content="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解在Android开发中，设计模式有助于组织代码，提高代码的可维护性和可扩展性。MVC、MVP和MVVM是三种常见的设计模式。以下是对这三种设计模式的详细讲解，包括它们的基本概念、结构图、优缺点以及在实际开发中的应用示例。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-11T13:32:30.000Z">
+<meta property="article:modified_time" content="2024-10-12T00:43:20.087Z">
+<meta property="article:author" content="june chiu">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/","path":"2024/10/11/安卓面试基础4/","title":"安卓面试基础4"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>安卓面试基础4 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">学习笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日常学习记录的笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-分类"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC-MVP-MVVM%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MVC%EF%BC%88Model-View-Controller%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1. MVC（Model-View-Controller）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 结构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 示例代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MVP%EF%BC%88Model-View-Presenter%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">2. MVP（Model-View-Presenter）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 结构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 示例代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MVVM%EF%BC%88Model-View-ViewModel%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3. MVVM（Model-View-ViewModel）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 结构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 示例代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">4. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android%E6%8F%92%E4%BB%B6%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">android插件化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%B4%BB"><span class="nav-number">3.</span> <span class="nav-text">进程保活</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.1.</span> <span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%B4%BB%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">2. 常见的进程保活策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%89%8D%E5%8F%B0%E6%9C%8D%E5%8A%A1%EF%BC%88Foreground-Service%EF%BC%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 前台服务（Foreground Service）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-AlarmManager%E5%AE%9A%E6%97%B6%E5%94%A4%E9%86%92"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 AlarmManager定时唤醒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-JobScheduler"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 JobScheduler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E5%99%A8"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.4 广播接收器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%B4%BB%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.3.</span> <span class="nav-text">3. 进程保活的注意事项</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">june chiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="安卓面试基础4 | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓面试基础4
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-11 21:32:30" itemprop="dateCreated datePublished" datetime="2024-10-11T21:32:30+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-12 08:43:20" itemprop="dateModified" datetime="2024-10-12T08:43:20+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="MVC-MVP-MVVM设计模式详细讲解"><a href="#MVC-MVP-MVVM设计模式详细讲解" class="headerlink" title="MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解"></a>MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解</h2><p>在Android开发中，设计模式有助于组织代码，提高代码的可维护性和可扩展性。MVC、MVP和MVVM是三种常见的设计模式。以下是对这三种设计模式的详细讲解，包括它们的基本概念、结构图、优缺点以及在实际开发中的应用示例。</p>
+<span id="more"></span>
+<h3 id="1-MVC（Model-View-Controller）"><a href="#1-MVC（Model-View-Controller）" class="headerlink" title="1. MVC（Model-View-Controller）"></a>1. MVC（Model-View-Controller）</h3><h4 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h4><p>MVC是一种将应用程序分为三部分的设计模式：</p>
+<ul>
+<li><strong>Model</strong>：负责处理数据和业务逻辑。</li>
+<li><strong>View</strong>：负责显示数据和与用户交互。</li>
+<li><strong>Controller</strong>：负责处理用户输入并更新Model和View。</li>
+</ul>
+<h4 id="1-2-结构图"><a href="#1-2-结构图" class="headerlink" title="1.2 结构图"></a>1.2 结构图</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+----------+            +----------+            +----------+</span><br><span class="line">|  <span class="type">View</span>    | &lt;--------&gt; |<span class="type">Controller</span>| &lt;--------&gt; |  <span class="type">Model</span>   |</span><br><span class="line">+----------+            +----------+            +----------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-优缺点"><a href="#1-3-优缺点" class="headerlink" title="1.3 优缺点"></a>1.3 优缺点</h4><p><strong>优点</strong>：</p>
+<ul>
+<li>分离关注点，提高代码的可维护性和可测试性。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>在复杂应用中，Controller可能变得过于庞大。</li>
+</ul>
+<h4 id="1-4-示例代码"><a href="#1-4-示例代码" class="headerlink" title="1.4 示例代码"></a>1.4 示例代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Model</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserModel</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getters and setters</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> TextView nameTextView;</span><br><span class="line">    <span class="keyword">private</span> EditText emailEditText;</span><br><span class="line">    <span class="keyword">private</span> Button saveButton;</span><br><span class="line">    <span class="keyword">private</span> UserController userController;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        nameTextView = findViewById(R.id.nameTextView);</span><br><span class="line">        emailEditText = findViewById(R.id.emailEditText);</span><br><span class="line">        saveButton = findViewById(R.id.saveButton);</span><br><span class="line">        userController = <span class="keyword">new</span> <span class="title class_">UserController</span>(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">        saveButton.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span> &#123;</span><br><span class="line">                userController.saveUser(emailEditText.getText().toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateView</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        nameTextView.setText(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> UserModel userModel;</span><br><span class="line">    <span class="keyword">private</span> MainActivity view;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserController</span><span class="params">(MainActivity view)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.view = view;</span><br><span class="line">        userModel = <span class="keyword">new</span> <span class="title class_">UserModel</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">saveUser</span><span class="params">(String email)</span> &#123;</span><br><span class="line">        userModel.setEmail(email);</span><br><span class="line">        view.updateView(userModel.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-MVP（Model-View-Presenter）"><a href="#2-MVP（Model-View-Presenter）" class="headerlink" title="2. MVP（Model-View-Presenter）"></a>2. MVP（Model-View-Presenter）</h3><h4 id="2-1-基本概念"><a href="#2-1-基本概念" class="headerlink" title="2.1 基本概念"></a>2.1 基本概念</h4><p>MVP是MVC的一种改进，通过引入Presenter来分离View和Model，使得每个部分更清晰：</p>
+<ul>
+<li><strong>Model</strong>：负责数据和业务逻辑。</li>
+<li><strong>View</strong>：负责显示数据和与用户交互。</li>
+<li><strong>Presenter</strong>：作为中间人，处理View的用户交互并更新Model和View。</li>
+</ul>
+<h4 id="2-2-结构图"><a href="#2-2-结构图" class="headerlink" title="2.2 结构图"></a>2.2 结构图</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+----------+            +----------+            +----------+</span><br><span class="line">|  <span class="type">View</span>    | &lt;--------&gt; |<span class="type">Presenter</span> | &lt;--------&gt; |  <span class="type">Model</span>   |</span><br><span class="line">+----------+            +----------+            +----------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-优缺点"><a href="#2-3-优缺点" class="headerlink" title="2.3 优缺点"></a>2.3 优缺点</h4><p><strong>优点</strong>：</p>
+<ul>
+<li>View和Model完全分离，代码更清晰。</li>
+<li>Presenter更容易测试。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>需要编写更多的样板代码。</li>
+</ul>
+<h4 id="2-4-示例代码"><a href="#2-4-示例代码" class="headerlink" title="2.4 示例代码"></a>2.4 示例代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Model</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserModel</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getters and setters</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View Interface</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserView</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">showUser</span><span class="params">(String name, String email)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View (Activity)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title class_">UserView</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> TextView nameTextView;</span><br><span class="line">    <span class="keyword">private</span> EditText emailEditText;</span><br><span class="line">    <span class="keyword">private</span> Button saveButton;</span><br><span class="line">    <span class="keyword">private</span> UserPresenter presenter;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        nameTextView = findViewById(R.id.nameTextView);</span><br><span class="line">        emailEditText = findViewById(R.id.emailEditText);</span><br><span class="line">        saveButton = findViewById(R.id.saveButton);</span><br><span class="line">        presenter = <span class="keyword">new</span> <span class="title class_">UserPresenter</span>(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">        saveButton.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span> &#123;</span><br><span class="line">                presenter.saveEmail(emailEditText.getText().toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showUser</span><span class="params">(String name, String email)</span> &#123;</span><br><span class="line">        nameTextView.setText(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Presenter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserPresenter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> UserView view;</span><br><span class="line">    <span class="keyword">private</span> UserModel userModel;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserPresenter</span><span class="params">(UserView view)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.view = view;</span><br><span class="line">        userModel = <span class="keyword">new</span> <span class="title class_">UserModel</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">saveEmail</span><span class="params">(String email)</span> &#123;</span><br><span class="line">        userModel.setEmail(email);</span><br><span class="line">        view.showUser(userModel.getName(), userModel.getEmail());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-MVVM（Model-View-ViewModel）"><a href="#3-MVVM（Model-View-ViewModel）" class="headerlink" title="3. MVVM（Model-View-ViewModel）"></a>3. MVVM（Model-View-ViewModel）</h3><h4 id="3-1-基本概念"><a href="#3-1-基本概念" class="headerlink" title="3.1 基本概念"></a>3.1 基本概念</h4><p>MVVM通过引入ViewModel来简化View和Model之间的交互：</p>
+<ul>
+<li><strong>Model</strong>：负责数据和业务逻辑。</li>
+<li><strong>View</strong>：负责显示数据和与用户交互。</li>
+<li><strong>ViewModel</strong>：充当View的抽象，处理数据和业务逻辑，通常与数据绑定库（如Data Binding或LiveData）一起使用。</li>
+</ul>
+<h4 id="3-2-结构图"><a href="#3-2-结构图" class="headerlink" title="3.2 结构图"></a>3.2 结构图</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+----------+            +----------+            +----------+</span><br><span class="line">|  <span class="type">View</span>    | &lt;--------&gt; |<span class="type">ViewModel</span> | &lt;--------&gt; |  <span class="type">Model</span>   |</span><br><span class="line">+----------+            +----------+            +----------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-优缺点"><a href="#3-3-优缺点" class="headerlink" title="3.3 优缺点"></a>3.3 优缺点</h4><p><strong>优点</strong>：</p>
+<ul>
+<li>View与Model完全分离，代码更清晰。</li>
+<li>ViewModel可以复用，且更容易测试。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>需要学习和使用数据绑定库。</li>
+</ul>
+<h4 id="3-4-示例代码"><a href="#3-4-示例代码" class="headerlink" title="3.4 示例代码"></a>3.4 示例代码</h4><p>使用<code>LiveData</code>和<code>ViewModel</code>的MVVM示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Model</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserModel</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getters and setters</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View (Activity)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> TextView nameTextView;</span><br><span class="line">    <span class="keyword">private</span> EditText emailEditText;</span><br><span class="line">    <span class="keyword">private</span> Button saveButton;</span><br><span class="line">    <span class="keyword">private</span> UserViewModel userViewModel;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        nameTextView = findViewById(R.id.nameTextView);</span><br><span class="line">        emailEditText = findViewById(R.id.emailEditText);</span><br><span class="line">        saveButton = findViewById(R.id.saveButton);</span><br><span class="line"></span><br><span class="line">        userViewModel = <span class="keyword">new</span> <span class="title class_">ViewModelProvider</span>(<span class="built_in">this</span>).get(UserViewModel.class);</span><br><span class="line"></span><br><span class="line">        userViewModel.getUser().observe(<span class="built_in">this</span>, <span class="keyword">new</span> <span class="title class_">Observer</span>&lt;UserModel&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onChanged</span><span class="params">(UserModel userModel)</span> &#123;</span><br><span class="line">                nameTextView.setText(userModel.getName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        saveButton.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span> &#123;</span><br><span class="line">                userViewModel.saveEmail(emailEditText.getText().toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ViewModel</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserViewModel</span> <span class="keyword">extends</span> <span class="title class_">ViewModel</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;UserModel&gt; userLiveData;</span><br><span class="line">    <span class="keyword">private</span> UserModel userModel;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserViewModel</span><span class="params">()</span> &#123;</span><br><span class="line">        userLiveData = <span class="keyword">new</span> <span class="title class_">MutableLiveData</span>&lt;&gt;();</span><br><span class="line">        userModel = <span class="keyword">new</span> <span class="title class_">UserModel</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> LiveData&lt;UserModel&gt; <span class="title function_">getUser</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> userLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">saveEmail</span><span class="params">(String email)</span> &#123;</span><br><span class="line">        userModel.setEmail(email);</span><br><span class="line">        userLiveData.setValue(userModel);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>三种设计模式各有优缺点，选择哪一种取决于具体的项目需求和团队的熟悉程度：</p>
+<ul>
+<li><p><strong>mvc与mvp的区别</strong><br>mvc中view视图与model直接交互<br>mvp中view视图不会与model直接交互</p>
+</li>
+<li><p><strong>MVC</strong>：适用于简单应用，但在大型项目中可能变得复杂。</p>
+</li>
+<li><p><strong>MVP</strong>：提供了更好的分离关注点和可测试性，但需要更多样板代码。</p>
+</li>
+<li><p><strong>MVVM</strong>：与数据绑定库结合使用，提供了更好的分离关注点、可复用性和可测试性</p>
+</li>
+</ul>
+<h2 id="android插件化"><a href="#android插件化" class="headerlink" title="android插件化"></a>android插件化</h2><p>64k限制</p>
+<ol>
+<li>代码动态加载</li>
+<li>资源动态加载  AssetsManager +反射</li>
+<li>资源混淆</li>
+<li>动态加载apk  DexClassLoader + 反射</li>
+<li>热更新  Dexposed hook</li>
+</ol>
+<h2 id="进程保活"><a href="#进程保活" class="headerlink" title="进程保活"></a>进程保活</h2><p>前台进程，可见进程，服务进程，后台进程，空进程</p>
+<p>low memory killer 策略<br>利用Native进程保活 5.0以后失效，使用JobScheduler</p>
+<h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><p>由于Android系统为了优化内存管理，会在需要时终止后台进程。因此，开发者需要采取一些策略来延长应用进程的生命周期。</p>
+<h3 id="2-常见的进程保活策略"><a href="#2-常见的进程保活策略" class="headerlink" title="2. 常见的进程保活策略"></a>2. 常见的进程保活策略</h3><h4 id="2-1-前台服务（Foreground-Service）"><a href="#2-1-前台服务（Foreground-Service）" class="headerlink" title="2.1 前台服务（Foreground Service）"></a>2.1 前台服务（Foreground Service）</h4><p>将应用的某些功能放在前台服务中运行，使其更不容易被系统回收。</p>
+<ul>
+<li><strong>实现方法</strong>：<ul>
+<li>启动服务并调用<code>startForeground()</code>。</li>
+<li>提供持续显示的通知以告知用户服务正在运行。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyForegroundService</span> <span class="keyword">extends</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">onStartCommand</span><span class="params">(Intent intent, <span class="type">int</span> flags, <span class="type">int</span> startId)</span> &#123;</span><br><span class="line">        <span class="type">Notification</span> <span class="variable">notification</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NotificationCompat</span>.Builder(<span class="built_in">this</span>, <span class="string">&quot;CHANNEL_ID&quot;</span>)</span><br><span class="line">                .setContentTitle(<span class="string">&quot;Service Running&quot;</span>)</span><br><span class="line">                .setContentText(<span class="string">&quot;Foreground Service&quot;</span>)</span><br><span class="line">                .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        startForeground(<span class="number">1</span>, notification);</span><br><span class="line">        <span class="keyword">return</span> START_STICKY; <span class="comment">//系统机制</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> IBinder <span class="title function_">onBind</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-AlarmManager定时唤醒"><a href="#2-2-AlarmManager定时唤醒" class="headerlink" title="2.2 AlarmManager定时唤醒"></a>2.2 AlarmManager定时唤醒</h4><p>通过<code>AlarmManager</code>定期唤醒应用，执行特定任务。</p>
+<ul>
+<li><strong>实现方法</strong>：<ul>
+<li>设置周期性闹钟，通过<code>PendingIntent</code>触发服务。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AlarmManager</span> <span class="variable">alarmManager</span> <span class="operator">=</span> (AlarmManager) getSystemService(Context.ALARM_SERVICE);</span><br><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="built_in">this</span>, MyService.class);</span><br><span class="line"><span class="type">PendingIntent</span> <span class="variable">pendingIntent</span> <span class="operator">=</span> PendingIntent.getService(<span class="built_in">this</span>, <span class="number">0</span>, intent, <span class="number">0</span>);</span><br><span class="line">alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,</span><br><span class="line">        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,</span><br><span class="line">        AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-JobScheduler"><a href="#2-3-JobScheduler" class="headerlink" title="2.3 JobScheduler"></a>2.3 JobScheduler</h4><p>使用<code>JobScheduler</code>在条件满足时执行后台任务，可以减少资源消耗。</p>
+<ul>
+<li><strong>实现方法</strong>：<ul>
+<li>定义<code>JobService</code>，并通过<code>JobScheduler</code>调度任务。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyJobService</span> <span class="keyword">extends</span> <span class="title class_">JobService</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onStartJob</span><span class="params">(JobParameters params)</span> &#123;</span><br><span class="line">        <span class="comment">// 执行任务</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onStopJob</span><span class="params">(JobParameters params)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-广播接收器"><a href="#2-4-广播接收器" class="headerlink" title="2.4 广播接收器"></a>2.4 广播接收器</h4><p>监听系统广播，如网络变化、设备启动等，唤醒应用。</p>
+<ul>
+<li><strong>实现方法</strong>：<ul>
+<li>注册广播接收器并在回调中启动服务。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBroadcastReceiver</span> <span class="keyword">extends</span> <span class="title class_">BroadcastReceiver</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onReceive</span><span class="params">(Context context, Intent intent)</span> &#123;</span><br><span class="line">        <span class="type">Intent</span> <span class="variable">serviceIntent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(context, MyService.class);</span><br><span class="line">        context.startService(serviceIntent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-进程保活的注意事项"><a href="#3-进程保活的注意事项" class="headerlink" title="3. 进程保活的注意事项"></a>3. 进程保活的注意事项</h3><ul>
+<li><strong>电量消耗</strong>：频繁唤醒或长时间运行服务会增加电量消耗。</li>
+<li><strong>用户体验</strong>：不当的保活策略可能导致不良的用户体验。</li>
+<li><strong>系统限制</strong>：Android系统（尤其是新版本）对后台进程和任务有严格的限制。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/" rel="prev" title="安卓面试基础3">
+                  <i class="fa fa-angle-left"></i> 安卓面试基础3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/" rel="next" title="安卓面试基础5">
+                  安卓面试基础5 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">june chiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -157,7 +157,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%807/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,75 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/" class="post-title-link" itemprop="url">BAT安卓面试基础3</a>
+          <a href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%807/" class="post-title-link" itemprop="url">安卓面试基础7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-12 10:15:22" itemprop="dateCreated datePublished" datetime="2024-10-12T10:15:22+08:00">2024-10-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%806/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%806/" class="post-title-link" itemprop="url">安卓面试基础6</a>
         </h2>
 
         <div class="post-meta-container">
@@ -187,7 +255,335 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-10-11 20:19:50 / Modified: 21:19:39" itemprop="dateCreated datePublished" datetime="2024-10-11T20:19:50+08:00">2024-10-11</time>
+      <time title="Created: 2024-10-12 09:26:28 / Modified: 09:55:33" itemprop="dateCreated datePublished" datetime="2024-10-12T09:26:28+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ANR面试"><a href="#ANR面试" class="headerlink" title="ANR面试"></a>ANR面试</h2><p>ANR（Application Not Responding）是指应用程序无响应，是 Android 系统检测到应用程序在特定时间内未能响应用户输入事件或执行特定操作而触发的。</p>
+<ul>
+<li>输入事件（如按键或触摸事件）：5 秒</li>
+<li>BroadcastReceiver：后台广播 10 秒，前台广播 60 秒</li>
+<li>Service：前台服务 20 秒</li>
+</ul>
+<h3 id="ANR-主要由以下几种情况引起："><a href="#ANR-主要由以下几种情况引起：" class="headerlink" title="ANR 主要由以下几种情况引起："></a>ANR 主要由以下几种情况引起：</h3><ul>
+<li>主线程阻塞：主线程执行了耗时操作，如网络请求、文件读写、大量计算等，导致无法及时处理用户输入事件。</li>
+<li>长时间未释放资源：如 BroadcastReceiver 或 Service 长时间未完成任务。</li>
+<li>死锁：多个线程之间相互等待资源，导致线程无法继续执行。</li>
+<li>界面更新频繁：频繁进行界面更新操作，导致主线程负载过高。</li>
+<li>内存不足：系统内存不足，导致 GC 频繁或 OOM（内存溢出）。</li>
+</ul>
+<h3 id="如何预防和解决-ANR？"><a href="#如何预防和解决-ANR？" class="headerlink" title="如何预防和解决 ANR？"></a>如何预防和解决 ANR？</h3><ul>
+<li><p>避免在主线程执行耗时操作<br>在主线程中应避免执行如网络请求、文件读写、大量计算等耗时操作。这类操作应放在子线程中执行，通过 Handler 或 AsyncTask 等方式通知主线程更新 UI。</p>
+</li>
+<li><p>使用合适的线程机制<br>对于后台任务，尽量使用 IntentService 或 JobIntentService，它们在完成任务后会自动停止。<br>使用 HandlerThread 或 ExecutorService 来管理线程，避免创建过多线程导致系统资源耗尽。</p>
+</li>
+<li><p>合理使用 BroadcastReceiver<br>避免在 BroadcastReceiver 中执行耗时操作。如果确实需要执行耗时任务，可以启动一个 Service 来处理。</p>
+</li>
+<li><p>优化界面绘制<br>避免频繁调用 invalidate() 或 requestLayout() 方法。<br>尽量减少界面元素的层级，优化自定义 View 的绘制逻辑。</p>
+</li>
+<li><p>资源优化<br>合理管理和释放资源，如 Bitmap、Cursor 等，避免内存泄漏。<br>使用合适的缓存策略，减少内存占用。</p>
+</li>
+</ul>
+<h2 id="OOM面试详解"><a href="#OOM面试详解" class="headerlink" title="OOM面试详解"></a>OOM面试详解</h2><ul>
+<li><p>OOM（Out of Memory）是指应用程序在运行时内存耗尽，导致内存溢出异常。</p>
+</li>
+<li><p>内存抖动（Memory Churn）是指短时间内频繁创建和销毁对象，导致内存频繁分配和回收，从而影响系统性能。</p>
+</li>
+<li><p>内存泄漏（Memory Leak）是指应用程序在运行时，由于疏忽或错误导致某些对象无法被垃圾回收器回收，从而占用内存，导致内存泄漏。</p>
+</li>
+</ul>
+<h3 id="OOM-的原因"><a href="#OOM-的原因" class="headerlink" title="OOM 的原因"></a>OOM 的原因</h3><ul>
+<li>大尺寸图片加载：加载未经压缩的大图片到内存中。</li>
+<li>内存泄漏：对象未被正确释放，导致内存无法回收。</li>
+<li>多线程并发：过多线程同时占用内存。</li>
+<li>大量数据处理：处理大数据集合时未进行优化。</li>
+<li>不合理的缓存策略：长时间持有不必要的对象。</li>
+</ul>
+<h3 id="如何检测-OOM"><a href="#如何检测-OOM" class="headerlink" title="如何检测 OOM"></a>如何检测 OOM</h3><ul>
+<li>使用内存分析工具<br>Android Profiler：Android Studio 提供的内存分析工具，可以检测内存使用情况和泄漏。<br>MAT（Memory Analyzer Tool）：分析内存堆快照，找出潜在的内存泄漏。  </li>
+<li>使用 LeakCanary<br>LeakCanary 是一个开源工具库，可以自动检测内存泄漏并显示详细信息。</li>
+</ul>
+<h3 id="如何预防和解决-OOM"><a href="#如何预防和解决-OOM" class="headerlink" title="如何预防和解决 OOM"></a>如何预防和解决 OOM</h3><ul>
+<li><p>图片加载优化<br>使用合适尺寸加载图片：通过 BitmapFactory.Options 设置 inSampleSize 来压缩图片。<br>使用图片加载库：如 Glide 或 Picasso，它们具有内存优化功能。</p>
+</li>
+<li><p>避免内存泄漏<br>及时释放资源：如 Bitmap、Cursor 等。<br>避免静态引用：不使用静态变量持有 Activity 或 Context 的引用。<br>使用弱引用：对于需要长时间持有的对象，使用 WeakReference。</p>
+</li>
+<li><p>优化内存使用<br>使用 LRUCache：缓存数据，避免重复加载。<br>优化数据结构：选择合适的数据结构存储数据。<br>减少全局变量：避免不必要的全局变量。</p>
+</li>
+<li><p>控制线程数量<br>合理使用线程池：避免创建过多线程，使用 ExecutorService 管理线程。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/" class="post-title-link" itemprop="url">安卓面试基础5</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-12 08:43:33 / Modified: 09:25:17" itemprop="dateCreated datePublished" datetime="2024-10-12T08:43:33+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Okhttp-框架源码"><a href="#Okhttp-框架源码" class="headerlink" title="Okhttp 框架源码"></a>Okhttp 框架源码</h2><p>OkHttp是一个高效、灵活的HTTP客户端框架，其源码设计精巧，其中包含了许多值得学习的设计模式和实现技术。以下是OkHttp框架的主要组成部分及其源码分析。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/12/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%805/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/" class="post-title-link" itemprop="url">安卓面试基础4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-11 21:32:30" itemprop="dateCreated datePublished" datetime="2024-10-11T21:32:30+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-12 08:43:20" itemprop="dateModified" datetime="2024-10-12T08:43:20+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="MVC-MVP-MVVM设计模式详细讲解"><a href="#MVC-MVP-MVVM设计模式详细讲解" class="headerlink" title="MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解"></a>MVC&#x2F;MVP&#x2F;MVVM设计模式详细讲解</h2><p>在Android开发中，设计模式有助于组织代码，提高代码的可维护性和可扩展性。MVC、MVP和MVVM是三种常见的设计模式。以下是对这三种设计模式的详细讲解，包括它们的基本概念、结构图、优缺点以及在实际开发中的应用示例。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%804/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="june chiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 学习笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/" class="post-title-link" itemprop="url">安卓面试基础3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-11 20:19:50" itemprop="dateCreated datePublished" datetime="2024-10-11T20:19:50+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-12 08:43:12" itemprop="dateModified" datetime="2024-10-12T08:43:12+08:00">2024-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -216,7 +612,7 @@
           <h2 id="View的绘制面试讲解"><a href="#View的绘制面试讲解" class="headerlink" title="View的绘制面试讲解"></a>View的绘制面试讲解</h2><p>在Android开发中，视图（View）的绘制是一个非常重要的过程。理解视图的绘制机制不仅有助于创建自定义视图，还能优化应用的性能。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/#more" rel="contents">
+              <a class="btn" href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%803/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -247,7 +643,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -265,7 +661,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/" class="post-title-link" itemprop="url">BAT安卓面试基础2</a>
+          <a href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/" class="post-title-link" itemprop="url">安卓面试基础2</a>
         </h2>
 
         <div class="post-meta-container">
@@ -275,9 +671,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-10-11 18:05:42 / Modified: 21:19:36" itemprop="dateCreated datePublished" datetime="2024-10-11T18:05:42+08:00">2024-10-11</time>
+      <time title="Created: 2024-10-11 18:05:42" itemprop="dateCreated datePublished" datetime="2024-10-11T18:05:42+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-12 08:43:03" itemprop="dateModified" datetime="2024-10-12T08:43:03+08:00">2024-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -306,7 +708,7 @@
           <h2 id="Handler-面试详解"><a href="#Handler-面试详解" class="headerlink" title="Handler 面试详解"></a>Handler 面试详解</h2><p>在Android开发中，<code>Handler</code>机制是用于管理线程间通信和消息处理的一个重要工具。它主要通过消息队列（MessageQueue）和消息循环（Looper）来实现。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/#more" rel="contents">
+              <a class="btn" href="/2024/10/11/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%802/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -337,7 +739,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/11/Android%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -355,7 +757,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">BAT安卓面试基础</a>
+          <a href="/2024/10/11/Android%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95/" class="post-title-link" itemprop="url">安卓面试基础</a>
         </h2>
 
         <div class="post-meta-container">
@@ -365,9 +767,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-10-11 10:44:55 / Modified: 18:01:33" itemprop="dateCreated datePublished" datetime="2024-10-11T10:44:55+08:00">2024-10-11</time>
+      <time title="Created: 2024-10-11 10:44:55" itemprop="dateCreated datePublished" datetime="2024-10-11T10:44:55+08:00">2024-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-12 08:42:51" itemprop="dateModified" datetime="2024-10-12T08:42:51+08:00">2024-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -398,7 +806,7 @@
 <p>设计模式（代理、单例、工厂、build）<br>数据结构<br>java语言基础（反射、注解、注入）<br>UI布局和控件、自定义UI控件<br>Http和Socket编程、性能优化、内存优化<br>安全加解密算法</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/10/11/BAT%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/#more" rel="contents">
+              <a class="btn" href="/2024/10/11/Android%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -669,366 +1077,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/07/23/vue2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/23/vue2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="june chiu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/23/vue2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">vue2学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-07-23 09:45:34 / Modified: 21:33:48" itemprop="dateCreated datePublished" datetime="2024-07-23T09:45:34+08:00">2024-07-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/Vue2/" itemprop="url" rel="index"><span itemprop="name">Vue2</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h3><h3 id="Vue起步"><a href="#Vue起步" class="headerlink" title="Vue起步"></a>Vue起步</h3><h4 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/23/vue2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/23/Vue3%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="june chiu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/23/Vue3%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Vue3学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-07-23 09:05:21 / Modified: 09:33:59" itemprop="dateCreated datePublished" datetime="2024-07-23T09:05:21+08:00">2024-07-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、Vue-3-概述"><a href="#一、Vue-3-概述" class="headerlink" title="一、Vue 3 概述"></a>一、Vue 3 概述</h3><h4 id="1-Vue-js-简介"><a href="#1-Vue-js-简介" class="headerlink" title="1. Vue.js 简介"></a>1. Vue.js 简介</h4><p>Vue.js 是一个渐进式的 JavaScript 框架，专注于构建用户界面。Vue 可以与其他库或现有项目进行集成，也可以用于搭建复杂的单页应用（SPA）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/23/Vue3%E5%AD%A6%E4%B9%A0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/22/mysql%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="june chiu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/22/mysql%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">mysql学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-07-22 19:36:30 / Modified: 23:05:06" itemprop="dateCreated datePublished" datetime="2024-07-22T19:36:30+08:00">2024-07-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">后端开发</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>学习 MySQL 的大纲可以帮助你系统化地掌握这门数据库管理系统。以下是一个详细的 MySQL 学习大纲，分为基础入门、进阶应用以及高级主题三个部分。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/22/mysql%E5%AD%A6%E4%B9%A0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/22/CSS3%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="june chiu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 学习笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/22/CSS3%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">CSS3学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-07-22 19:13:52 / Modified: 19:35:28" itemprop="dateCreated datePublished" datetime="2024-07-22T19:13:52+08:00">2024-07-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/css3/" itemprop="url" rel="index"><span itemprop="name">css3</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-CSS3-基础"><a href="#1-CSS3-基础" class="headerlink" title="1. CSS3 基础"></a>1. CSS3 基础</h3><p>CSS3 是 Cascading Style Sheets 的最新版本，允许开发者控制网页的布局和视觉样式。在本节中，我们将深入讨论 CSS 的基本语法、选择器类型、如何引入 CSS，以及具体的代码示例。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/22/CSS3%E5%AD%A6%E4%B9%A0/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
