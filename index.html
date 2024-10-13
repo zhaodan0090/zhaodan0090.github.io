@@ -253,9 +253,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-10-12 09:26:28 / Modified: 09:55:33" itemprop="dateCreated datePublished" datetime="2024-10-12T09:26:28+08:00">2024-10-12</time>
+      <time title="Created: 2024-10-12 09:26:28" itemprop="dateCreated datePublished" datetime="2024-10-12T09:26:28+08:00">2024-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-13 12:37:24" itemprop="dateModified" datetime="2024-10-13T12:37:24+08:00">2024-10-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,6 +341,266 @@
 <li><p>控制线程数量<br>合理使用线程池：避免创建过多线程，使用 ExecutorService 管理线程。</p>
 </li>
 </ul>
+<h2 id="Bitmap面试问题"><a href="#Bitmap面试问题" class="headerlink" title="Bitmap面试问题"></a>Bitmap面试问题</h2><p>在 Android 开发中，<code>Bitmap</code> 是一个非常重要的类，用于表示图像。面试中常见的 Bitmap 相关问题通常涉及到内存管理、性能优化和实际应用。</p>
+<h3 id="1-什么是-Bitmap？"><a href="#1-什么是-Bitmap？" class="headerlink" title="1. 什么是 Bitmap？"></a>1. 什么是 Bitmap？</h3><p><strong>回答：</strong><br>Bitmap 是 Android 中用于存储图像的类，可以从资源文件、文件或其他输入流中创建。Bitmap 在内存中以像素阵列的形式存储图像数据。</p>
+<h3 id="2-如何高效地加载-Bitmap？"><a href="#2-如何高效地加载-Bitmap？" class="headerlink" title="2. 如何高效地加载 Bitmap？"></a>2. 如何高效地加载 Bitmap？</h3><p><strong>回答：</strong><br>高效加载 Bitmap 可以使用以下方法：</p>
+<ul>
+<li><p><strong>使用 BitmapFactory.Options 进行图片压缩：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BitmapFactory.<span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BitmapFactory</span>.Options();</span><br><span class="line">options.inJustDecodeBounds = <span class="literal">true</span>;</span><br><span class="line">BitmapFactory.decodeResource(getResources(), R.drawable.large_image, options);</span><br><span class="line"></span><br><span class="line">options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</span><br><span class="line">options.inJustDecodeBounds = <span class="literal">false</span>;</span><br><span class="line"><span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> BitmapFactory.decodeResource(getResources(), R.drawable.large_image, options);</span><br></pre></td></tr></table></figure>
+
+<p><code>calculateInSampleSize</code> 是一个自定义方法，用于计算合适的 <code>inSampleSize</code> 值。</p>
+</li>
+<li><p><strong>使用图片加载库：</strong><br>使用如 Glide 或 Picasso 等图片加载库，它们具有内存优化和缓存功能。</p>
+</li>
+</ul>
+<h3 id="3-什么是-Bitmap-的-inSampleSize？"><a href="#3-什么是-Bitmap-的-inSampleSize？" class="headerlink" title="3. 什么是 Bitmap 的 inSampleSize？"></a>3. 什么是 Bitmap 的 inSampleSize？</h3><p><strong>回答：</strong><br><code>inSampleSize</code> 是 <code>BitmapFactory.Options</code> 的一个参数，用于指定加载图片时的缩放比例。值为 2 表示图像的宽和高都会缩小一半，值为 4 表示宽和高缩小到四分之一。</p>
+<h3 id="4-如何避免-Bitmap-引起的内存泄漏？"><a href="#4-如何避免-Bitmap-引起的内存泄漏？" class="headerlink" title="4. 如何避免 Bitmap 引起的内存泄漏？"></a>4. 如何避免 Bitmap 引起的内存泄漏？</h3><p><strong>回答：</strong><br>避免 Bitmap 引起的内存泄漏可以采取以下措施：</p>
+<ul>
+<li><p><strong>及时回收 Bitmap：</strong><br>使用 <code>bitmap.recycle()</code> 方法在不再需要 Bitmap 时手动回收其占用的内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (bitmap != <span class="literal">null</span> &amp;&amp; !bitmap.isRecycled()) &#123;</span><br><span class="line">    bitmap.recycle();</span><br><span class="line">    bitmap = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用弱引用：</strong><br>使用 <code>WeakReference</code> 持有 Bitmap 对象，避免长时间持有导致内存泄漏。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WeakReference&lt;Bitmap&gt; bitmapWeakReference = <span class="keyword">new</span> <span class="title class_">WeakReference</span>&lt;&gt;(bitmap);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>避免静态引用：</strong><br>不要使用静态变量持有 Bitmap 引用。</p>
+</li>
+</ul>
+<h3 id="5-如何处理大图片的显示？"><a href="#5-如何处理大图片的显示？" class="headerlink" title="5. 如何处理大图片的显示？"></a>5. 如何处理大图片的显示？</h3><p><strong>回答：</strong><br>处理大图片可以通过以下方法：</p>
+<ul>
+<li><p><strong>分块加载：</strong><br>将大图片分成多个小块，按需加载。</p>
+</li>
+<li><p><strong>使用 subsampling-scale-image-view：</strong><br>这是一个开源库，支持大图片的平滑缩放和移动。</p>
+</li>
+</ul>
+<h3 id="6-如何在-Canvas-上绘制-Bitmap？"><a href="#6-如何在-Canvas-上绘制-Bitmap？" class="headerlink" title="6. 如何在 Canvas 上绘制 Bitmap？"></a>6. 如何在 Canvas 上绘制 Bitmap？</h3><p><strong>回答：</strong><br>在 Canvas 上绘制 Bitmap 通常通过 <code>drawBitmap</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Canvas</span> <span class="variable">canvas</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Canvas</span>();</span><br><span class="line"><span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> BitmapFactory.decodeResource(getResources(), R.drawable.image);</span><br><span class="line">canvas.drawBitmap(bitmap, left, top, <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-如何缩放-Bitmap？"><a href="#7-如何缩放-Bitmap？" class="headerlink" title="7. 如何缩放 Bitmap？"></a>7. 如何缩放 Bitmap？</h3><p><strong>回答：</strong><br>缩放 Bitmap 可以使用 <code>Bitmap.createScaledBitmap</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Bitmap</span> <span class="variable">scaledBitmap</span> <span class="operator">=</span> Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-如何将-Drawable-转换为-Bitmap？"><a href="#8-如何将-Drawable-转换为-Bitmap？" class="headerlink" title="8. 如何将 Drawable 转换为 Bitmap？"></a>8. 如何将 Drawable 转换为 Bitmap？</h3><p><strong>回答：</strong><br>将 Drawable 转换为 Bitmap 可以通过以下代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">drawableToBitmap</span><span class="params">(Drawable drawable)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (drawable <span class="keyword">instanceof</span> BitmapDrawable) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((BitmapDrawable) drawable).getBitmap();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);</span><br><span class="line">    <span class="type">Canvas</span> <span class="variable">canvas</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Canvas</span>(bitmap);</span><br><span class="line">    drawable.setBounds(<span class="number">0</span>, <span class="number">0</span>, canvas.getWidth(), canvas.getHeight());</span><br><span class="line">    drawable.draw(canvas);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bitmap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-如何处理-Bitmap-旋转问题？"><a href="#9-如何处理-Bitmap-旋转问题？" class="headerlink" title="9. 如何处理 Bitmap 旋转问题？"></a>9. 如何处理 Bitmap 旋转问题？</h3><p><strong>回答：</strong><br>处理 Bitmap 旋转问题可以使用 Matrix 类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Matrix</span> <span class="variable">matrix</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Matrix</span>();</span><br><span class="line">matrix.postRotate(<span class="number">90</span>); <span class="comment">// 旋转90度</span></span><br><span class="line"><span class="type">Bitmap</span> <span class="variable">rotatedBitmap</span> <span class="operator">=</span> Bitmap.createBitmap(bitmap, <span class="number">0</span>, <span class="number">0</span>, bitmap.getWidth(), bitmap.getHeight(), matrix, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-Bitmap-Config-有哪些类型？有什么区别？"><a href="#10-Bitmap-Config-有哪些类型？有什么区别？" class="headerlink" title="10. Bitmap.Config 有哪些类型？有什么区别？"></a>10. Bitmap.Config 有哪些类型？有什么区别？</h3><p><strong>回答：</strong><br><code>Bitmap.Config</code> 定义了 Bitmap 的像素配置，有以下几种类型：</p>
+<ul>
+<li><strong>ARGB_8888：</strong> 每个像素 4 字节（32 位），包括透明度通道。图像质量高，内存占用大。</li>
+<li><strong>RGB_565：</strong> 每个像素 2 字节（16 位），没有透明度通道。图像质量较低，内存占用小。</li>
+<li><strong>ARGB_4444：</strong> 每个像素 2 字节（16 位），包括透明度通道。已被废弃。</li>
+<li><strong>ALPHA_8：</strong> 每个像素 1 字节（8 位），只有透明度通道。</li>
+</ul>
+<h2 id="LruCache内存缓存"><a href="#LruCache内存缓存" class="headerlink" title="LruCache内存缓存"></a>LruCache内存缓存</h2><p>在 Android 开发中，<code>LruCache</code> 是一个内存缓存实现，主要用于缓存应用中的数据，以提高性能和响应速度。以下是 <code>LruCache</code> 的详细讲解：</p>
+<h3 id="什么是-LruCache？"><a href="#什么是-LruCache？" class="headerlink" title="什么是 LruCache？"></a>什么是 LruCache？</h3><p><strong>LruCache</strong> 是 “Least Recently Used Cache” 的缩写，即最近最少使用缓存。它是一种缓存机制，当缓存达到最大容量时，会优先移除最近最少使用的条目，以腾出空间。</p>
+<h3 id="为什么使用-LruCache？"><a href="#为什么使用-LruCache？" class="headerlink" title="为什么使用 LruCache？"></a>为什么使用 LruCache？</h3><ul>
+<li><strong>提高性能：</strong> 减少对磁盘或网络的频繁访问。</li>
+<li><strong>节省资源：</strong> 通过缓存经常使用的数据，减少加载时间。</li>
+<li><strong>自动管理：</strong> 自动处理缓存的添加和移除。</li>
+</ul>
+<h3 id="如何使用-LruCache？"><a href="#如何使用-LruCache？" class="headerlink" title="如何使用 LruCache？"></a>如何使用 LruCache？</h3><ol>
+<li><p><strong>创建 LruCache 实例</strong></p>
+<p>创建一个 LruCache 实例时，需要指定缓存的大小。一般使用应用可用内存的一部分。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">cacheSize</span> <span class="operator">=</span> <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 4MiB</span></span><br><span class="line">LruCache&lt;String, Bitmap&gt; bitmapCache = <span class="keyword">new</span> <span class="title class_">LruCache</span>&lt;&gt;(cacheSize);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>存储数据</strong></p>
+<p>使用 <code>put</code> 方法将数据存入缓存：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitmapCache.put(<span class="string">&quot;imageKey&quot;</span>, bitmap);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检索数据</strong></p>
+<p>使用 <code>get</code> 方法从缓存中获取数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> bitmapCache.get(<span class="string">&quot;imageKey&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>移除数据</strong></p>
+<p>可以使用 <code>remove</code> 方法提前移除数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitmapCache.remove(<span class="string">&quot;imageKey&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="如何计算缓存大小？"><a href="#如何计算缓存大小？" class="headerlink" title="如何计算缓存大小？"></a>如何计算缓存大小？</h3><p>缓存大小的计算可以根据应用可用内存来决定。例如，可以使用如下方法计算：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">maxMemory</span> <span class="operator">=</span> (<span class="type">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</span><br><span class="line"><span class="type">int</span> <span class="variable">cacheSize</span> <span class="operator">=</span> maxMemory / <span class="number">8</span>; <span class="comment">// 使用最大可用内存的1/8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义-LruCache-行为"><a href="#自定义-LruCache-行为" class="headerlink" title="自定义 LruCache 行为"></a>自定义 LruCache 行为</h3><p>你可以通过重写 <code>LruCache</code> 的 <code>sizeOf</code> 方法，自定义每个缓存条目的大小。例如，对于 <code>Bitmap</code> 缓存：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LruCache&lt;String, Bitmap&gt; bitmapCache = <span class="keyword">new</span> <span class="title class_">LruCache</span>&lt;String, Bitmap&gt;(cacheSize) &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="type">int</span> <span class="title function_">sizeOf</span><span class="params">(String key, Bitmap value)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> value.getByteCount() / <span class="number">1024</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LruCache-的应用场景"><a href="#LruCache-的应用场景" class="headerlink" title="LruCache 的应用场景"></a>LruCache 的应用场景</h3><ul>
+<li><strong>图片缓存：</strong> 缓存已加载的图片，减少重复加载。</li>
+<li><strong>数据缓存：</strong> 缓存从网络获取的 JSON 数据或其他轻量级数据。</li>
+</ul>
+<h2 id="UI卡顿面试"><a href="#UI卡顿面试" class="headerlink" title="UI卡顿面试"></a>UI卡顿面试</h2><h3 id="什么是-UI-卡顿？"><a href="#什么是-UI-卡顿？" class="headerlink" title="什么是 UI 卡顿？"></a>什么是 UI 卡顿？</h3><p>UI 卡顿表现为界面不流畅、响应延迟。理想情况下，Android 应用应该以 60 帧每秒的速度运行，这意味着每帧的渲染时间不应超过 16ms。</p>
+<h3 id="UI-卡顿的常见原因"><a href="#UI-卡顿的常见原因" class="headerlink" title="UI 卡顿的常见原因"></a>UI 卡顿的常见原因</h3><ol>
+<li><p><strong>主线程阻塞：</strong></p>
+<ul>
+<li>在主线程执行耗时操作，如网络请求、数据库查询或文件读写。</li>
+</ul>
+</li>
+<li><p><strong>布局过于复杂：</strong></p>
+<ul>
+<li>布局层次过深或过于复杂，导致渲染时间过长。</li>
+</ul>
+</li>
+<li><p><strong>不当的绘制操作：</strong></p>
+<ul>
+<li>在 <code>onDraw</code> 方法中进行复杂计算或创建复杂对象。</li>
+</ul>
+</li>
+<li><p><strong>内存不足：</strong></p>
+<ul>
+<li>内存泄漏导致可用内存减少，GC 频繁触发。</li>
+</ul>
+</li>
+<li><p><strong>动画执行不当：</strong></p>
+<ul>
+<li>动画中的逻辑复杂或帧率设置不当。</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何检测-UI-卡顿？"><a href="#如何检测-UI-卡顿？" class="headerlink" title="如何检测 UI 卡顿？"></a>如何检测 UI 卡顿？</h3><ol>
+<li><p><strong>Systrace 工具：</strong></p>
+<ul>
+<li>Android Profiler 中的 Systrace 能帮助分析线程执行情况。</li>
+</ul>
+</li>
+<li><p><strong>布局检查工具：</strong></p>
+<ul>
+<li>使用 Layout Inspector 检查布局的复杂程度。</li>
+</ul>
+</li>
+<li><p><strong>日志监控：</strong></p>
+<ul>
+<li>查看 Logcat 中的“Choreographer”日志，检测掉帧情况。</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何解决-UI-卡顿？"><a href="#如何解决-UI-卡顿？" class="headerlink" title="如何解决 UI 卡顿？"></a>如何解决 UI 卡顿？</h3><ol>
+<li><p><strong>避免主线程阻塞：</strong></p>
+<ul>
+<li>将耗时操作移到后台线程，如使用 AsyncTask、HandlerThread 或 RxJava。</li>
+</ul>
+</li>
+<li><p><strong>优化布局：</strong></p>
+<ul>
+<li>减少布局嵌套，使用 ConstraintLayout 等性能优化布局。</li>
+</ul>
+</li>
+<li><p><strong>优化绘制操作：</strong></p>
+<ul>
+<li>在 <code>onDraw</code> 中缓存计算结果，避免创建不必要的对象。</li>
+</ul>
+</li>
+<li><p><strong>减少内存使用：</strong></p>
+<ul>
+<li>使用合适的数据结构，及时释放不再需要的对象。</li>
+</ul>
+</li>
+<li><p><strong>优化动画：</strong></p>
+<ul>
+<li>使用硬件加速，简化动画逻辑。</li>
+</ul>
+</li>
+</ol>
+<h3 id="实践建议"><a href="#实践建议" class="headerlink" title="实践建议"></a>实践建议</h3><ul>
+<li><strong>使用 ViewStub：</strong> 延迟加载不常用的布局。</li>
+<li><strong>RecyclerView 代替 ListView：</strong> 提高列表性能。</li>
+<li><strong>Profile UI 渲染：</strong> 使用 Android Profiler 分析布局和渲染性能。</li>
+</ul>
+<h2 id="Android内存泄漏"><a href="#Android内存泄漏" class="headerlink" title="Android内存泄漏"></a>Android内存泄漏</h2><h3 id="什么是内存泄漏？"><a href="#什么是内存泄漏？" class="headerlink" title="什么是内存泄漏？"></a>什么是内存泄漏？</h3><p>内存泄漏是指应用中不再需要的对象无法被垃圾回收器回收，导致内存使用不断增加。</p>
+<h3 id="常见内存泄漏原因"><a href="#常见内存泄漏原因" class="headerlink" title="常见内存泄漏原因"></a>常见内存泄漏原因</h3><ol>
+<li><p><strong>静态变量持有上下文：</strong></p>
+<ul>
+<li>静态变量持有 <code>Activity</code> 或 <code>Context</code> 的引用，导致无法释放。</li>
+</ul>
+</li>
+<li><p><strong>匿名内部类和非静态内部类：</strong></p>
+<ul>
+<li>内部类隐式持有外部类的引用。</li>
+</ul>
+</li>
+<li><p><strong>未取消注册的监听器或接收器：</strong></p>
+<ul>
+<li>忘记在 <code>onDestroy</code> 中取消注册的 <code>BroadcastReceiver</code> 或 <code>Listener</code>。</li>
+</ul>
+</li>
+<li><p><strong>未关闭的资源：</strong></p>
+<ul>
+<li>未及时关闭的 <code>Cursor</code>、<code>File</code>、<code>InputStream</code> 等。</li>
+</ul>
+</li>
+<li><p><strong>Handler 导致的泄漏：</strong></p>
+<ul>
+<li>使用 Handler 时，消息队列中的消息持有外部类的引用。</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何检测内存泄漏？"><a href="#如何检测内存泄漏？" class="headerlink" title="如何检测内存泄漏？"></a>如何检测内存泄漏？</h3><ol>
+<li><p><strong>Android Profiler：</strong></p>
+<ul>
+<li>使用 Android Profiler 的内存分析工具检查内存使用情况。</li>
+</ul>
+</li>
+<li><p><strong>LeakCanary：</strong></p>
+<ul>
+<li>一个开源库，能自动检测并报告内存泄漏。</li>
+</ul>
+</li>
+</ol>
+<h3 id="如何避免内存泄漏？"><a href="#如何避免内存泄漏？" class="headerlink" title="如何避免内存泄漏？"></a>如何避免内存泄漏？</h3><ol>
+<li><p><strong>避免持有 Activity 的静态引用：</strong></p>
+<ul>
+<li>不在静态变量中直接引用 <code>Activity</code> 或 <code>Context</code>。</li>
+</ul>
+</li>
+<li><p><strong>使用静态内部类：</strong></p>
+<ul>
+<li>将内部类声明为静态，并使用 <code>WeakReference</code> 持有外部类实例。</li>
+</ul>
+</li>
+<li><p><strong>及时取消注册：</strong></p>
+<ul>
+<li>在 <code>onDestroy</code> 中取消注册所有监听器和接收器。</li>
+</ul>
+</li>
+<li><p><strong>关闭资源：</strong></p>
+<ul>
+<li>在使用完 <code>Cursor</code>、<code>File</code> 等资源后立即关闭。</li>
+</ul>
+</li>
+<li><p><strong>使用弱引用：</strong></p>
+<ul>
+<li>使用 <code>WeakReference</code> 持有不重要的对象，允许其被回收。</li>
+</ul>
+</li>
+</ol>
+<h3 id="实践建议-1"><a href="#实践建议-1" class="headerlink" title="实践建议"></a>实践建议</h3><ul>
+<li><strong>使用应用上下文：</strong> 在需要长时间持有的对象中使用 <code>Application Context</code>。</li>
+<li><strong>谨慎使用单例模式：</strong> 确保单例中不持有 <code>Activity</code> 引用。</li>
+<li><strong>定期检查代码：</strong> 使用工具检测和优化内存使用。</li>
+</ul>
+<h2 id="冷启动优化"><a href="#冷启动优化" class="headerlink" title="冷启动优化"></a>冷启动优化</h2><ul>
+<li>冷启动：系统中没有应用程序进程的任何实例，需要创建并启动一个新的进程。会执行 <code>Application</code> 的 <code>onCreate</code> 方法，然后创建 <code>Activity</code>。</li>
+<li>热启动：系统中已有应用程序进程的实例，只需要将 <code>Activity</code> 带到前台。会执行 <code>Activity</code> 的 <code>onCreate</code>、<code>onStart</code>、<code>onResume</code> 方法。</li>
+</ul>
+<p>冷启动流程：Application 的 构造方法 -&gt;attchBaseContext() -&gt;onCreate() -&gt;Activity 的 onCreate() -&gt;onStart() -&gt;onResume()-&gt; 测量布局绘制</p>
+<h3 id="冷启动优化-1"><a href="#冷启动优化-1" class="headerlink" title="冷启动优化"></a>冷启动优化</h3><ol>
+<li>减少onCreate()方法的工作量</li>
+<li>不要让application参与业务操作</li>
+<li>不要在Application中做耗时操作</li>
+<li>不要以静态变量的方式在Application中保存数据</li>
+<li>布局&#x2F;mainThread</li>
+<li>懒加载延时初始化</li>
+</ol>
+<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><p>1、android不用静态变量存储数据</p>
+<ul>
+<li>内存泄漏：<br>静态变量的生命周期与应用进程相同，如果持有对 Context（如 Activity）的引用，会导致内存泄漏，因为这些对象无法被垃圾回收。</li>
+<li>数据不一致性：<br>静态变量在应用进程中是全局共享的，可能会被多个组件同时访问和修改，容易导致数据不一致。</li>
+<li>应用进程被系统终止：<br>Android 系统可能会在内存不足时终止应用进程。静态变量的内容在这种情况下会丢失，无法保证数据持久性。</li>
+</ul>
+<p>传输方式替代：文件&#x2F;sp&#x2F;contentProvider&#x2F;SQLite&#x2F;LiveData</p>
+<p>2、SP不能跨进程使用、不能存储大数据</p>
+<p>3、内存对象序列化</p>
+<ul>
+<li>序列化：将对象转换为字节序列的过程</li>
+<li>反序列化：将字节序列恢复为对象的过程<br>Serializable：java提供的一个序列化接口，实现该接口，将对象序列化<br>Parcelable：Android提供的一个序列化接口，更适合Android平台，使用内存的时候效率比Serializable高<br>Parcelable 磁盘数据序列化有问题</li>
+</ul>
+<p>4、避免在ui线程中作繁重的操作<br>Handler、AsyncTask、线程池、RxJava、IntentService、HandlerThread</p>
 
       
     </div>
